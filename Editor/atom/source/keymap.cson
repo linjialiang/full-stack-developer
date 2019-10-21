@@ -1,0 +1,34 @@
+'atom-workspace':
+    'ctrl-k ctrl-t': 'git-time-machine:toggle'
+
+'atom-workspace .tree-view':
+    'g g': 'core:move-to-top'
+    'shift-G': 'core:move-to-bottom'
+    'ctrl-k ctrl-p': 'tree-view:open-selected-entry-up'
+    'ctrl-k ctrl-n': 'tree-view:open-selected-entry-down'
+    'ctrl-k ctrl-h': 'tree-view:open-selected-entry-left'
+    'ctrl-k ctrl-l': 'tree-view:open-selected-entry-right'
+
+'atom-workspace atom-text-editor':
+    'ctrl-k ctrl-o': 'autocomplete-plus:activate'
+    'ctrl-k ctrl-e': 'open-in-browser:open'
+
+'.select-list atom-text-editor, body atom-text-editor.autocomplete-active':
+    'ctrl-p': 'core:move-up'
+    'ctrl-n': 'core:move-down'
+    'home': 'core:move-to-top'
+    'end': 'core:move-to-bottom'
+
+'atom-text-editor, webview.markdown-preview-plus':
+    'ctrl-k ctrl-m': 'markdown-preview-plus:toggle'
+
+'atom-workspace atom-text-editor:not([mini])':
+    'ctrl-k m': 'quick-highlight:toggle'
+    'ctrl-k shift-M': 'quick-highlight:clear'
+
+'atom-text-editor.vim-mode-plus.normal-mode, atom-text-editor.vim-mode-plus.visual-mode':
+    'g m': 'vim-mode-plus-user:quick-highlight-word'
+    'g shift-M': 'quick-highlight:clear'
+
+'.platform-win32 atom-text-editor':
+    'ctrl-k ctrl-r': 'symbols-view:toggle-file-symbols'

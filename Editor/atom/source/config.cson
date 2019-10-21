@@ -1,0 +1,126 @@
+"*":
+  "atom-beautify":
+    css:
+      default_beautifier: "Prettier"
+    executables:
+      "php-cs-fixer":
+        path: "C:\\Users\\emad\\.atom\\php-cs-fixer-v2.phar"
+    general:
+      _analyticsUserId: ""
+    html:
+      preserve_newlines: false
+    js:
+      default_beautifier: "Prettier"
+      object_curly_spacing: true
+      preserve_newlines: false
+      space_before_conditional: false
+    markdown:
+      default_beautifier: "Prettier"
+    php:
+      allow_risky: "yes"
+  autoprefixer:
+    runOnSave: true
+  autosave:
+    enabled: true
+  "color-picker":
+    abbreviateValues: true
+    alphaChannelAlways: true
+    automaticReplace: true
+    triggerKey: "K"
+  core:
+    autoHideMenuBar: true
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "markdown-preview"
+      "language-gfm"
+    ]
+    packagesWithKeymapsDisabled: [
+      "git-time-machine"
+      "open-in-browser"
+      "symbols-view"
+      "markdown-preview-plus"
+    ]
+    telemetryConsent: "limited"
+    themes: [
+      "one-light-ui"
+      "one-dark-syntax"
+    ]
+    uriHandlerRegistration: "always"
+  docblockr:
+    auto_add_method_tag: true
+    c_style_block_comments: true
+    deep_indent: true
+    development_mode: true
+    extra_tags_go_after: true
+    lower_case_primitives: true
+    newline_after_block: true
+    override_js_var: true
+    per_section_indent: true
+    short_primitives: true
+  "double-tag":
+    allowEndTagSync: true
+  editor:
+    fontFamily: "'Fira Code', '思源黑体 CN'"
+    showIndentGuide: true
+    showInvisibles: true
+    tabLength: 4
+    tabType: "soft"
+  "exception-reporting":
+    userId: ""
+  "line-ending-selector":
+    defaultLineEnding: "LF"
+  "markdown-preview-plus":
+    syncConfig:
+      syncEditorOnPreviewScroll: true
+      syncPreviewOnChange: true
+      syncPreviewOnEditorScroll: true
+    useGitHubStyle: true
+  minimap:
+    plugins:
+      bookmarks: true
+      bookmarksDecorationsZIndex: 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "minimap-quick-highlight": true
+      "minimap-quick-highlightDecorationsZIndex": 0
+      "split-diff": true
+      "split-diffDecorationsZIndex": 0
+  "one-dark-ui":
+    tabCloseButton: "Left"
+    tabSizing: "Maximum"
+  "one-light-ui":
+    hideDockButtons: true
+    stickyHeaders: true
+    tabCloseButton: "Left"
+    tabSizing: "Maximum"
+  "platformio-ide-terminal":
+    ansiColors:
+      zBright:
+        brightBlue: "#0080c0"
+    core:
+      shell: "C:\\Program Files\\Git\\bin\\bash.exe"
+      workingDirectory: "Active File"
+    style:
+      theme: "solarized-dark"
+    toggles:
+      autoClose: true
+  "project-manager":
+    alwaysOpenInSameWindow: true
+    includeGitRepositories: true
+    showPath: false
+    sortBy: "group"
+  "quick-highlight":
+    decorate: "box"
+  "spell-check":
+    useLocales: false
+  "sync-settings":
+    _lastBackupHash: ""
+    gistId: ""
+    personalAccessToken: ""
+    quietUpdateCheck: true
+    removeObsoletePackages: true
+  "tree-view-git-status":
+    gitFlow:
+      display_type: 2
+  welcome:
+    showOnStartup: false
