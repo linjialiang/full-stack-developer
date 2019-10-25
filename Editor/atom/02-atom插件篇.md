@@ -116,6 +116,7 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 | `icon: 'code-icon'`   | 代码图标    |
 | `icon: 'psd-icon'`    | psd 图标    |
 | `icon: 'php-icon'`    | php 图标    |
+| `icon: 'book-icon'`   | 文档 图标   |
 
 ### autoprefixer
 
