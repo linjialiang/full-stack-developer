@@ -1,0 +1,106 @@
+# httpd 自定义配置文件
+
+> 源码：
+
+```conf
+LoadModule vhost_alias_module modules/mod_vhost_alias.so
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule php7_module ${WAMP_ROOT}/base/php/php7apache2_4.dll
+
+<IfModule php7_module>
+    PHPINIDir "${WAMP_ROOT}/base/php"
+</IfModule>
+
+ServerAdmin admin@example.com
+
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+
+DocumentRoot "${WAMP_ROOT}/base/default"
+<Directory "${WAMP_ROOT}/base/default">
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+<VirtualHost *:${HTTP_PORT}>
+    DocumentRoot "${WAMP_ROOT}/base/default"
+</VirtualHost>
+
+<Directory "${HTDOCS}">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+<IfModule dir_module>
+    DirectoryIndex index.html index.php
+</IfModule>
+
+<Files ".ht*">
+    Require all denied
+</Files>
+
+ErrorLog "|${SRVROOT}/bin/rotatelogs.exe -t ${HTLOGS}/error/error_log.%Y-%m-%d-%H_%M_%S 5M 480"
+
+LogLevel warn
+
+<IfModule log_config_module>
+    LogFormat "$V-%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "$V-%h %l %u %t \"%r\" %>s %b" common
+    LogFormat "%h-%v-%V %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" newlogformat
+
+    <IfModule logio_module>
+      LogFormat "$V-%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    </IfModule>
+
+    SetEnvIf Request_URI "\.(ico|gif|jpg|png|bmp|swf|css|js)$" dontlog
+
+    CustomLog "|${SRVROOT}/bin/rotatelogs.exe -t ${HTLOGS}/access/access_log.%Y-%m-%d 86400 480" newlogformat env=!dontlog
+</IfModule>
+
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "${SRVROOT}/cgi-bin/"
+</IfModule>
+
+<Directory "${SRVROOT}/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<IfModule headers_module>
+    RequestHeader unset Proxy early
+</IfModule>
+
+<IfModule mime_module>
+    TypesConfig conf/mime.types
+
+    AddType application/x-compress .Z
+    AddType application/x-gzip .gz .tgz
+    AddType application/x-httpd-php .php
+</IfModule>
+
+<IfModule proxy_html_module>
+    Include conf/extra/proxy-html.conf
+</IfModule>
+
+<IfModule ssl_module>
+    SSLRandomSeed startup builtin
+    SSLRandomSeed connect builtin
+</IfModule>
+
+Alias /adminer ${WAMP_ROOT}/base/adminer
+<Directory ${WAMP_ROOT}/base/adminer>
+    Options FollowSymLinks
+    DirectoryIndex adminer.php
+    <RequireAll>
+        Require local
+    </RequireAll>
+</Directory>
+
+<IfModule include_module>
+    Include "${WAMP_ROOT}/web/sites/*.conf"
+</IfModule>
+```
