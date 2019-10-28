@@ -215,71 +215,66 @@ DocumentRoot "${WAMP_ROOT}/base/default"
 
    > 提示：任何解析到当前服务器的域名，只要没有配置虚拟主机，都会指定到改缺省虚拟主机下；
 
-> 由于 apache24 的第一个 `<VirtualHost>` 设置的站点目录为 `${WAMP_ROOT}/base/www-default` ，因此缺省站点都会访问该目录！
+   | 缺省值       | 描述                                   |
+   | ------------ | -------------------------------------- |
+   | 缺省虚拟主机 | 未定义虚拟主机的域名指向的虚拟主机配置 |
+   | 站点缺省路径 | 未定义路径的虚拟主机指向的站点根目录   |
 
-```shell
-<VirtualHost *:80>
-    DocumentRoot "${WAMP_ROOT}/base/default"
-</VirtualHost>
+2. 站点访问权限
+
+   我们可以为每个站点的各种目录设置访问权限，站点总目录权限设置如下：
+
+   ```conf
+   <Directory "${HTDOCS}">
+       Options Indexes FollowSymLinks
+       AllowOverride All
+       Require all granted
+   </Directory>
+   ```
+
+   > 提示：为了便于管理，所有站点我们都会放在一个路径下面，这个路径就是 `站点总目录` 。
+
+3. `Options` 部分属性值
+
+   | Options 属性值   | 描述               | 服务器建议 |
+   | ---------------- | ------------------ | ---------- |
+   | `Indexes`        | 允许展示目录式列表 | 关闭       |
+   | `FollowSymLinks` | 允许访问 url 链接  | 开启       |
+
+4. `AllowOverride` 部分属性值
+
+   | AllowOverride 属性值 | 描述                      | 考虑与建议           |
+   | -------------------- | ------------------------- | -------------------- |
+   | `None`               | 完全忽略 `.htaccess` 文件 | 更安全，性能消耗降低 |
+   | `All`                | 加载 `.htaccess` 文件     | 更方便，性能消耗增加 |
+
+### 默认读取文件
+
+`mod_dir.so` 模块允许通过 `DirectoryIndex` 参数设置默认文件，具体设置如下：
+
+```conf
+<IfModule dir_module>
+DirectoryIndex index.html index.htm index.php
+</IfModule>
 ```
 
-- 特定区块开放访问权限
+> 提示：配置多个默认文件，会从左往右索引文件，直到找到为止。无法找到页面将无法显示或输出文件列表
 
-  > 通俗讲：指定一个位置，允许访问者访问
+### 阻止客户端查看特殊文件
 
-  ```shell
-  <Directory "${HTDOCS}">
-      Options Indexes FollowSymLinks
-      AllowOverride All
-      Require all granted
-  </Directory>
-  ```
+httpd 可以让某些固定格式的文件不被浏览者访问，如：会禁用 `.htaccess` 和 `.htpasswd` 文件被 Web 客户端查看
 
-  > 提示：一般情况下，我们会指定 1 个存放所有站点的根目录
+```conf
+<Files ".ht*">
+Require all denied
+</Files>
+```
 
-- 本节附录：
+### 其他设置
 
-  > `Options` 部分属性值
+1. 这几组都是默认配置，如果没有特别需要，可以直接移除掉了：
 
-  | Options 属性值   | 描述               | 服务器建议 |
-  | ---------------- | ------------------ | ---------- |
-  | `Indexes`        | 允许展示目录式列表 | 关闭       |
-  | `FollowSymLinks` | 允许访问 url 链接  | 开启       |
-
-  > `AllowOverride` 部分属性值
-
-  | AllowOverride 属性值 | 描述                     | 考虑与建议 |
-  | -------------------- | ------------------------ | ---------- |
-  | `None`               | 不允许任何.htaccess 规则 | 更安全     |
-  | `All`                | 允许任何.htaccess 规则   | 更方便     |
-
-4. 设置 httpd 服务默认读取文件
-
-   > 哪些文件可以被 httpd 自动加载并按顺序依次读取，直到发现文件位置
-
-   ```shell
-   <IfModule dir_module>
-   DirectoryIndex index.html index.htm index.php
-   </IfModule>
-   ```
-
-   > 提示：配置多个默认文件，会从左往右索引文件，直到找到为止。无法找到页面将无法显示或输出文件列表
-
-5. 阻止客户端查看特殊文件
-
-   > 一般情况下我们需要阻止 `.htaccess` 和 `.htpasswd` 文件被 Web 客户端查看
-
-   ```shell
-   <Files ".ht*">
-   Require all denied
-   </Files>
-   ```
-
-6. 三组不需要特别修改的默认配置
-
-   > 这几组都是默认配置，我们将配置移除掉了
-
-   ```shell
+   ```conf
    <IfModule alias_module>
        ScriptAlias /cgi-bin/ "${SRVROOT}/cgi-bin/"
    </IfModule>
@@ -295,8 +290,9 @@ DocumentRoot "${WAMP_ROOT}/base/default"
    </IfModule>
    ```
 
-7. 为 php 关联扩展名（支持多个扩展名）
+2. 关联 php 扩展名
 
+   > httpd 允许处理静态页面和 php 动态页面，但默认没有指定 php 文件类型，这样 httpd 只能把所有的页面都往 php 解释器跑一遍，大大提高了服务器负荷。
    > 操作：在 `<IfModule mime_module>` 内新增一行代码
 
    ```shell
@@ -311,7 +307,7 @@ DocumentRoot "${WAMP_ROOT}/base/default"
 
    > 格式： `AddType application/x-httpd-php [.扩展名1] [.扩展名2] ...`
 
-8. 两组组不需要特别修改的默认配置
+3. 两组组不需要特别修改的默认配置
 
    ```shell
    <IfModule proxy_html_module>
@@ -324,7 +320,7 @@ DocumentRoot "${WAMP_ROOT}/base/default"
    </IfModule>
    ```
 
-9. 为 apache24 虚拟主机配置文件指定存放目录
+4. 为 apache24 虚拟主机配置文件指定存放目录
 
    > 说明：虚拟主机配置文件其实就是，apache24 的子孙配置文件
 
