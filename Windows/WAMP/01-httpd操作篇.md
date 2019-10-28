@@ -78,7 +78,7 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 | 01   | 所有注释内容，都可以移除                                                           |
 | 02   | 除了加载 `mod_include.so` 模块必须在主配置文件定义外，其余都可以在自配置文件里定义 |
 
-### 源码参考
+## 源码参考
 
 下面列出供大家参考的配置文件源码：
 
@@ -87,159 +87,171 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 | 01   | [主配置文件](./httpd/01-httpd主配置文件.md)         |
 | 02   | [自定义配置文件](./httpd/02-httpd自定义配置文件.md) |
 | 03   | [http 站点配置](./httpd/03-http站点配置.md)         |
-| 03   | [https 站点配置](./httpd/04-https站点配置.md)       |
-| 03   | [alias 站点配置](./httpd/05-alias站点配置.md)       |
+| 04   | [https 站点配置](./httpd/04-https站点配置.md)       |
+| 05   | [alias 站点配置](./httpd/05-alias站点配置.md)       |
 
-## 配置详解
+## 修改配置文件
 
-> 从下面开始我们讲解的都是 httpd 配置文件的内部配置了
+这里讲解是配置文件中我们可能需要改变的内容。
 
-1.  加载必要模块
+### 加载必要模块
 
-    > 默认并没有将模块全部开启，需要的模块在 apache24.conf 下加载即可，下面是我经常使用的模块
+下面是我经常使用的两个模块
 
-    | 模块名        | 加载模块                                                   |
-    | ------------- | ---------------------------------------------------------- |
-    | `mod_alias`   | `LoadModule vhost_alias_module modules/mod_vhost_alias.so` |
-    | `mod_rewrite` | `LoadModule rewrite_module modules/mod_rewrite.so`         |
+| 模块名        | 加载模块                                                   |
+| ------------- | ---------------------------------------------------------- |
+| `mod_alias`   | `LoadModule vhost_alias_module modules/mod_vhost_alias.so` |
+| `mod_rewrite` | `LoadModule rewrite_module modules/mod_rewrite.so`         |
 
-    > 加载模块格式 `LoadModule 模块标识符 模块路径（支持相对路径和绝对路径）`
+> 加载模块格式 `LoadModule 模块标识符 模块路径（支持相对路径和绝对路径）`
 
-2.  为 apache24 绑定 php
+### 绑定 php
 
-    > 绑定 php 需要分两步操作：1）加载 php 模块；2）获取 php 配置文件所在目录
+我们这里采用了模块的方式绑定 php：
 
-    - 解决：php 大版本升迁问题（配置文件：httpd.conf）
+| 绑定 php 步骤 | 描述                       |
+| ------------- | -------------------------- |
+| 01            | 加载 httpd 自带的 php 模块 |
+| 02            | 获取 php.ini 目录          |
 
-      > 由于推荐版和兼容版 php 版本差异，导致模块标识符不一致，需要通过设置变量来解决
+1. 加载 php 模块
 
-      ```shell
-      # 设置变量
-      Define PHP_VERSION "php7"
-      ```
+   ```conf
+   LoadModule php7_module ${WAMP_ROOT}/base/php/php7apache2_4.dll
+   ```
 
-      > 加载 php 模块
+2. 获取 php 配置文件所在目录（php.ini）
 
-      ```shell
-      LoadModule ${PHP_VERSION}_module ${BASE_ROOT}/php/${PHP_VERSION}apache2_4.dll
-      ```
+   ```conf
+   <IfModule php7_module>
+     PHPINIDir "${WAMP_ROOT}/base/php"
+   </IfModule>
+   ```
 
-      > 获取 php 配置文件所在目录（php.ini）
+3. 题外话： `mod_unixd` 模块
 
-      ```shell
-      <IfModule ${PHP_VERSION}_module>
-          PHPINIDir "${BASE_ROOT}/php"
-      </IfModule>
-      ```
+   mod_unixd 是 类 unix 平台的基本安全性模块，属于必须配置项（windows 不需要这个）
 
-      - 题外话： `mod_unixd` 模块
+   | 属性             | 描述                     |
+   | ---------------- | ------------------------ |
+   | `User 用户名`    | 指定 apache24 的用户     |
+   | `Group 用户组名` | 指定 apache24 的用户群组 |
 
-      > 这是 Unix 系列平台的基本（必需）安全性模块，类 unix 下属于必须配置项（windows 不需要这个）
+   > 代码示例：
 
-      | 属性             | 描述                     |
-      | ---------------- | ------------------------ |
-      | `User 用户名`    | 指定 apache24 的用户     |
-      | `Group 用户组名` | 指定 apache24 的用户群组 |
+   ```conf
+   <IfModule unixd_module>
+       User www
+       Group www
+   </IfModule>
+   ```
 
-      > 代码案例
+### httpd 缺省设置
 
-      ```shell
-      # <IfModule unixd_module>
-      #     User www
-      #     Group www
-      # </IfModule>
-      ```
+这些值会为稍后在文件中定义的任何虚拟主机容器提供缺省值。
 
-3.  设置 apache24 站点默认配置
+1. 设置默认邮箱地址
 
-    > 任何未由 virtualhost 定义处理的请求都会由该配置响应。这些值会为稍后在文件中定义的任何虚拟主机容器提供缺省值。
+   ```shell
+   ServerAdmin admin@example.com
+   ```
 
-    - 设置默认邮箱地址
+2. 设置全局主机名
 
-      > 这个地址出现在一些服务器生成的页面上，比如错误文档。
+   ```shell
+   # ServerName www.example.com:80
+   ```
 
-      ```shell
-      ServerAdmin admin@example.com
-      ```
+3. 拒绝访问整个服务器的文件系统
 
-    - 设置全局主机名
+   ```shell
+   <Directory />
+     AllowOverride none
+     Require all denied
+   </Directory>
+   ```
 
-      > 一般情况下这个不需要配置，除非个人有特殊需要
+   > 这个必须配置，否则服务器根目录都将对外开放！
 
-      ```shell
-      # ServerName www.example.com:80
-      ```
+### 单站点模式
 
-    - 拒绝访问整个服务器的文件系统
+如果服务器只有一个站点的话，就没必要开启 `mod_vhost_alias.so` 模块， 这时候 `DocumentRoot` 就是站点根目录了。
 
-      > 如果是服务器这个必须配置，否则整个服务器文件系统都将对访问者开放
+1. 通过 `DocumentRoot` 的参数来指定单站点的路径：
 
-      ```shell
-      <Directory />
-          AllowOverride none
-          Require all denied
-      </Directory>
-      ```
+```shell
+DocumentRoot "${WAMP_ROOT}/base/default"
+```
 
-    - 为 apache24 指定站点缺省位置
+2. 站点缺省路径
 
-      ```text
-      - apache24 未配置 VirtualHost 的域名会访问第一个 VirtualHost 配置下的站点目录
-      - DocumentRoot 是会被探针识别为站点目录的，安全起见不应该与其它站点设置在同一个根目录下
-      ```
+在多站点模式中，任何没有单独指定 `DocumentRoot` 参数的虚拟主机都会缺省指向该路径
 
+3. 站点缺省路径访问权限
 
-      ```shell
-      DocumentRoot "${BASE_ROOT}/default"
-      ```
+   默认情况下，httpd 禁止访问所有路径（继承于 `<Directory />` 的配置），添加站点缺省路径权限具体操作如下：
 
-      > 为站点缺省位置配置访问权限（不配置会禁止所有人访问--继承于 `<Directory />` 的配置，）
+   ```shell
+   <Directory "${WAMP_ROOT}/base/default">
+      Options FollowSymLinks
+      AllowOverride None
+      Require all granted
+   </Directory>
+   ```
 
-      ```shell
-      <Directory "${BASE_ROOT}/default">
-          Options FollowSymLinks
-          AllowOverride None
-          Require all granted
-      </Directory>
-      ```
+### 多站点模式
 
-      > 由于 apache24 的第一个 `<VirtualHost>` 设置的站点目录为 `${BASE_ROOT}/www-default` ，因此缺省站点都会访问该目录！
+通常服务器会有多个站点，这时就需要加载 `mod_vhost_alias.so` 模块来创建多个虚拟主机了。
 
-      ```shell
-      <VirtualHost *:80>
-          DocumentRoot "${BASE_ROOT}/default"
-      </VirtualHost>
-      ```
+1. 缺省虚拟主机
 
-    - 特定区块开放访问权限
+   httpd 的 `mod_vhost_alias.so` 模块规则定义，第一条满足条件的虚拟站点为缺省站点，具体定义如下：
 
-      > 通俗讲：指定一个位置，允许访问者访问
+   ```conf
+   <VirtualHost *:${HTTP_PORT}>
+       DocumentRoot "${WAMP_ROOT}/base/default"
+   </VirtualHost>
+   ```
 
-      ```shell
-      <Directory "${HTDOCS}">
-          Options Indexes FollowSymLinks
-          AllowOverride All
-          Require all granted
-      </Directory>
-      ```
+   > 提示：任何解析到当前服务器的域名，只要没有配置虚拟主机，都会指定到改缺省虚拟主机下；
 
-      > 提示：一般情况下，我们会指定 1 个存放所有站点的根目录
+> 由于 apache24 的第一个 `<VirtualHost>` 设置的站点目录为 `${WAMP_ROOT}/base/www-default` ，因此缺省站点都会访问该目录！
 
-    - 本节附录：
+```shell
+<VirtualHost *:80>
+    DocumentRoot "${WAMP_ROOT}/base/default"
+</VirtualHost>
+```
 
-        > `Options` 部分属性值
+- 特定区块开放访问权限
 
-        | Options 属性值   | 描述               | 服务器建议 |
-        | ---------------- | ------------------ | ---------- |
-        | `Indexes`        | 允许展示目录式列表 | 关闭       |
-        | `FollowSymLinks` | 允许访问 url 链接  | 开启       |
+  > 通俗讲：指定一个位置，允许访问者访问
 
-        > `AllowOverride` 部分属性值
+  ```shell
+  <Directory "${HTDOCS}">
+      Options Indexes FollowSymLinks
+      AllowOverride All
+      Require all granted
+  </Directory>
+  ```
 
-        | AllowOverride 属性值 | 描述                     | 考虑与建议 |
-        | -------------------- | ------------------------ | ---------- |
-        | `None`               | 不允许任何.htaccess 规则 | 更安全     |
-        | `All`                | 允许任何.htaccess 规则   | 更方便     |
+  > 提示：一般情况下，我们会指定 1 个存放所有站点的根目录
+
+- 本节附录：
+
+  > `Options` 部分属性值
+
+  | Options 属性值   | 描述               | 服务器建议 |
+  | ---------------- | ------------------ | ---------- |
+  | `Indexes`        | 允许展示目录式列表 | 关闭       |
+  | `FollowSymLinks` | 允许访问 url 链接  | 开启       |
+
+  > `AllowOverride` 部分属性值
+
+  | AllowOverride 属性值 | 描述                     | 考虑与建议 |
+  | -------------------- | ------------------------ | ---------- |
+  | `None`               | 不允许任何.htaccess 规则 | 更安全     |
+  | `All`                | 允许任何.htaccess 规则   | 更方便     |
 
 4. 设置 httpd 服务默认读取文件
 
@@ -327,111 +339,6 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 ## apache24.conf 内容
 
 > 兼容版和推荐版用的都是同一个 [apache24.conf](./soure/apache24.conf) 配置文件
-
-## 虚拟主机相关配置
-
-> 这里我主要讲解 2 个内容：别名配置、虚拟主机配置
-
-1. 别名配置
-
-   ```text
-   - 以 phpmtadmin 和 adminer.php 为例;
-   - 站点配置目录下新建文件 phpmyadmin.conf文件；
-   ```
-
-   > 下面直接贴代码：
-
-   ```shell
-   Alias /phpmyadmin ${BASE_ROOT}/phpmyadmin
-   <Directory ${BASE_ROOT}/phpmyadmin>
-       Options FollowSymLinks
-       DirectoryIndex index.php
-       <RequireAll>
-           Require local
-       </RequireAll>
-   </Directory>
-   <Directory ${BASE_ROOT}/phpmyadmin/libraries>
-       Require all denied
-   </Directory>
-   <Directory ${BASE_ROOT}/phpmyadmin/setup/lib>
-       Require all denied
-   </Directory>
-   Alias /adminer ${BASE_ROOT}/phpmyadmin/adminer.php
-   ```
-
-2. 配置虚拟主机
-
-   > 站点配置目录下新建 `.conf` 扩展的文件，下面直接贴代码：
-
-   ```shell
-   <VirtualHost *:80>
-       ServerAdmin admin@example.com
-       DocumentRoot "${HTDOCS}/www_test_com"
-       ServerName www.test1.com
-       ServerAlias www.test1.com test1.com www.test2.com test2.com
-       ErrorDocument 404 /Error.html
-
-       ErrorLog "${HTLOGS}/error/test.log"
-       CustomLog "${HTLOGS}/access/test.log" common
-
-       RewriteEngine on
-       RewriteCond %{HTTP_HOST} ^test1.com$ [NC]
-       RewriteRule ^(.*)$ http://www.%{HTTP_HOST}$1 [R=301,L]
-       RewriteCond %{HTTP_HOST} ^test2.com$ [NC]
-       RewriteRule ^(.*)$ http://www.%{HTTP_HOST}$1 [R=301,L]
-   </VirtualHost>
-   ```
-
-   > 最简洁虚拟主机配置
-
-   ```shell
-   <VirtualHost *:80>
-       DocumentRoot "${HTDOCS}/www_test_com"
-       ServerName www.test1.com
-   </VirtualHost>
-   ```
-
-   > ssl 版配置
-
-   ```shell
-   <VirtualHost *:80>
-       ServerName www.test.com
-       ServerAlias test.com www.test.com
-       DocumentRoot "${HTDOCS}/www_test_com"
-
-       RewriteEngine on
-       RewriteCond %{SERVER_PORT} 80 [NC]
-       RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]
-   </VirtualHost>
-
-   <virtualhost *:443>
-       ServerName www.test.com
-       ServerAlias test.com www.test.com
-       DocumentRoot "${HTDOCS}/www_test_com"
-
-       RewriteEngine on
-       RewriteCond %{HTTP_HOST} ^test.com$ [NC]
-       RewriteRule ^(.*)$ https://www.%{HTTP_HOST}$1 [R=301,L]
-
-       SSLEngine on
-       SSLCertificateFile 路径/2_www.test.com.crt
-       SSLCertificateKeyFile 路径/3_www.test.com.key
-       SSLCertificateChainFile 路径/1_root_bundle.crt
-   </virtualhost>
-   ```
-
-3. 将域名绑定到本地
-
-   > windows 开发环境只有在系统文件 `hosts` 下加入指定的域名，网站才能正常访问！
-
-   ```hosts
-   # 在底部新增几行内容
-   127.0.0.1 test.com www.test.com
-   127.0.0.1 test1.com www.test1.com
-   127.0.0.1 test2.com www.test2.com
-   ```
-
-   > 文件路径： `c:\Windows\System32\drivers\etc\hosts`
 
 ## httpd 日志
 
