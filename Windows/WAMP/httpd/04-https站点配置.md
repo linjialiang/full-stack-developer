@@ -3,7 +3,7 @@
 https 协议的站点配置，就是带 ssl 的默认端口 443，示例代码如下：
 
 ```conf
-<VirtualHost *:80>
+<VirtualHost *:${HTTP_PORT}>
     ServerName www.test.com
     ServerAlias test.com www.test.com
     DocumentRoot "${HTDOCS}/www_test_com"
@@ -13,7 +13,7 @@ https 协议的站点配置，就是带 ssl 的默认端口 443，示例代码�
     RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]
 </VirtualHost>
 
-<virtualhost *:443>
+<virtualhost *:${HTTPS_PORT}>
     ServerName www.test.com
     ServerAlias test.com www.test.com
     DocumentRoot "${HTDOCS}/www_test_com"
