@@ -61,7 +61,7 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 
 自定义配置文件通过主配置文件中 `Include` 语句加载，支持相对路径和绝对路径，具体代码如下：
 
-```shell
+```conf
 <IfModule include_module>
     Include "${WAMP_ROOT}/base/conf/httpd.conf"
 </IfModule>
@@ -152,19 +152,19 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 
 1. 设置默认邮箱地址
 
-   ```shell
+   ```conf
    ServerAdmin admin@example.com
    ```
 
 2. 设置全局主机名
 
-   ```shell
+   ```conf
    # ServerName www.example.com:80
    ```
 
 3. 拒绝访问整个服务器的文件系统
 
-   ```shell
+   ```conf
    <Directory />
      AllowOverride none
      Require all denied
@@ -179,7 +179,7 @@ SRVROOT 是 httpd 主配置文件里自带的变量，用于确定 httpd 所在�
 
 1. 通过 `DocumentRoot` 的参数来指定单站点的路径：
 
-```shell
+```conf
 DocumentRoot "${WAMP_ROOT}/base/default"
 ```
 
@@ -191,7 +191,7 @@ DocumentRoot "${WAMP_ROOT}/base/default"
 
    默认情况下，httpd 禁止访问所有路径（继承于 `<Directory />` 的配置），添加站点缺省路径权限具体操作如下：
 
-   ```shell
+   ```conf
    <Directory "${WAMP_ROOT}/base/default">
       Options FollowSymLinks
       AllowOverride None
@@ -272,7 +272,7 @@ Require all denied
 
 ### 其他设置
 
-1. 这几组都是默认配置，如果没有特别需要，可以直接移除掉了：
+1. 这 3 组都是默认已经配置的，如果没有特别需要，可以直接移除掉了：
 
    ```conf
    <IfModule alias_module>
@@ -290,12 +290,11 @@ Require all denied
    </IfModule>
    ```
 
-2. 关联 php 扩展名
+2. 关联 php 文件的扩展名
 
-   > httpd 允许处理静态页面和 php 动态页面，但默认没有指定 php 文件类型，这样 httpd 只能把所有的页面都往 php 解释器跑一遍，大大提高了服务器负荷。
-   > 操作：在 `<IfModule mime_module>` 内新增一行代码
+   > 操作：在 `<IfModule mime_module>` 内新增一行 php 相关代码：
 
-   ```shell
+   ```conf
    <IfModule mime_module>
        TypesConfig conf/mime.types
 
@@ -305,11 +304,11 @@ Require all denied
    </IfModule>
    ```
 
-   > 格式： `AddType application/x-httpd-php [.扩展名1] [.扩展名2] ...`
+   > 格式： `AddType application/x-httpd-php .扩展名1 [.扩展名2 ...]`
 
-3. 两组组不需要特别修改的默认配置
+3. 这 2 组不需要特别修改
 
-   ```shell
+   ```conf
    <IfModule proxy_html_module>
        Include conf/extra/proxy-html.conf
    </IfModule>
@@ -320,26 +319,14 @@ Require all denied
    </IfModule>
    ```
 
-4. 为 apache24 虚拟主机配置文件指定存放目录
+4. 指定站点配置文件存放目录
 
-   > 说明：虚拟主机配置文件其实就是，apache24 的子孙配置文件
+   站点配置文件就是 httpd 的自定义配置文件，只需通过 `Include` 参数加载即可：
 
-   ```shell
+   ```conf
    <IfModule include_module>
-       Include "${WEB_ROOT}/sites/*.conf"
+       Include "${WAMP_ROOT}/web/sites/*.conf"
    </IfModule>
    ```
 
-   > 提示：Include 支持简单的正则表达式
-
-## apache24.conf 内容
-
-> 兼容版和推荐版用的都是同一个 [apache24.conf](./soure/apache24.conf) 配置文件
-
-## httpd 日志
-
-> 点击查看详情 [httpd 日志](./info/httpd日志.md)
-
-## httpd 访问控制
-
-> 点击查看详情 [httpd 访问控制](./info/httpd访问控制.md)
+   > 提示：Include 支持简单的正则表达式，sites 目录下所有 `.conf` 文件都会被加载！
