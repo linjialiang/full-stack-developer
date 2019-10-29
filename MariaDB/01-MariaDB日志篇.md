@@ -82,10 +82,33 @@ log_warnings=9
 
 > 二进制日志事件支持三种格式：
 
-| 格式                     | 代码      |
-| ------------------------ | --------- |
-| 基于 sql 语句记录（SBR） | statement |
-| 基于行记录（RBR）        | row       |
-| 混合模式（MBR）          | mixed     |
+| 格式                     | 代码      | 说明                             |
+| ------------------------ | --------- | -------------------------------- |
+| 基于 sql 语句记录（SBR） | STATEMENT | 有些语句会无法确定，复制不安全。 |
+| 基于行记录（RBR）        | ROW       | 执行非确定性语句会更安全。       |
+| 混合模式（MBR）          | MIXED     | 前两者结合体                     |
 
 > 提示：mixed 让系统自行判断该基于哪种模式，也是 MariaDB 的默认值！
+
+### 二进制日志变量
+
+二进制日志变量非常多，这里只介绍几个 my.ini 会用到的，具体请查阅 [官方手册](https://mariadb.com/kb/en/library/replication-and-binary-log-system-variables)
+
+| 变量             | 描述                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| log_bin          | 是否启用二进制日志记录，并指定二进制日志文件存放路径                                  |
+| log_bin_index    | 保存最后一个二进制日志文件名称的文件，也就是索引文件。                                |
+| expire_logs_days | 多少天之后自动删除二进制日志。默认 0，表示不会自动删除。取值范围：`0-99`              |
+| server_id        | mariadb 集群在复制二进制日志时，每台 MariaDB 服务器的 sercer_id 值不一样，默认值：`1` |
+| binlog_format    | 确定复制是基于行，基于语句还是混合的。默认：`MIXED`                                   |
+
+> my.ini 配置：
+
+```ini
+[mysqld]
+log_bin=c:/wamp/web/logs/mariadb/bin-log
+log_bin_index=c:/wamp/web/logs/mariadb/mariadb-bin.index
+expire_logs_days=30
+server_id=2
+binlog_format=MIXED
+```
