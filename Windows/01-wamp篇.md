@@ -6,7 +6,7 @@
 
 | 最新版本  | 百度网盘地址                                    | 密码   |
 | --------- | ----------------------------------------------- | ------ |
-| `v4.3.20` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
+| `v5.0.2` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
 
 ## 软件列表
 
@@ -68,6 +68,7 @@ WAMP 开发环境目录
 |   ├─logs                                  服务器相关日志文件目录
 |   |  ├─httpd                              apache24日志目录
 |   |  ├─xdebug                             xdebug日志目录
+|   |  ├─mariadb                            MariaDB日志目录
 |   |
 |
 ├─install.bat                               安装wamp相关服务到系统服务
@@ -115,4 +116,4 @@ WAMP 开发环境目录
 
 ## 更新日志
 
-> 见 [更新日志](./更新日志.md)
+> 见 [更新日志](./WAMP/更新日志.md)
