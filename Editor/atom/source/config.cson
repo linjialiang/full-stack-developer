@@ -41,10 +41,6 @@
       "markdown-preview-plus"
     ]
     telemetryConsent: "limited"
-    themes: [
-      "one-light-ui"
-      "one-dark-syntax"
-    ]
     uriHandlerRegistration: "always"
   docblockr:
     auto_add_method_tag: true
@@ -89,10 +85,11 @@
     tabCloseButton: "Left"
     tabSizing: "Maximum"
   "one-light-ui":
-    hideDockButtons: true
-    stickyHeaders: true
     tabCloseButton: "Left"
     tabSizing: "Maximum"
+  "php-ide-serenata":
+    core: {}
+    storagePath: "C:\\Users\\emad\\AppData\\Roaming\\php-ide-serenata"
   "platformio-ide-terminal":
     ansiColors:
       zBright:
