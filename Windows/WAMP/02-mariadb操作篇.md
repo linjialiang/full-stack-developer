@@ -16,10 +16,14 @@ port = 3306
 datadir = "c:/wamp/web/data"
 ```
 
-```text
-- 提示：`innodb` 索引扩展默认会跟 `datadir` 同级，如无必要不用配置
-- 注意：需要将 mariadb 根目录下的 data 目录下的全部数据复制到指定的路径下
-```
+> 注意：my.ini 文件除了这些最基本配置以外，还需要开启一些日志功能，具体请查阅[MariaDB 日志篇](./../../MariaDB/01-MariaDB日志篇.md)
+
+### 其他说明
+
+| 序号 | 描述                                                       |
+| ---- | ---------------------------------------------------------- |
+| 01   | `innodb` 索引扩展默认会跟 `datadir` 同级，如无必要不用配置 |
+| 02   | data 目录复制到`datadir`参数指定的路径下                   |
 
 ## 配置文件路径
 
@@ -95,7 +99,7 @@ datadir = "c:/wamp/web/data"
 ### 一个简洁的 config.inc.php 配置内容：
 
 ```php
-# 短语密码,cookie认证时不能为空，推荐[a-Z0-9~!@#$%^&*()_+]的随机组合，大于32为佳
+# 短语密码,cookie认证时不能为空，大于32为佳
 $cfg['blowfish_secret'] = 'fvNqC4^HR8WELJ7$C5UD2a&xk6w@Rfr4M(MBU';
 $i = 0;
 $i++;
