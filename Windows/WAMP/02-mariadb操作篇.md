@@ -72,13 +72,19 @@ datadir = "c:/wamp/web/data"
 
 ### 创建 data 目录数据
 
-从 mariadb 10.4 开始 data 目录默认为空，需要通过 `mysql_install_db.exe` 来生成 data 目录的基本数据（自动初始化 mariadb）！
+从 mariadb 10.4 开始 data 目录默认为空，需要通过 `mysql_install_db.exe` 来生成 mariadb
+.基本数据！
 
-1. mysql_install_db.exe 所在路径如下：`c:\wamp\mariadb\bin\mysql_install_db.exe`
+1. 使用 `mysql_install_db.exe` 生成 mariadb 基础数据
 
-2. 默认生成的 data 目录的路径：`c:\wamp\mariadb\data`
+   ```shell
+   > cd c:\wamp\base\mariadb\bin
+   > mysql_install_db.exe --datadir=c:/wamp/web/data --password=123456
+   ```
 
-3. 移除 `c:\wamp\mariadb\data\php.ini` 文件
+   > 便捷：双击 `mysql_install_db.exe` 即可生成 mariadb 基础数据（默认路径为：`c:\wamp\base\mariadb\data`）
+
+2. 移除 `c:\wamp\web\data\php.ini` 文件
 
 ## 配置 phpmyadmin
 
