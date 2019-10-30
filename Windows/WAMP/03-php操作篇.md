@@ -196,17 +196,16 @@ error_reporting(错误级别别名与位运算符组合);
 
 `php_imagick.dll` 扩展安装需要下载两个软件包：
 
-| 软件包                                                             | 描述               |
-| ------------------------------------------------------------------ | ------------------ |
-| [php_imagick](https://pecl.php.net/package/imagick)                | php 扩展           |
-| [ImageMagick](https://imagemagick.org/script/download.php#windows) | ImageMagick 运行库 |
+| 软件包                                              | 描述     |
+| --------------------------------------------------- | -------- |
+| [php_imagick](https://pecl.php.net/package/imagick) | php 扩展 |
 
 具体操作步骤如下：
 
-| 步骤 | 描述                                                                     |
-| ---- | ------------------------------------------------------------------------ |
-| 01   | 将 php_imagick.dll 放入 ext 目录                                         |
-| 02   | 将 php_imagick.dll 写入 php.ini 文件                                     |
-| 03   | 安装 ImageMagick 运行库，并将其加入系统变量（安装时勾选第 2 个选项即可） |
+| 步骤 | 描述                                       |
+| ---- | ------------------------------------------ |
+| 01   | 将 `php_imagick.dll` 拷贝到 php 的扩展目录 |
+| 02   | php.ini 文件增加 `extension=imagick`       |
+| 03   | 将其他 dll 文件拷贝到 php 根目录           |
 
-> 提示：php_imagick.dll 的编译版本最好与 ImageMagick 运行库的版本号一致（一般只要运行库版本较高即可）！
+> 提示：如果安装了对应版本的 [ImageMagick.exe](https://imagemagick.org) 可以省略 `第 3 步` ！
