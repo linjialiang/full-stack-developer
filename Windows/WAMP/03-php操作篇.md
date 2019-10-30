@@ -196,16 +196,20 @@ error_reporting(错误级别别名与位运算符组合);
 
 `php_imagick.dll` 扩展安装需要下载两个软件包：
 
-| 软件包                                              | 描述     |
-| --------------------------------------------------- | -------- |
-| [php_imagick](https://pecl.php.net/package/imagick) | php 扩展 |
+| 软件包                                                      | 描述                     |
+| ----------------------------------------------------------- | ------------------------ |
+| [php_imagick](https://pecl.php.net/package/imagick)         | 实现 imagick 功能的扩展  |
+| [ImageMagick](https://windows.php.net/downloads/pecl/deps/) | php_imagick 扩展的运行库 |
+
+> 提示：`ImageMagick` 官网下载的安装包可能和 php_imagick 扩展版本冲突，建议通过表中链接下载对应版本！
 
 具体操作步骤如下：
 
-| 步骤 | 描述                                       |
-| ---- | ------------------------------------------ |
-| 01   | 将 `php_imagick.dll` 拷贝到 php 的扩展目录 |
-| 02   | php.ini 文件增加 `extension=imagick`       |
-| 03   | 将其他 dll 文件拷贝到 php 根目录           |
+| 步骤 | 描述                                                     |
+| ---- | -------------------------------------------------------- |
+| 01   | 将 `php_imagick.dll` 拷贝到 php 的扩展目录               |
+| 02   | php.ini 文件增加 `extension=imagick`                     |
+| 03   | 将 `ImageMagick` 运行库解压到 `C:\wamp\base\ImageMagick` |
+| 04   | 将 `C:\wamp\base\ImageMagick\bin` 加入到 `系统变量` 中   |
 
-> 提示：如果安装了对应版本的 [ImageMagick.exe](https://imagemagick.org) 可以省略 `第 3 步` ！
+> 提示：`ImageMagick` 必须加入的是 `系统变量` 而不是 `用户变量`(httpd 不会获取 `用户变量`信息)！
