@@ -97,16 +97,19 @@ datadir = "c:/wamp/web/data"
 
 ### 必备文件说明：
 
-| 必备数据                 | 描述                                       |
-| ------------------------ | ------------------------------------------ |
-| `mysql` 目录             | 专门用于管理 MariaDB 的数据库              |
-| `performance_schema`目录 | 用于收集数据库服务器性能参数               |
-| `aria_log.%`             | Aria 存储引擎的日志文件                    |
-| `aria_log_control`       | Aria 存储引擎的日志控制文件                |
-| `ib_logfile%`            | InnoDB 的`重做日志文件`                    |
-| `ib_buffer_pool`         | InnoDB 存取内存热数据的文件                |
-| `ibdata1`                | InnoDB 的共享表空间                        |
-| `multi-master.info`      | 多源复制相关文件，包含所有正在使用的主连接 |
+| 必备数据                    | 描述                                       |
+| --------------------------- | ------------------------------------------ |
+| `mysql` 目录                | 专门用于管理 MariaDB 的数据库              |
+| `performance_schema`目录    | 用于收集数据库服务器性能参数               |
+| `aria_log.%`                | Aria 存储引擎的日志文件                    |
+| `aria_log_control`          | Aria 存储引擎的日志控制文件                |
+| `ib_logfile1` `ib_logfile2` | InnoDB 的`重做日志文件`                    |
+| `ib_buffer_pool`            | InnoDB 存取内存热数据的文件                |
+| `ibdata1`                   | InnoDB 的共享表空间                        |
+| `multi-master.info`         | 多源复制相关文件，包含所有正在使用的主连接 |
+| `bin-log%`                  | 二进制日志文件（自动生成）                 |
+| `bin-log.index`             | 二进制日志文件索引（自动生成）             |
+| `multi-master.info`         | 多源复制相关文件，包含所有正在使用的主连接 |
 
 > 热数据：是需要被计算节点频繁访问的在线类数据。
 
