@@ -106,9 +106,55 @@ log_warnings=9
 
 ```ini
 [mysqld]
-log_bin=c:/wamp/web/logs/mariadb/bin-log
-log_bin_index=c:/wamp/web/logs/mariadb/mariadb-bin.index
+log_bin="c:/wamp/web/data/bin-log"
+log_bin_index="c:/wamp/web/data/bin-log.index"
+binlog_format="mixed"
 expire_logs_days=30
 server_id=2
-binlog_format=MIXED
 ```
+
+## `innodb` 日志
+
+`InnoDB存储引擎` 产生的日志，我们又称 `重做日志文件`，记录了对于 `InnoDB存储引擎` 的事务日志。
+
+> 默认：情况下会有两个日志文件 `ib_logfile0` `ib_logfile1`。
+
+### 重做日志文件的必要性
+
+重做日志文件的主要目的是：万一实例或者介质失败（media failure），重做日志文件就能派上用场。
+
+> 如：数据库由于所在主机断电导致实例失败，`InnoDB存储引擎`会使用重做日志恢复到掉电前的时刻，以此来保证数据的完整性。
+
+### 重做日志概述
+
+每个 `InnoDB存储引擎`至少有 1 个`重做日志文件组`（group），每个文件组下至少有 2 个重做日志文件，如默认的` ib_logfile0``、ib_logfile1 `。
+
+> 为了得到更高的可靠性，你可以:
+
+| 设置多个镜像日志组（mirrored log groups），将不同的文件组放在不同的磁盘上。            |
+| -------------------------------------------------------------------------------------- |
+| 日志组中每个重做日志文件的大小一致，并以循环方式使用。                                 |
+| `InnoDB存储引擎` 先写重做`日志文件 1`，当达到文件的最后时，会切换至`重做日志文件 2` 。 |
+| 当`重做日志文件 2` 也被写满时，会再切换到重做`日志文件 1` 中。                         |
+
+### 重做日志相关变量
+
+> `innodb` 相关变量请查阅[MariaDB 官网](https://mariadb.com/kb/en/library/innodb-system-variables/)
+
+| 变量                         | 描述                                                                      |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| `innodb_log_file_size`       | 指定了重做日志文件的大小；                                                |
+| `innodb_log_files_in_group`  | 指定了日志文件组中重做日志文件的数量，默认：`2`；                         |
+| `innodb_mirrored_log_groups` | 指定了日志镜像文件组的数量，默认：`1`，代表只有一个日志文件组，没有镜像； |
+| `innodb_log_group_home_dir`  | 指定了日志文件组所在路径，默认在数据库路径下。                            |
+
+> 指令：`show variables like 'innodb%log%';` 用于查看重做日志组的配置
+
+- my.ini 增加内容：
+
+  ```ini
+  [mysqld]
+  innodb_log_group_home_dir="c:/wamp/web/data/"
+  ```
+
+  > 提示：默认情况下也是 `c:/wamp/web/data/` 目录，如果不是特定目录，不必设置。

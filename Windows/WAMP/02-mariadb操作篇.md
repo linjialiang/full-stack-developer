@@ -108,7 +108,7 @@ datadir = "c:/wamp/web/data"
 | `ibdata1`                | InnoDB 的共享表空间                        |
 | `multi-master.info`      | 多源复制相关文件，包含所有正在使用的主连接 |
 
-> 热数据：是需要被计算节点频繁访问的在线类数据；
+> 热数据：是需要被计算节点频繁访问的在线类数据。
 
 1. `ib_buffer_pool` 文件详解
 
@@ -146,6 +146,17 @@ datadir = "c:/wamp/web/data"
    | 所有使用 InnoDB 引擎的数据库的表数据（开启独立表空间后，不再存储） |
 
    > 指令：使用 `show variables like 'innodb_file_per_table';` 查看是否开启独立表空间。
+
+## 指定 pid 文件
+
+> pid 文件默认会在`datadir`目录自动生成，为了便于管理，我们可以单独指定：
+
+```ini
+[mysqld]
+pid-file="c:/wamp/base/conf/mariadb.pid"
+```
+
+> 提示：需要保证目录存在，并且 `mariadb.pid` 文件不能创建！
 
 ## ~~配置 phpmyadmin~~
 
