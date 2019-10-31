@@ -1,0 +1,29 @@
+syntax enable
+set cursorline
+set autoindent
+set smartindent
+filetype plugin indent on
+set nowrap
+set encoding=utf8
+set fileencodings=ucs-bom,utf8,prc,default,latin1
+language messages zh_CN.utf-8
+set fileformat=unix
+set fileformats=unix,dos,mac
+set laststatus=2
+set cmdheight=1
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set scrolloff=999
+inoremap <C-c> <Esc>
+set relativenumber number
+autocmd InsertEnter * :set norelativenumber number
+autocmd InsertLeave * :set relativenumber number
+autocmd BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+set foldmethod=indent
+set foldcolumn=1
+set foldlevelstart=99
+let $za='za'
+nnoremap <Space> $za
