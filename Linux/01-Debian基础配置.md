@@ -138,7 +138,7 @@ Debian 下有三类手册相关的包，以下列出的软件包可以安装：
 $ apt install manpages manpages-zh helpman help2man
 ```
 
-> 关于手册的详细讲解请查阅 [Debian 帮助手册](./manual/02-Debian帮助手册.md)
+> 关于手册的详细讲解请查阅 [Debian 帮助手册](./manual/02-Debian帮助指令.md)
 
 ## 安装 ssh 包
 
