@@ -69,3 +69,24 @@ Windows 系统服务项的启动类型分为如下三种：
 ```shell
 sc config <service-name> start=<set-value>
 ```
+
+## 附录：wamp 使用说明书
+
+| 步骤 | 说明                                                                   |
+| ---- | ---------------------------------------------------------------------- |
+| 01   | 将 `wamp.7z` 解压到 C 盘根目录                                         |
+| 02   | 将 `C:\wamp\base\ImageMagick\bin` 加入系统变量(启动 `magick` 扩展必备) |
+| 03   | 使用 `C:\wamp\install.bat` 脚本安装系统服务                            |
+| 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                           |
+| 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                    |
+| 06   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统             |
+
+> 如果想要更换目录，需修改以下几个文件的内容：
+
+| 步骤 | 修改内容                                              |
+| ---- | ----------------------------------------------------- |
+| 01   | `httpd.conf` 第 1 行 `WAMP_ROOT` 的变量值             |
+| 02   | `my.ini` 下所有与路径相关的参数值                     |
+| 03   | 修改 `php.ini` 下 `extension_dir` 参数值              |
+| 04   | 修改 `php.ini` 下 `xdebug.profiler_output_dir` 参数值 |
+| 05   | 修改 `php.ini` 下 `xdebug.trace_output_dir` 参数值    |
