@@ -80,6 +80,7 @@ sc config <service-name> start=<set-value>
 | 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                           |
 | 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                    |
 | 06   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统             |
+| 07   | MariaDB 的 root 密码默认为 `123456`                                    |
 
 > 如果想要更换目录，需修改以下几个文件的内容：
 
