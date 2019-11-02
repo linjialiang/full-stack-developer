@@ -135,10 +135,12 @@ $ curl -I 127.0.0.1
 
 2. 将一键启动脚本加入开机自动启动
 
-   | 操作步骤     | 指令                                              |
+   | 非本地服务   | 指令                                              |
    | ------------ | ------------------------------------------------- |
    | 启用开机启动 | `/lib/systemd/systemd-sysv-install enable nginx`  |
    | 禁用开机启动 | `/lib/systemd/systemd-sysv-install disable nginx` |
+
+   > 本地服务加入开启启动方法为 `sustemctl enable nginx`
 
 3. nginx 一键启动文件常用指令：
 
