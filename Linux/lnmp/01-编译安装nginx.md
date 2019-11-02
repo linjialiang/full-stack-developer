@@ -133,4 +133,18 @@ $ curl -I 127.0.0.1
 
    > 文件内容查看 [nginx 一键启动](./source/nginx一键启动文件.md)
 
-2.
+2. 将一键启动脚本加入开机自动启动
+
+   | 操作步骤     | 指令                                              |
+   | ------------ | ------------------------------------------------- |
+   | 启用开机启动 | `/lib/systemd/systemd-sysv-install enable nginx`  |
+   | 禁用开机启动 | `/lib/systemd/systemd-sysv-install disable nginx` |
+
+3. nginx 一键启动文件常用指令：
+
+   | 操作                      | 指令                           |
+   | ------------------------- | ------------------------------ |
+   | 启动 Nginx                | `/etc/init.d/nginx start`      |
+   | 停止 Nginx                | `/etc/init.d/nginx stop`       |
+   | 重新加载 Nginx            | `/etc/init.d/nginx reload`     |
+   | 验证 Nginx 配置文件正确性 | `/etc/init.d/nginx configtest` |
