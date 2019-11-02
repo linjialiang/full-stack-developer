@@ -17,16 +17,13 @@ Linux 下推荐大家都使用 LNMP 作为开发环境，毕竟部署环境 LNMP
 
 本教程所说的 LNMP 指的是： `Debian + Nginx + MariaDB + PHP`
 
-## LNMP 布局
+## 编译环境
 
-`Nginx` 、`MariaDB` 、`PHP` 及其必备运行包我们都会采取编译的方式安装，这样能更加直观的展示每个软件包的作用。
+Linux 下编译安装软件包，需要先安装编译工具，具体代码如下：
 
-1. 软件包一览表：
-
-| 软件包                                                               | 用处说明     |
-| -------------------------------------------------------------------- | ------------ |
-| [nginx-1.16.1.tar.gz](http://nginx.org/download/nginx-1.16.1.tar.gz) | Nginx 源码包 |
-
+```shell
+$ apt install gcc g++ autotools-dev make cmake autoconf automake m4 libtool
+```
 
 ## 章节导航
 
