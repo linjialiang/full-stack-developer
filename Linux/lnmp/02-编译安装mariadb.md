@@ -129,7 +129,7 @@ mariadb 官方的安装方式，非常的经典，所以我们只需要进行简
 
 ### 修改 `datadir` 路径
 
-修改 `datadir` 路径有很多种方式，这里讲解最方便的，更高级的方式请参阅 [MariaDB 数据初始化篇](./../../MariaDB/01-mariadb数据初始化篇.md)
+修改 `datadir` 路径有很多种方式，这里讲解最方便的，更高级的方式请参阅 [MariaDB 数据初始化篇](./../../MariaDB/02-mariadb数据初始化篇.md)
 
 1. 停止 MariaDB 服务
 
@@ -192,7 +192,7 @@ mariadb 官方的安装方式，非常的经典，所以我们只需要进行简
    MariaDB [(none)]> flush privileges;
    ```
 
-   > 关于 sql 指令的具体含义，请参阅 [MariaDB 下的 sql 指令](./../../MariaDB/02-mariadb下的sql指令.md)
+   > 关于 sql 指令的具体含义，请参阅 [MariaDB 下的 sql 指令](./../../MariaDB/03-mariadb下的sql指令.md)
 
    | 设备           | ip 地址        |
    | -------------- | -------------- |
