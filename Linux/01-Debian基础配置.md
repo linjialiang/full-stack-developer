@@ -15,14 +15,14 @@ Debian 系统刚刚安装成功非常干净，我们需要对其进行适当的�
 
 1. 配置 ip 地址
 
-   ```shell
+   ```sh
    $ cp /etc/network/interfaces{,.bak}
    $ nano /etc/network/interfaces
    ```
 
    配置静态地址：
 
-   ```shell
+   ```sh
    source /etc/network/interfaces.d/*
 
    # The loopback network interface
@@ -39,7 +39,7 @@ Debian 系统刚刚安装成功非常干净，我们需要对其进行适当的�
 
    配置动态地址(默认就是这个)：
 
-   ```shell
+   ```sh
    source /etc/network/interfaces.d/*
 
    # The loopback network interface
@@ -53,7 +53,7 @@ Debian 系统刚刚安装成功非常干净，我们需要对其进行适当的�
 
 2. 配置 DNS
 
-   ```shell
+   ```sh
    $ cp /etc/resolv.conf{,.bak}
    $ vi /etc/resolv.conf
    ```
@@ -82,7 +82,7 @@ Debian 通过 `network` 这个软件来管理网络
 
 1. 重启加载网络配置
 
-   ```shell
+   ```sh
    $ service networking restart
    $ systemctl restart networking
    $ /etc/init.d/networking restart
@@ -90,13 +90,13 @@ Debian 通过 `network` 这个软件来管理网络
 
 2. 停止网络
 
-   ```shell
+   ```sh
    $ /etc/init.d/networking stop
    ```
 
 3. 启动网络
 
-   ```shell
+   ```sh
    $ /etc/init.d/networking start
    ```
 
@@ -108,13 +108,13 @@ Debian 通过 `network` 这个软件来管理网络
 
 1. 安装 `locales` 软件包
 
-   ```shell
+   ```sh
    $ apt install locales
    ```
 
 2. 设置语言环境
 
-   ```shell
+   ```sh
    $ dpkg-reconfigure locales
    ```
 
@@ -134,7 +134,7 @@ Debian 下有三类手册相关的包，以下列出的软件包可以安装：
 | `help2man`    | 输出一份简单的手册页 |
 | `helpman`     | 快速获取 Debian 教程 |
 
-```shell
+```sh
 $ apt install manpages manpages-zh helpman help2man
 ```
 
@@ -144,13 +144,13 @@ $ apt install manpages manpages-zh helpman help2man
 
 服务器都是远程操控，所以 ssh 必然要安装
 
-```shell
+```sh
 $ apt install ssh
 ```
 
 - 允许 ssh 使用远程 root 连接：
 
-  ```shell
+  ```sh
   $ cp /etc/ssh/sshd_config{,.bak}
   $ vi /etc/ssh/sshd_config
   ```
@@ -163,7 +163,7 @@ $ apt install ssh
 
 - 重新加载 ssh 配置，让修改生效
 
-  ```shell
+  ```sh
   $ /etc/init.d/ssh reload
   ```
 
@@ -171,7 +171,7 @@ $ apt install ssh
 
 默认的源镜像是有问题，我们需要进行修改
 
-```shell
+```sh
 $ cp /etc/apt/sources.list{,.bak}
 $ vi /etc/apt/sources.list
 ```
@@ -204,14 +204,14 @@ $ vi /etc/apt/sources.list
 
 修改用户根目录下的 `.bashrc` 可以美化 bash 控制台，具体如下：
 
-```shell
+```sh
 $ cp ~/.bashrc{,.bak}
 $ vi ~/.bashrc
 ```
 
 1. `.bashrc` 示例：
 
-   ```shell
+   ```sh
    PS1='[${debian_chroot:+($debian_chroot)}\u@Debian10 \W]\$ '
    export LS_OPTIONS='--color=auto'
    eval "`dircolors`"
@@ -222,7 +222,7 @@ $ vi ~/.bashrc
 
 2. 使用 `source` 更新终端界面：
 
-   ```shell
+   ```sh
    $ source ~/.bashrc
    ```
 
@@ -230,7 +230,7 @@ $ vi ~/.bashrc
 
 以下几个常用工具包，我们可以一键安装：
 
-```shell
+```sh
 $ apt install lrzsz tar bzip2 gzip curl wget
 ```
 
@@ -246,7 +246,7 @@ $ apt install lrzsz tar bzip2 gzip curl wget
 
 vim 编辑器非常适合终端操作，具体安装代码如下：
 
-```shell
+```sh
 $ apt install vim ctags vim-scripts
 ```
 
@@ -254,7 +254,7 @@ $ apt install vim ctags vim-scripts
 
    基础配置文件 `vimrc` 加载了一个空配置文件 `vimrc.local`，所以我们直接修改 `vimrc.local`
 
-   ```shell
+   ```sh
    $ touch /etc/vim/vimrc.local
    $ vim /etc/vim/vimrc.local
    ```
@@ -265,7 +265,7 @@ $ apt install vim ctags vim-scripts
 
 2. vim 安装中文帮助手册
 
-   ```shell
+   ```sh
    $ mkdir -p /package/vim
    $ cd /package/vim
    $ wget https://github.com/yianwillis/vimcdoc/releases/download/v2.1.0/vimcdoc-2.1.0.tar.gz

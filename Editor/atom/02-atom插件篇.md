@@ -132,17 +132,19 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 > 最简单的 ftp 配置，更全面的说明移步 [`官方说明`](https://github.com/icetee/remote-ftp)
 
-    {
-        "protocol": "ftp",
-        "host": "ip address",
-        "port": 21,
-        "user": "username",
-        "promptForPass": true,
-    }
+```conf
+{
+    "protocol": "ftp",
+    "host": "ip address",
+    "port": 21,
+    "user": "username",
+    "promptForPass": true,
+}
+```
 
 > SFTP 配置文件
 
-```shell
+```conf
 {
     "protocol": "sftp",
     "host": "example.com", // ip地址，默认: 'localhost'
@@ -159,7 +161,7 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 > FTP 配置文件
 
-```shell
+```conf
 {
     "protocol": "ftp",
     "host": "example.com", // ip地址，默认: 'localhost'

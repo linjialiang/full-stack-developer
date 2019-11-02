@@ -51,7 +51,7 @@ Windows 系统默认情况下 php 扩展的默认存放目录是 `c:\php\etc`，
 
 > 由于 xdebug 的驱动程序与其它官方自带扩展不同，我们建议将其写在 php.ini 最下方，写法如下：
 
-```shell
+```ini
 [Xdebug]
 zend_extension=xdebug
 xdebug.profiler_append = 0
@@ -80,7 +80,7 @@ php.ini 通过对 display_errors 的设置控制是否对 php 语法错误进行
 
 php 通过 error_reporting 的设置控制错误提示级别，格式如下：
 
-```shell
+```ini
 ; php.ini配置文件内格式
 error_reporting=错误级别别名
 

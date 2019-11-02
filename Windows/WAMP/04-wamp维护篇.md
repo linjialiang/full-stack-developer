@@ -8,7 +8,7 @@
 
    以管理员的身份打开 cmd，具体操作如下：
 
-   ```shell
+   ```cmd
    cd c:\wamp\base\httpd\bin
    httpd.exe -k install -n <service-httpd>
    ```
@@ -35,7 +35,7 @@
 
    以管理员的身份打开 cmd，具体操作如下：
 
-   ```shell
+   ```cmd
    cd c:\wamp\base\mariadb\bin
    mysqld.exe --install <service-mariadb>
    ```
@@ -66,7 +66,7 @@ Windows 系统服务项的启动类型分为如下三种：
 
 以管理员的身份打开 cmd，具体操作如下：
 
-```shell
+```cmd
 sc config <service-name> start=<set-value>
 ```
 

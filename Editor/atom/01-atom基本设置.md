@@ -10,7 +10,7 @@
 
 Atom 配置目录的结构如下：
 
-```shell
+```sh
 ├─ .atom                                    Atom配置根目录
 |   ├─.apm                                  忽略的目录
 |   |
@@ -91,7 +91,7 @@ Atom 配置目录的结构如下：
 
 1.  本地代理
 
-    ```shell
+    ```sh
     strict-ssl = false
     http-proxy = http://127.0.0.1:1080
     https-proxy = http://127.0.0.1:1080
@@ -99,7 +99,7 @@ Atom 配置目录的结构如下：
 
 2.  淘宝镜像代理（无效）
 
-    ```shell
+    ```sh
     ;strict-ssl = false
     ;http-proxy = http://registry.npm.taobao.org/
     ;https-proxy = https://registry.npm.taobao.org/

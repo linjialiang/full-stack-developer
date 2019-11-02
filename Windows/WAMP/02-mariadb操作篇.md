@@ -78,7 +78,7 @@ datadir = "c:/wamp/web/data"
 
    > 可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 目录，并初始化基础数据
 
-   ```shell
+   ```cmd
    > cd c:\wamp\base\mariadb\bin
    > mysql_install_db.exe --datadir=c:/wamp/web/data --password=123456
    ```

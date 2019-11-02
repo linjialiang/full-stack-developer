@@ -30,13 +30,13 @@
 
     > ErrorLog 用于指定错误日志路径，最基本的用法：
 
-    ```shell
+    ```sh
     ErrorLog "${HTLOGS}/error/error.log"
     ```
 
     > 按大小截断：错误日志每超过 5M 大小截断一次，并且按截断时间来命名
 
-    ```shell
+    ```sh
     ErrorLog "|${SRVROOT}/bin/rotatelogs.exe -t ${HTLOGS}/error/error_log.%Y-%m-%d-%H_%M_%S 5M 480"
     ```
 
@@ -44,7 +44,7 @@
 
     > LogLevel 用于调整错误日志中记录的消息的详细程度，新手推荐如下设置（有经验的可酌情调整）：
 
-    ```shell
+    ```sh
     LogLevel warn
     ```
 
@@ -114,22 +114,22 @@
 
     > 官方手册例子：
 
-    ```shell
+    ```sh
     #Simple example
     ErrorLogFormat "[%t] [%l] [pid %P] %F: %E: [client %a] %M"
     ```
 
-    ```shell
+    ```sh
     #Example (default format for threaded MPMs)
     ErrorLogFormat "[%{u}t] [%-m:%l] [pid %P:tid %T] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i"
     ```
 
-    ```shell
+    ```sh
     #Example (similar to the 2.2.x format)
     ErrorLogFormat "[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i"
     ```
 
-    ```shell
+    ```sh
     #Advanced example with request/connection log IDs
     ErrorLogFormat "[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M"
     ErrorLogFormat request "[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T"
@@ -157,7 +157,7 @@
 
    > 访问日志的典型配置如下所示：
 
-   ```shell
+   ```sh
    LogFormat "%h %l %u %t \"%r\" %>s %b" common
    CustomLog ${BASE_ROOT}/logs/apache24/access/access_log common
    ```
@@ -166,7 +166,7 @@
 
    > 默认的访问日志配置代码
 
-   ```shell
+   ```sh
    <IfModule log_config_module>
        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
        LogFormat "%h %l %u %t \"%r\" %>s %b" common
@@ -187,7 +187,7 @@
 
    > 新增访问日志格式模板，命名为 `newlogformat` 并调用该模板为访问日志输出格式
 
-   ```shell
+   ```sh
    <IfModule log_config_module>
        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
        LogFormat "%h %l %u %t \"%r\" %>s %b" common
@@ -211,7 +211,7 @@
    - 提示：由于每次截断的文件名一致，因此永远只能保留一天的日志。
    ```
 
-   ```shell
+   ```sh
    <IfModule log_config_module>
        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
        LogFormat "%h %l %u %t \"%r\" %>s %b" common
@@ -235,7 +235,7 @@
    - 提示：由于文件名根据时间来创建，因此每天都有一个日志文件被保留。
    ```
 
-   ```shell
+   ```sh
    <IfModule log_config_module>
        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
        LogFormat "%h %l %u %t \"%r\" %>s %b" common
@@ -260,7 +260,7 @@
    - 提示：由于文件名根据时间来创建，因此每天都有一个日志文件被保留。
    ```
 
-   ```shell
+   ```sh
    <IfModule log_config_module>
        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
        LogFormat "%h %l %u %t \"%r\" %>s %b" common

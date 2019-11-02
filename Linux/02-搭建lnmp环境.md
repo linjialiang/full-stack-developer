@@ -21,7 +21,7 @@ Linux 下推荐大家都使用 LNMP 作为开发环境，毕竟部署环境 LNMP
 
 Linux 下编译安装软件包，需要先安装编译工具，具体代码如下：
 
-```shell
+```sh
 $ apt install gcc g++ autotools-dev make cmake autoconf automake m4 libtool
 ```
 
