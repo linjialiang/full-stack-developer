@@ -210,3 +210,58 @@ $ cp www.conf{.default,}
    ```
 
    > 提示：具体配置请查阅 [php-fpm 工作进程配置详解](./source/php-fpm工作进程配置详解.md)
+
+### 简单控制 `php-fpm`：
+
+| 操作                    | 指令                           |
+| ----------------------- | ------------------------------ |
+| 启动 `php-fpm`          | `/server/php/sbin/php-fpm`     |
+| 关闭 `php-fpm`          | `pkill -9 php-fpm`             |
+| 关闭 `php-fpm`          | `kill -9 /var/run/php-fpm.pid` |
+| 测试 `php-fpm` 配置文件 | `/server/php/sbin/php-fpm -t`  |
+| `php-fpm` 操作帮助选项  | `/server/php/sbin/php-fpm -h`  |
+
+### 引导 `php-fpm` 开机启动
+
+编译 php 时如果加上了 `--enable-fpm` 选项就会自动生成两个启动脚本具体如下：
+
+| 脚本           | 脚本源码                                      |
+| -------------- | --------------------------------------------- |
+| systemctl 脚本 | [`php-fpm.service`](./source/php-fpm.service) |
+| init 启动脚本  | [`init.d.php-fpm`](./source/init.d.php-fpm)   |
+
+> 路径： `/package/lnmp/php-7.3.11/php_bulid/sapi/fpm`
+
+1. init 启动脚本
+
+   > 拷贝到 init.d 目录
+
+   ```sh
+   $ cp init.d.php-fpm /etc/init.d/php-fpm
+   ```
+
+   > 杀死之前打开的 nginx 进程，init 的才能正常使用，否则 pid 冲突
+
+   ```sh
+   $ ps -ef | grep php-fpm
+   $ kill -9 pid
+   # 或者
+   $ pkill -9 php-fpm
+   ```
+
+   > 接着使用 init 启动 php-fpm
+
+   | 操作           | 指令                         |
+   | -------------- | ---------------------------- |
+   | 启动 `php-fpm` | `/etc/init.d/php-fpm start`  |
+   | 关闭 `php-fpm` | `/etc/init.d/php-fpm stop`   |
+   | 重载 `php-fpm` | `/etc/init.d/php-fpm reload` |
+   | 测试 `php-fpm` | `/etc/init.d/php-fpm statuc` |
+
+2. systemctl 开机启动脚本
+
+   > 将启动脚本拷贝到 systemctl 系统目录下：
+
+   ```sh
+   $ cp /package/lnmp/php-7.3.11/php_bulid/sapi/fpm/php-fpm.service /usr/lib/systemd/system/php-fpm.service
+   ```
