@@ -265,3 +265,9 @@ $ cp www.conf{.default,}
    ```sh
    $ cp /package/lnmp/php-7.3.11/php_bulid/sapi/fpm/php-fpm.service /usr/lib/systemd/system/php-fpm.service
    ```
+
+   > 使用 `systemctl` 加入开机启动：
+
+   ```sh
+   systemctl enable php-fpm.service
+   ```
