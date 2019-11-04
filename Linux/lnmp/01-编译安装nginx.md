@@ -4,30 +4,33 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 
 ## 必备安装包准备
 
-> 编译 Nginx 需要的准备好的软件包：
+编译 Nginx 需要的准备好的软件包：
 
 | 必备         | 操作                                                                            |
 | ------------ | ------------------------------------------------------------------------------- |
-| libgd 库     | `apt install libgd-dev`                                                         |
-| geoip 库     | `apt install libgeoip-dev`                                                      |
+| libgd 开发库 | `apt install libgd-dev`                                                         |
+| geoip 开发库 | `apt install libgeoip-dev`                                                      |
 | openssl 库   | [`openssl-1.1.1d.tar.gz`](https://www.openssl.org/source/openssl-1.1.1d.tar.gz) |
 | pcre 库      | [`pcre-8.43.tar.gz`](https://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz)            |
 | zlib 库      | [`zlib-1.2.11.tar.gz`](http://zlib.net/zlib-1.2.11.tar.gz)                      |
 | nginx 源码包 | [`nginx-1.16.1.tar.gz`](http://nginx.org/download/nginx-1.16.1.tar.gz)          |
 
-> 软件包根目录为 `/package/lnmp` ，处理软件包过程如下指令：
+软件包根目录为 `/package/lnmp` ，处理软件包过程如下指令：
 
-|      |                 |
-| ---- | --------------- |
-| 下载 | `$ wget <urls>` |
-| 解包 | `$ wget <urls>` |
+| 过程 | 指令                 |
+| ---- | -------------------- |
+| 下载 | `$ wget <下载地址>`  |
+| 解包 | `$ tar -xzvf <包名>` |
+
+> 提示：使用 `./configure` 指令构建会提示缺失的依赖包！
 
 ## 编译 Nginx 需要的目录
 
-| 目录           | 指令                                           |
-| -------------- | ---------------------------------------------- |
-| Nginx 编译位置 | `mkdir -p /server/nginx`                       |
-| Nginx 构建位置 | `mkdir /package/lnmp/nginx-1.16.1/nginx_bulid` |
+| 目录                   | 指令                                           |
+| ---------------------- | ---------------------------------------------- |
+| Nginx 编译（安装）路径 | `mkdir -p /server/nginx`                       |
+| Nginx 源码路径         | `mkdir /package/lnmp/nginx-1.16.1`             |
+| Nginx 构建路径         | `mkdir /package/lnmp/nginx-1.16.1/nginx_bulid` |
 
 ## 构建指令
 
