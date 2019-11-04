@@ -122,113 +122,40 @@ $ cd /server/php/bin
 
 > 提示：在编译 php 扩展时，如果有多个 PHP 版本，可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
 
-## 安装 PRCL 扩展
+## 扩展库操作
 
-安装扩展的方式大同小异，下面是需要安装的两个 prcl 扩展
+1. PHP 扩展分类：
 
-| PRCL 扩展                                       | 描述                    |
-| ----------------------------------------------- | ----------------------- |
-| [imagick](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
-| [xdebug](https://pecl.php.net/package/xdebug)   | 用于显示 PHP 错误的扩展 |
+   | 扩展类型 | 扩展类型说明                         | 操作方式                    |
+   | -------- | ------------------------------------ | --------------------------- |
+   | 静态库   | 编译 PHP 时，允许 `安装/禁用` 的扩展 | 只能通过重新编译 PHP 来修改 |
+   | 动态库   | 使用 `phpize` 编译安装的 PECL 扩展   | 通过操作 `php.ini` 来控制   |
 
-### phpize 程序
+2. 动态库操作：
 
-`phpize` 可以将 PECL 扩展源码构建为可用 `./configure` 编译的源码，使用 `phpize --help` 可以查看帮助。
+   | 操作       | 案例                                          |
+   | ---------- | --------------------------------------------- |
+   | 开启动态库 | `php.ini` 文件里添加 `extension=<库名>`       |
+   | 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` |
 
-1. 配置环境变量:
+   > 提示：有些动态库是 `zend` 扩展库，需要使用 `zend_extension=<库名>` 开启，才能生效！
 
-   将 php 二进制文件存放目录加入环境变量中，可以方便 `phpize` 操作
+## `php-fpm` 服务
 
-   > 修改控制环境变量的文件
+想 Nginx 这类 web 服务，只能处理静态页面，如果想要处理 php 脚本，就必须借助类似 `php-fpm` 的服务！
 
-   ```sh
-   $ cp /etc/profile{,.bak}
-   $ vim /etc/profile
-   ```
+1. 配置 php-fpm
 
-   > `/etc/profile` 底部增加一行内容：
+   下面是 `php-fpm` 两个重要的配置文件：
 
-   ```sh
-   export PATH=$PATH:/server/php/bin:/server/php/sbin
-   ```
+   | 所属进程                    | 对应配置文件       | 数量     |
+   | --------------------------- | ------------------ | -------- |
+   | 主进程                      | `php-fpm.conf`     | 1        |
+   | pool 进程（即：工作池进程） | `php-fpm.d/*.conf` | 没有限制 |
 
-   > 使用 `source` 指令重新激活文件：
+   配置文件默认模块：
 
-   ```sh
-   $ source /etc/profile
-   ```
-
-2. 指定 php 配置文件
-
-   使用 `phpize` 前，必须正确配置 `php.ini` 文件
-
-   | 指令                                           | 描述                          |
-   | ---------------------------------------------- | ----------------------------- |
-   | `php --ini`                                    | 查询 php 配置文件信息         |
-   | `/package/lnmp/php-7.3.11/php.ini-development` | php 配置文件模版 - 开发环境   |
-   | `/package/lnmp/php-7.3.11/php.ini-production`  | php 配置文件模版 - 开部署环境 |
-
-   > 具体操作如下：
-
-   ```sh
-   $ cp -p -r /package/lnmp/php-7.3.11/php.ini-development /server/php/lib/php.ini
-   ```
-
-3. 创建 php 扩展源码目录
-
-   ```sh
-   $ mkdir -p /package/lnmp/php-ext
-   ```
-
-   > PRCL 扩展的默认安装路径为 `/server/php/lib/php/extensions/no-debug-non-zts-20180731/`
-
-### 安装 xdebug
-
-1. xdebug 目录列表
-
-   | xdebug 目录 | 路径                                                    |
-   | ----------- | ------------------------------------------------------- |
-   | 源码路径    | `/package/lnmp/php-ext/xdebug-2.8.0`                    |
-   | 构建路径    | `mkdir /package/lnmp/php-ext/xdebug-2.8.0/xdebug_bulid` |
-
-2. 编译安装
-
-   ```sh
-   $ cd /package/lnmp/php-ext/xdebug-2.8.0
-   $ phpize
-   $ cd xdebug_bulid
-   $ ../configure
-   $ make -j4
-   $ make test
-   $ make install
-   ```
-
-3. php.ini 文件添加扩展配置
-
-   ```sh
-   $ vim /server/php/lib/php.ini
-   ```
-
-   `php.ini` 底部增加如下如下：
-
-   ```ini
-   [Xdebug]
-   zend_extension=xdebug
-   xdebug.profiler_append = 0
-   xdebug.profiler_enable = 1
-   xdebug.profiler_enable_trigger = 0
-   xdebug.profiler_output_dir ="/logs/php/xdebug"
-   xdebug.trace_output_dir ="/logs/php/xdebug"
-   xdebug.profiler_output_name = "cache.out.%t-%s"
-   xdebug.remote_enable = 1
-   xdebug.remote_autostart = 1
-   xdebug.remote_handler = "dbgp"
-   xdebug.remote_host = "127.0.0.1"
-   xdebug.idekey= PHPSTROM
-   ```
-
-   配置文件指定的日志路径必须存在：
-
-   ```sh
-   $ mkdir -p /logs/php/xdebug
-   ```
+   | 所属进程  | 对应配置文件模块             |
+   | --------- | ---------------------------- |
+   | 主进程    | `php-fpm.conf.default`       |
+   | pool 进程 | `php-fpm.d/www.conf.default` |
