@@ -150,18 +150,63 @@ PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./
 
 想 Nginx 这类 web 服务，只能处理静态页面，如果想要处理 php 脚本，就必须借助类似 `php-fpm` 的服务！
 
-1. 配置 php-fpm
+### 配置 php-fpm
 
-   下面是 `php-fpm` 两个重要的配置文件：
+`php-fpm` 配置文件默认是在 `/server/php/etc` 下面：
 
-   | 所属进程                    | 对应配置文件       | 数量     |
-   | --------------------------- | ------------------ | -------- |
-   | 主进程                      | `php-fpm.conf`     | 1        |
-   | pool 进程（即：工作池进程） | `php-fpm.d/*.conf` | 没有限制 |
+| 所属进程                    | 对应配置文件       | 数量     |
+| --------------------------- | ------------------ | -------- |
+| 主进程                      | `php-fpm.conf`     | 1        |
+| pool 进程（即：工作池进程） | `php-fpm.d/*.conf` | 没有限制 |
 
-   配置文件默认模块：
+配置文件默认模块：
 
-   | 所属进程  | 对应配置文件模块             |
-   | --------- | ---------------------------- |
-   | 主进程    | `php-fpm.conf.default`       |
-   | pool 进程 | `php-fpm.d/www.conf.default` |
+| 所属进程  | 对应配置文件模块             |
+| --------- | ---------------------------- |
+| 主进程    | `php-fpm.conf.default`       |
+| pool 进程 | `php-fpm.d/www.conf.default` |
+
+### 创建主进程配置文件
+
+php-fpm 的主进程配置文件必须创建，使用默认模版的即可：
+
+```sh
+$ cd /server/php/etc
+$ cp php-fpm.conf{.default,}
+```
+
+### 创建工作进程配置文件
+
+php-fpm 的工作进程配置文件必须创建，允许多个：
+
+```sh
+$ cd /server/php/etc/php-fpm.d
+$ cp www.conf{.default,}
+```
+
+> 说明：默认的配置有些不满足要求，参考模版我们自定义一个配置文件。
+
+1. 工作池用户
+
+   与 nginx 的用户保持一致：
+
+   ```sh
+   # 创建一个名为nginx，id号为2000的用户组
+   $ groupadd -g 2000 nginx
+   # 创建一个名为nginx，id号为2000的用户，所属用户组为nginx，并且不创建家目录（-M 不创建家目录）
+   $ useradd -c 'Users of the Nginx service and php-fpm service' -u 2000 -s /usr/sbin/nologin -M -g nginx nginx
+   ```
+
+2. 创建 unix 套接字监听文件所在目录：
+
+   ```sh
+   $ mkdir /var/run/php/
+   ```
+
+3. 创建 php-pfm 工作进程配置文件：
+
+   ```sh
+   $ vim /server/php/etc/php-fpm.d/www.conf
+   ```
+
+   > 提示：具体配置请查阅 [php-fpm 工作进程配置详解](./source/php-fpm工作进程配置详解.md)
