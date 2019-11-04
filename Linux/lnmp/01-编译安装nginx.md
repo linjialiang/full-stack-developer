@@ -44,6 +44,8 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 
 2. 输入构建指令（开发环境 `mail` 、`stream` 模块不必选择）
 
+   > 提示：使用 `./configure -h` 可获取当前软件的所有构建选项
+
    ```sh
    ./configure --prefix=/server/nginx \
    --builddir=/package/lnmp/nginx-1.16.1/nginx_bulid \
