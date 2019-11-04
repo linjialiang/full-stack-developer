@@ -73,21 +73,19 @@ $ make install
 
 2. 构建选项
 
-   静态扩展只需要编译成功即可，动态扩展需要在 `php.ini` 文件里启用
-
-   | 构建选项                   | 描述                                                           |
-   | -------------------------- | -------------------------------------------------------------- |
-   | `--prefix=/server/php`     | 指定 php 安装路径                                              |
-   | `--enable-fpm`             | 构建 php-fpm 服务，`静态扩展`                                  |
-   | `--enable-mbstring`        | 构建 mbstring 扩展，`动态扩展`                                 |
-   | `--with-openssl`           | 构建 openssl 扩展，`动态扩展`                                  |
-   | `--with-pcre-jit`          | 正则支持 jit 编译器，`静态扩展`                                |
-   | `--enable-mysqlnd`         | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）                   |
-   | `--with-pdo-mysql`         | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动），`动态扩展`       |
-   | `--with-curl=/server/curl` | 构建 curl 扩展（指定路径好处：不必担心多版本冲突），`静态扩展` |
-   | `--without-cdb`            | 禁止构建 cdb 扩展（1 种数据库系统的扩展）                      |
-   | `--without-sqlite3`        | 禁止构建 sqlite3 扩展（1 种数据库系统的扩展）                  |
-   | `--without-pdo-sqlite`     | 禁止构建 pdo-sqlite 扩展（1 种数据库系统的扩展）               |
+   | 构建选项                   | 描述                                               |
+   | -------------------------- | -------------------------------------------------- |
+   | `--prefix=/server/php`     | 指定 php 安装路径                                  |
+   | `--enable-fpm`             | 构建 php-fpm 服务                                  |
+   | `--enable-mbstring`        | 构建 mbstring 扩展                                 |
+   | `--with-openssl`           | 构建 openssl 扩展                                  |
+   | `--with-pcre-jit`          | 正则支持 jit 编译器                                |
+   | `--enable-mysqlnd`         | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）       |
+   | `--with-pdo-mysql`         | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）       |
+   | `--with-curl=/server/curl` | 构建 curl 扩展（指定路径好处：不必担心多版本冲突） |
+   | `--without-cdb`            | 禁止构建 cdb 扩展（1 种数据库系统的扩展）          |
+   | `--without-sqlite3`        | 禁止构建 sqlite3 扩展（1 种数据库系统的扩展）      |
+   | `--without-pdo-sqlite`     | 禁止构建 pdo-sqlite 扩展（1 种数据库系统的扩展）   |
 
    具体指令如下：
 
@@ -128,10 +126,10 @@ $ cd /server/php/bin
 
 安装扩展的方式大同小异，下面是需要安装的两个 prcl 扩展
 
-| PRCL 扩展                                          | 描述                    |
-| -------------------------------------------------- | ----------------------- |
-| [ImageMagic](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
-| [xdebug](https://pecl.php.net/package/xdebug)      | 用于显示 PHP 错误的扩展 |
+| PRCL 扩展                                       | 描述                    |
+| ----------------------------------------------- | ----------------------- |
+| [imagick](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
+| [xdebug](https://pecl.php.net/package/xdebug)   | 用于显示 PHP 错误的扩展 |
 
 ### phpize 程序
 
@@ -174,4 +172,63 @@ $ cd /server/php/bin
 
    ```sh
    $ cp -p -r /package/lnmp/php-7.3.11/php.ini-development /server/php/lib/php.ini
+   ```
+
+3. 创建 php 扩展源码目录
+
+   ```sh
+   $ mkdir -p /package/lnmp/php-ext
+   ```
+
+   > PRCL 扩展的默认安装路径为 `/server/php/lib/php/extensions/no-debug-non-zts-20180731/`
+
+### 安装 xdebug
+
+1. xdebug 目录列表
+
+   | xdebug 目录 | 路径                                                    |
+   | ----------- | ------------------------------------------------------- |
+   | 源码路径    | `/package/lnmp/php-ext/xdebug-2.8.0`                    |
+   | 构建路径    | `mkdir /package/lnmp/php-ext/xdebug-2.8.0/xdebug_bulid` |
+
+2. 编译安装
+
+   ```sh
+   $ cd /package/lnmp/php-ext/xdebug-2.8.0
+   $ phpize
+   $ cd xdebug_bulid
+   $ ../configure
+   $ make -j4
+   $ make test
+   $ make install
+   ```
+
+3. php.ini 文件添加扩展配置
+
+   ```sh
+   $ vim /server/php/lib/php.ini
+   ```
+
+   `php.ini` 底部增加如下如下：
+
+   ```ini
+   [Xdebug]
+   zend_extension=xdebug
+   xdebug.profiler_append = 0
+   xdebug.profiler_enable = 1
+   xdebug.profiler_enable_trigger = 0
+   xdebug.profiler_output_dir ="/logs/php/xdebug"
+   xdebug.trace_output_dir ="/logs/php/xdebug"
+   xdebug.profiler_output_name = "cache.out.%t-%s"
+   xdebug.remote_enable = 1
+   xdebug.remote_autostart = 1
+   xdebug.remote_handler = "dbgp"
+   xdebug.remote_host = "127.0.0.1"
+   xdebug.idekey= PHPSTROM
+   ```
+
+   配置文件指定的日志路径必须存在：
+
+   ```sh
+   $ mkdir -p /logs/php/xdebug
    ```
