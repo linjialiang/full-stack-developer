@@ -256,7 +256,7 @@ $ cp www.conf{.default,}
    | 启动 `php-fpm` | `/etc/init.d/php-fpm start`  |
    | 关闭 `php-fpm` | `/etc/init.d/php-fpm stop`   |
    | 重载 `php-fpm` | `/etc/init.d/php-fpm reload` |
-   | 测试 `php-fpm` | `/etc/init.d/php-fpm statuc` |
+   | 测试 `php-fpm` | `/etc/init.d/php-fpm status` |
 
 2. systemctl 开机启动脚本
 

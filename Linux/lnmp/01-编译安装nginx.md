@@ -155,3 +155,11 @@ $ curl -I 127.0.0.1
    | 停止 Nginx                | `/etc/init.d/nginx stop`       |
    | 重新加载 Nginx            | `/etc/init.d/nginx reload`     |
    | 验证 Nginx 配置文件正确性 | `/etc/init.d/nginx configtest` |
+
+## 附录：Nginx 配置文件
+
+| 配置文件                                      | 描述                 |
+| --------------------------------------------- | -------------------- |
+| [`fastcgi-tp.conf`](./source/fastcgi-tp.conf) | `tp6` 基本配置项     |
+| [`nginx.conf`](./source/nginx.conf)           | nginx 主配置文件案例 |
+| [`sites.conf`](./source/sites.conf)           | `tp6` 站点配置模版   |
