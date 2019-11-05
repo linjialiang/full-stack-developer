@@ -2,8 +2,10 @@
 
 ```ini
 [www]
-user = nginx
-group = nginx
+;FPM 子进程运行的Unix用户，必须设置
+user = nobody
+;FPM 子进程运行的Unix用户组，必须设置。
+group = nobody
 
 ;默认是以 TCP 端口监听的
 ;listen = 127.0.0.1:9000
