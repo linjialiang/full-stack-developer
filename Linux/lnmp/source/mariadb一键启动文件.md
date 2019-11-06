@@ -17,7 +17,7 @@
 
     MYADMIN="/usr/bin/mysqladmin --defaults-file=/etc/mysql/my.cnf"
     MYSQLD_SAFE="/usr/bin/mysqld_safe --defaults-file=/etc/mysql/my.cnf"
-    PID_FILE="/var/run/mysqld/mysqld.pid"
+    PID_FILE="/server/run/mariadb/mariadb.pid"
 
     start(){
         if [ -e ${PID_FILE} ]
@@ -101,7 +101,7 @@
 
     MYADMIN="/usr/bin/mysqladmin --defaults-file=/etc/mysql/my.cnf"
     MYSQLD_SAFE="/usr/bin/mysqld_safe --defaults-file=/etc/mysql/my.cnf"
-    PID_FILE="/var/run/mysqld/mysqld.pid"
+    PID_FILE="/server/run/mariadb/mariadb.pid"
 
     start(){
         log_daemon_msg "Starting MariaDB service" "mysqld"

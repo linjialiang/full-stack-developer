@@ -10,7 +10,7 @@ group = nogroup
 ;默认是以 TCP 端口监听的
 ;listen = 127.0.0.1:9000
 ;我们修改成为，在unix套接字上监听
-listen = /server/run/php73-fpm.sock
+listen = /server/run/php/php73-fpm.sock
 listen.backlog = 511
 listen.owner = nginx
 listen.group = nginx
