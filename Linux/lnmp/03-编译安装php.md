@@ -6,12 +6,12 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 
 编译 PHP 需要的准备好的软件包：
 
-| 必备           | 操作                                                                       |
-| -------------- | -------------------------------------------------------------------------- |
-| libxml2 开发库 | `apt install libxml2-dev`                                                  |
-| libssl 开发库  | `apt install libssl-dev`                                                   |
-| PHP 源码包     | [`php-7.3.11.tar.gz`](https://www.php.net/distributions/php-7.3.11.tar.gz) |
-| CURL 源码包    | [`curl-7.66.0.tar.gz`](https://curl.haxx.se/download/curl-7.66.0.tar.gz)   |
+| 必备           | 操作                                                                     |
+| -------------- | ------------------------------------------------------------------------ |
+| libxml2 开发库 | `apt install libxml2-dev`                                                |
+| libssl 开发库  | `apt install libssl-dev`                                                 |
+| PHP 源码包     | [php-7.3.11.tar.gz](https://www.php.net/distributions/php-7.3.11.tar.gz) |
+| CURL 源码包    | [curl-7.66.0.tar.gz](https://curl.haxx.se/download/curl-7.66.0.tar.gz)   |
 
 软件包根目录为 `/package/lnmp` ，处理软件包过程如下指令：
 

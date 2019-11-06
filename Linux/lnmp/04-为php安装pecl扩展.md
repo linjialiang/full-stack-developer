@@ -123,10 +123,10 @@
 
 2. 软件包列表
 
-   | imagick 必备包                                                                     | 必备包说明                   |
-   | ---------------------------------------------------------------------------------- | ---------------------------- |
-   | `[ImageMagick](https://github.com/ImageMagick/ImageMagick/archive/7.0.9-2.tar.gz)` | 扩展的编译库、运行库的源码包 |
-   | `[imagick](https://pecl.php.net/get/imagick-3.4.4.tgz)`                            | 扩展源码包                   |
+   | imagick 必备包                                                                   | 必备包说明                   |
+   | -------------------------------------------------------------------------------- | ---------------------------- |
+   | [ImageMagick](https://github.com/ImageMagick/ImageMagick/archive/7.0.9-2.tar.gz) | 扩展的编译库、运行库的源码包 |
+   | [imagick](https://pecl.php.net/get/imagick-3.4.4.tgz)                            | 扩展源码包                   |
 
 3. 编译 `ImageMagick`
 
