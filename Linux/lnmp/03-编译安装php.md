@@ -225,12 +225,12 @@ $ cp www.conf{.default,}
 
 编译 php 时如果加上了 `--enable-fpm` 选项就会自动生成两个启动脚本具体如下：
 
-| 脚本           | 脚本源码                                      |
-| -------------- | --------------------------------------------- |
-| systemctl 脚本 | [`php-fpm.service`](./source/php-fpm.service) |
-| init 启动脚本  | [`init.d.php-fpm`](./source/init.d.php-fpm)   |
+| 启动项      | 文件源码参考(pid 值做了修正)                  |
+| ----------- | --------------------------------------------- |
+| `systemctl` | [`php-fpm.service`](./source/php-fpm.service) |
+| `init.d`    | [`init.d.php-fpm`](./source/init.d.php-fpm)   |
 
-> 路径： `/package/lnmp/php-7.3.11/php_bulid/sapi/fpm`
+> 编译源码的路径： `/package/lnmp/php-7.3.11/php_bulid/sapi/fpm`
 
 1. init 启动脚本
 

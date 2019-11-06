@@ -112,7 +112,12 @@
    | `pid`        | `/server/run/php/php73-fpm.pid`  |
    | `socket`     | `/server/run/php/php73-fpm.sock` |
 
-   > 提示：修改了 `pid` 路径后，`init.d` 启动项将会无法操作 `php-fpm`，需重新指定 `php_fpm_PID` 变量值才可正常工作！
+   > 提示：修改了 `pid` 路径后，两个启动文件里的 `pid` 值也需要修改，具体操作如下：
+
+   | 启动文件    | 路径                                      | 对应的参数名  |
+   | ----------- | ----------------------------------------- | ------------- |
+   | `init.d`    | `/etc/init.d/php-fpm`                     | `php_fpm_PID` |
+   | `systemctl` | `/usr/lib/systemd/system/php-fpm.service` | `PIDFile`     |
 
 ## 用户说明
 
