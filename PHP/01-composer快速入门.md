@@ -23,6 +23,43 @@
 | composer self-update | 将 Composer 自身升级到最新版本                     |
 | composer config      | 编辑 Composer 的一些基本设置                       |
 
+## 操作 composer 指令
+
+我们通过脚本程序，将 composer 操作简化了，完整的操作应该是下面这样的：
+
+| 系统    | 指令                                                                      |
+| ------- | ------------------------------------------------------------------------- |
+| Windows | `<php根目录路径>\php.exe <composer文件路径>\composer.phar <composer指令>` |
+| Linux   | `<php执行程序路径>/php <composer文件路径>/composer.phar <composer指令>`   |
+
+1. 将 `php执行程序路径` 加入到环境变量中，可简化成：
+
+   | 系统    | 指令                                                      |
+   | ------- | --------------------------------------------------------- |
+   | Windows | `php.exe <composer文件路径>\composer.phar <composer指令>` |
+   | Linux   | `<composer文件路径>/composer.phar <composer指令>`         |
+
+   > 提示：Linux 下 `php执行程序` 一旦加入加入环境变量就可以省略！
+
+2. 再将 `composer文件路径` 加入到环境变量中，可简化成：
+
+   | 系统    | 指令                                   |
+   | ------- | -------------------------------------- |
+   | Windows | `php.exe composer.phar <composer指令>` |
+   | Linux   | `composer.phar <composer指令>`         |
+
+3. Windows 通过 bat 脚本将指令简化为：
+
+   ```sh
+   $ composer <composer指令>
+   ```
+
+4. Linux 通过软连接或重命名将脚本简化为：
+
+   ```sh
+   $ composer <composer指令>
+   ```
+
 ## 重要指令解释
 
 这里我们只讲解了个别重要的指令，其它指令请[查看手册](https://docs.phpcomposer.com)
@@ -61,7 +98,7 @@
 
    这将解决项目的所有依赖，并将确切的版本号写入 composer.lock
 
-   ```shell
+   ```sh
    $ composer update
    ```
 
@@ -69,13 +106,13 @@
 
    如果你只是想更新几个包，你可以像这样分别列出它们：
 
-   ```shell
+   ```sh
    $ composer update composer_username/package_name [...]
    ```
 
    更新指定 `composer 包` 案例:
 
-   ```shell
+   ```sh
    $ composer update topthink/framework linjialiang/hash
    ```
 
@@ -83,13 +120,13 @@
 
    你还可以使用通配符进行批量更新：
 
-   ```shell
+   ```sh
    $ composer update composer_username1/*
    ```
 
    批量更新 `composer 包` 案例:
 
-   ```shell
+   ```sh
    $ composer update topthink/*
    ```
 
@@ -99,19 +136,19 @@
 
 `composer require` 命令增加新的依赖包到当前目录的 composer.json 文件中。并且在添加或改变依赖时， 修改后的依赖关系将被安装或者更新。
 
-```shell
-composer require
+```sh
+$ composer require
 ```
 
 1. 如果你不希望通过交互来指定依赖包，你可以在这条令中直接指明依赖包。
 
-   ```shell
+   ```sh
    $ composer require composer_username/package_name:version [...]
    ```
 
 2. 申明依赖举例:
 
-   ```shell
+   ```sh
    $ composer require topthink/framework:6.0.*-dev linjialiang/hash:0.0.6
    ```
 
@@ -128,13 +165,13 @@ composer require
 
 1. 如果该目录目前不存在，则会在安装过程中自动创建
 
-   ```shell
+   ```sh
    $ composer create-project composer_username/project_name path version
    ```
 
 2. 创建 composer 项目举例
 
-   ```shell
+   ```sh
    $ composer create-project topthink/think /www/tp6 6.0.*-dev
    ```
 
@@ -144,7 +181,7 @@ composer require
 
 ### `Root 包` 概念
 
-“root 包”是指由 composer.json 定义的在你项目根目录的包。这是 composer.json 定义你项目所需的主要条件。（简单的说，你自己的项目就是一个 root 包）
+`root 包` 是指由 composer.json 定义的在你项目根目录的包。这是 composer.json 定义你项目所需的主要条件。（简单的说，你自己的项目就是一个 root 包）
 
 1. 如果你克隆了其中的一个依赖包，直接在其上开始工作，那么它就变成了“root 包”。与作为他人的依赖包时使用相同的 composer.json 文件，但上下文发生了变化。
 2. 注意： 一个资源包是不是“root 包”，取决于它的上下文。 例：如果你的项目依赖 monolog 库，那么你的项目就是“root 包”。 但是，如果你从 GitHub 上克隆了 monolog 为它修复 bug， 那么此时 monolog 就是“root 包”。
@@ -204,7 +241,7 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
    | Windows | `c:\wamp\base\php` | `php.exe` |
    | Linux   | `/server/php/bin`  | `php`     |
 
-   > 提示：如果没加入系统环境变量中，就需要指定 `php可执行文件` 的全路径。
+   > 提示：如果没加入系统环境变量中，安装时就需要指定 `php可执行文件` 的全路径。
 
 2. 任意目录下，下载 composer 安装脚本：
 
@@ -238,12 +275,7 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
    $ mv composer.phar /server/php/bin/
    ```
 
-   > 提示：建议与 php 可执行文件处于同一目录，这样有一个好处：
-
-   | composer.phar 位置           | 优缺点                                                 |
-   | ---------------------------- | ------------------------------------------------------ |
-   | 目录跟 `php 可执行文件` 相同 | 即使 php 可执行文件没有加入环境变量，也可以正常使用    |
-   | 目录跟 `php 可执行文件` 不同 | 就算指定了 composer 路径，也无法执行，因为无法执行 php |
+   > 提示：建议 `composer 文件` 与 `php 执行程序` 处于同一目录！
 
 ### 执行脚本选项说明：
 
@@ -274,6 +306,12 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
    ```sh
    export PATH=$PATH:/server/php/bin:/server/php/sbin
+   ```
+
+   > 使用 `source` 指令重载 profile 文件内容到环境变量：
+
+   ```sh
+   $ source /etc/profile
    ```
 
 ### Windows 下全局调用 `composer.phar`
@@ -315,7 +353,7 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
 ## 附录一：Linux 操作 composer 须知
 
-| 操作须知                             |
-| ------------------------------------ |
-| 允许使用 root 用户 `升级 composer`   |
-| 不允许使用 root 用户 `操作 composer` |
+| 操作须知                                    |
+| ------------------------------------------- |
+| 允许使用 root 用户 `升级 composer 程序本身` |
+| 不允许使用 root 用户 `操作 composer`        |
