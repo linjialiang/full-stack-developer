@@ -93,24 +93,26 @@
 
 4. 修改 php-fpm 的 `pid 和 socket` 文件路径
 
-   > `pid` 在 `php-fpm.conf` 里修改：
+   `pid` 在 `php-fpm.conf` 里修改：
 
    ```sh
    $ vim /server/php/etc/php-fpm.conf
    ```
 
-   > `socket` 在 `php-fpm.d/www.conf` 里修改：
+   `socket` 在 `php-fpm.d/www.conf` 里修改：
 
    ```sh
    $ vim /server/php/etc/php-fpm.d/www.conf
    ```
 
-   > `pid` 由 root 用户管理；`socket` 由工作池用户（nginx）管理：
+   `pid` 由 root 用户管理；`socket` 由工作池用户（nginx）管理：
 
    | 配置文件指令 | 路径                             |
    | ------------ | -------------------------------- |
    | `pid`        | `/server/run/php/php73-fpm.pid`  |
    | `socket`     | `/server/run/php/php73-fpm.sock` |
+
+   > 提示：修改了 `pid` 路径后，`init.d` 启动项将会无法操作 `php-fpm`，需重新指定 `php_fpm_PID` 变量值才可正常工作！
 
 ## 用户说明
 
