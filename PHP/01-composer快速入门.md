@@ -197,9 +197,9 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
 ### 具体安装步骤：
 
-1. php 可执行文件加入环境变量中
+1. `php 可执行程序目录` 的路径加入环境变量中
 
-   | 系统    | php 执行文件路径   | 文件名    |
+   | 系统    | php 执行文件路径   | 主程序名  |
    | ------- | ------------------ | --------- |
    | Windows | `c:\wamp\base\php` | `php.exe` |
    | Linux   | `/server/php/bin`  | `php`     |
@@ -255,22 +255,22 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
 ### Linux 下全局调用 `composer.phar`
 
-1. 将 `composer.phar` 移动到 php 的可执行文件目录：
+1. 将 `composer.phar` 移动到 `php 可执行程序目录` 中：
 
    ```sh
    $ mv composer.phar /server/php/bin/
    ```
 
-2. 将 php 的 `可执行文件路径` 加入到环境变量中
+2. 将 php 的 `php 可执行程序目录` 的路径加入到环境变量中：
 
-   > `/etc/profile` 用于定义 Linux 系统环境变量：
+   > `/etc/profile` 用于定义 Linux 系统环境变量
 
    ```sh
    $ cp /etc/profile{,.bak}
    $ vim /etc/profile
    ```
 
-   > 在 /etc/profile 底部加入一行内容：
+   > 在 /etc/profile 底部加入 1 行内容
 
    ```sh
    export PATH=$PATH:/server/php/bin:/server/php/sbin
@@ -283,7 +283,7 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 | 01   | 将 `composer.phar` 移动到 php 跟目录              |
 | 02   | 打开 cmd，进入 php 根目录，并执行第 3 步骤指令    |
 | 03   | `echo @php "%~dp0composer.phar" %\*>composer.bat` |
-| 04   | 将 `php 根目录` 的路径加入环境变量中              |
+| 04   | 将 `php 根目录` 的路径加入到系统环境变量中        |
 
 ### 切换 composer 镜像
 

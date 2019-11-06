@@ -80,7 +80,7 @@ php 想要开启 curl 扩展，就必须安装 CURL 软件包，这是 curl 扩�
    | `--prefix=/server/php`     | 指定 php 安装路径                                  |
    | `--enable-fpm`             | 构建 php-fpm 服务                                  |
    | `--enable-mbstring`        | 构建 mbstring 扩展                                 |
-   | `--with-openssl`           | 构建 openssl 扩展                                  |
+   | `--with-openssl`           | 构建 openssl 扩展，`composer` 需要使用此扩展       |
    | `--with-pcre-jit`          | 正则支持 jit 编译器                                |
    | `--enable-mysqlnd`         | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）       |
    | `--with-pdo-mysql`         | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）       |
