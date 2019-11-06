@@ -148,3 +148,14 @@ lnmp 环境下我们需要关注下面几个用户：
    $ groupadd -g 2001 www
    $ useradd -c 'Users of the FTP and sites' -u 2001 -s /usr/sbin/nologin -d /server/www -m -g www www
    ```
+
+## 附录一：为什么 PHP 无法使用 PDO 操作 MariaDB ？
+
+| 步骤 | 说明                                                                           |
+| ---- | ------------------------------------------------------------------------------ |
+| 01   | `pdo_mysql.default_socket` 默认值为 `/tmp/mysql.sock`                          |
+| 02   | `MariaDB` 的 `socket` 路径为 `/server/run/mariadb/mariadb.sock`                |
+| 03   | `php.ini` 下修改： `pdo_mysql.default_socket=/server/run/mariadb/mariadb.sock` |
+| 04   | 重启 `php-fpm` 即可                                                            |
+
+> 提示：`php.ini` 跟 `php执行文件 和 php-fpm` 息息相关，`Nginx` 只接收 php-fpm 转发的数据，实际并未参与，所以不必重启 `Nginx`。
