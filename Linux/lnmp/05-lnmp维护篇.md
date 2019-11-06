@@ -105,19 +105,25 @@
    $ vim /server/php/etc/php-fpm.d/www.conf
    ```
 
-   `pid` 由 root 用户管理；`socket` 由工作池用户（nginx）管理：
-
-   | 配置文件指令 | 路径                             |
+   | 配置文件参数 | 参数值（路径）                   |
    | ------------ | -------------------------------- |
    | `pid`        | `/server/run/php/php73-fpm.pid`  |
    | `socket`     | `/server/run/php/php73-fpm.sock` |
 
-   > 提示：修改了 `pid` 路径后，两个启动文件里的 `pid` 值也需要修改，具体操作如下：
+   > 提示： `pid` 由 root 用户管理；`socket` 由工作进程用户（nginx）管理：
+
+5. 修改了 `pid` 路径后，两个启动文件里的 `pid` 值也需要修改，具体操作如下：
 
    | 启动文件    | 路径                                      | 对应的参数名  |
    | ----------- | ----------------------------------------- | ------------- |
    | `init.d`    | `/etc/init.d/php-fpm`                     | `php_fpm_PID` |
    | `systemctl` | `/usr/lib/systemd/system/php-fpm.service` | `PIDFile`     |
+
+   > 提示：如果 `systemctl` 启动文件做了修改，需要使用以下指令，重新加载：
+
+   ```sh
+   $ systemctl daemon-reload
+   ```
 
 ## 用户说明
 
