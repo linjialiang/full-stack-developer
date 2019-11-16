@@ -121,7 +121,7 @@
    [value1=action1 value2=action2 ...]
    ```
 
-   > `valueN` 具体值如下（value 只是一个返回值属性，作用需要自定义）：
+   > `valueN` 具体值如下（valueN 具体值的具体意义，暂时未知）：
 
    | ValueN 值         | ValueN 值             | ValueN 值           |
    | ----------------- | --------------------- | ------------------- |
@@ -148,6 +148,17 @@
    | done        | 终止后续层叠模块的验证，把控制权立刻交回应用程序                   |
    | N(非负整数) | 就表示需要忽略后面 N 个同样类型的模块。                            |
    | reset       | 清除所有层叠模块的返回状态，从下一个层叠模块重新开始验证           |
+
+3. 简单语法 vs 复杂语法
+
+   事实上，简单语法也是通过复杂语法组合起来的，具体如下：
+
+   | 简单语法   | 对应的复杂语法                                               |
+   | ---------- | ------------------------------------------------------------ |
+   | required   | `[success=ok new_authtok_reqd=ok ignore=ignore default=bad]` |
+   | requisite  | `[success=ok new_authtok_reqd=ok ignore=ignore default=die]` |
+   | sufficient | `[success=done new_authtok_reqd=done default=ignore]`        |
+   | optional   | `[success=ok new_authtok_reqd=ok default=ignore]`            |
 
 ### `Linux-PAM` 模块路径
 
