@@ -114,3 +114,47 @@
    | `optional`   | 即使本行指定的模块验证失败，也允许用户享受应用程序提供的服务      | 如果每行的控制语法都是 `optional` ，则认证永远不会失败                         |
    | `include`    | 表示在验证过程中调用其他的 PAM 配置文件。                         | 载入文件的每一行验证与当前文件验证相同                                         |
    | `substack`   | 类似 `include` 验证                                               | 但 `参数值=done/die` 是只跳过载入文件，其余照常验证                            |
+
+2. 对于更复杂的语法，有效的控制 值具有以下形式：
+
+   ```sh
+   [value1=action1 value2=action2 ...]
+   ```
+
+   `valueN` 包括如下具体值：
+
+   | ValueN 值               | 描述 |
+   | ----------------------- | ---- |
+   | `success`               |
+   | `open_err`              |
+   | `symbol_err`            |
+   | `service_err`           |
+   | `system_err`            |
+   | `buf_err`               |
+   | `perm_denied`           |
+   | `auth_err`              |
+   | `cred_insufficient`     |
+   | `authinfo_unavail`      |
+   | `user_unknown`          |
+   | `maxtries`              |
+   | `new_authtok_reqd`      |
+   | `acct_expired`          |
+   | `session_err`           |
+   | `cred_unavail`          |
+   | `cred_expired`          |
+   | `cred_err`              |
+   | `no_module_data`        |
+   | `conv_err`              |
+   | `authtok_err`           |
+   | `authtok_recover_err`   |
+   | `authtok_lock_busy`     |
+   | `authtok_disable_aging` |
+   | `try_again`             |
+   | `ignore`                |
+   | `abort`                 |
+   | `authtok_expired`       |
+   | `module_unknown`        |
+   | `bad_item`              |
+   | `conv_again`            |
+   | `incomplete`            |
+   | `default`               |
