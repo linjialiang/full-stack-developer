@@ -42,7 +42,7 @@ vsftpd 有很多参数，下面列出我们必须掌握的参数选项：
    | 选项模块        | 说明           |
    | --------------- | -------------- |
    | 匿名模块        | 关闭           |
-   | sftp 模块       | 不需要开启     |
+   | sll 模块        | 开启           |
    | 日志模块        | 不需要特别关注 |
    | 权限模块        | 默认即可       |
    | vsftpd 用户模块 | 默认即可       |
@@ -55,14 +55,24 @@ vsftpd 有很多参数，下面列出我们必须掌握的参数选项：
    ```conf
    anonymous_enable=NO
    local_enable=YES
+
    ssl_enable=YES
-   ascii_upload_enable=NO
+   ssl_sslv3=YES
+   force_local_data_ssl=YES
+   force_local_logins_ssl=YES
+   guest_enable=YES
+   rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+   rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+
+   virtual_use_local_privs=YES
+   write_enable=YES
 
    listen=NO
    listen_ipv6=YES
    listen_port=21
 
    port_enable=NO
+
    pasv_enable=YES
    pasv_max_port=21001
    pasv_min_port=21099
@@ -74,7 +84,7 @@ vsftpd 有很多参数，下面列出我们必须掌握的参数选项：
    local_max_rate=8192
    local_umask=077
 
-   max_per_ip=1
+   max_per_ip=3
    max_clients=10
    max_login_fails=3
 
@@ -90,8 +100,6 @@ vsftpd 有很多参数，下面列出我们必须掌握的参数选项：
    userlist_file=/etc/vsftpd.user_list
    ```
 
-````
-
 ## 创建本地用户，用于登陆 vsftpd
 
 1. 创建用户组及用户
@@ -99,7 +107,7 @@ vsftpd 有很多参数，下面列出我们必须掌握的参数选项：
 ```sh
 $ groupadd -g 2001 www
 $ useradd -c 'Users of the vsftpd user' -u 2001 -s /usr/sbin/nologin -M -g www www
-````
+```
 
 2. `/server/www` 目录权限
 
