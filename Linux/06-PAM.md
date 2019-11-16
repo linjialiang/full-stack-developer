@@ -106,55 +106,77 @@
 
 1. 对于简单语法，有效的控制值为：
 
-   | 简单语法     | 返回成功                                                          | 返回失败                                                                       |
-   | ------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-   | `required`   | 带有该标记的模块必须认证成功                                      | 如果出现认证失败，不会立即结束认证，需等全部条目处理完，再结束认证，并返回错误 |
-   | `requisite`  | 带有该标记的模块必须认证成功                                      | 一旦出现认证失败，立即结束认证，并返回错误消息                                 |
-   | `sufficient` | 该标记的模块只要有 1 行认证成功（`前面的 required` 认证没有失败） | 认证失败，就会将其当作 `optional` 控制来处理                                   |
-   | `optional`   | 即使本行指定的模块验证失败，也允许用户享受应用程序提供的服务      | 如果每行的控制语法都是 `optional` ，则认证永远不会失败                         |
-   | `include`    | 表示在验证过程中调用其他的 PAM 配置文件。                         | 载入文件的每一行验证与当前文件验证相同                                         |
-   | `substack`   | 类似 `include` 验证                                               | 但 `参数值=done/die` 是只跳过载入文件，其余照常验证                            |
+   | 简单语法     | 返回成功                                   | 返回失败                                                   |
+   | ------------ | ------------------------------------------ | ---------------------------------------------------------- |
+   | `required`   | 带有该标记的模块必须认证成功               | 出现认证失败，也需等待其它条目全部认证一遍，再统一返回消息 |
+   | `requisite`  | 带有该标记的模块必须认证成功               | 一旦出现认证失败，立即结束认证，并返回错误消息             |
+   | `sufficient` | 该标记的模块只要有 1 行认证成功            | 认证失败，就会将其当作 `optional` 控制来处理               |
+   | `optional`   | 认证失败，也允许用户享受应用程序提供的服务 | 如果只有 `optional` 认证 ，并且全部认证不成功              |
+   | `include`    | 表示在验证过程中调用其他的 PAM 配置文件。  | 载入文件的每一行验证与当前文件验证相同                     |
+   | `substack`   | 类似 `include` 验证                        | 但 `参数值=done/die` 是只跳过载入文件，其余照常验证        |
 
-2. 对于更复杂的语法，有效的控制 值具有以下形式：
+2. 对于更复杂的语法，有效的控制值具有以下形式：
 
    ```sh
    [value1=action1 value2=action2 ...]
    ```
 
-   `valueN` 包括如下具体值：
+   > `valueN` 具体值如下（value 只是一个返回值属性，作用需要自定义）：
 
-   | ValueN 值               | 描述 |
-   | ----------------------- | ---- |
-   | `success`               |
-   | `open_err`              |
-   | `symbol_err`            |
-   | `service_err`           |
-   | `system_err`            |
-   | `buf_err`               |
-   | `perm_denied`           |
-   | `auth_err`              |
-   | `cred_insufficient`     |
-   | `authinfo_unavail`      |
-   | `user_unknown`          |
-   | `maxtries`              |
-   | `new_authtok_reqd`      |
-   | `acct_expired`          |
-   | `session_err`           |
-   | `cred_unavail`          |
-   | `cred_expired`          |
-   | `cred_err`              |
-   | `no_module_data`        |
-   | `conv_err`              |
-   | `authtok_err`           |
-   | `authtok_recover_err`   |
-   | `authtok_lock_busy`     |
-   | `authtok_disable_aging` |
-   | `try_again`             |
-   | `ignore`                |
-   | `abort`                 |
-   | `authtok_expired`       |
-   | `module_unknown`        |
-   | `bad_item`              |
-   | `conv_again`            |
-   | `incomplete`            |
-   | `default`               |
+   | ValueN 值         | ValueN 值             | ValueN 值           |
+   | ----------------- | --------------------- | ------------------- |
+   | success           | authtok_lock_busy     | maxtries            |
+   | open_err          | authtok_disable_aging | new_authtok_reqd    |
+   | symbol_err        | try_again             | acct_expired        |
+   | service_err       | ignore                | session_err         |
+   | system_err        | abort                 | cred_unavail        |
+   | buf_err           | authtok_expired       | cred_expired        |
+   | perm_denied       | module_unknown        | cred_err            |
+   | auth_err          | bad_item              | no_module_data      |
+   | cred_insufficient | conv_again            | conv_err            |
+   | authinfo_unavail  | incomplete            | authtok_err         |
+   | user_unknown      | default               | authtok_recover_err |
+
+   > `actionN` 包括下面几种值：
+
+   | actionN 值  | 描述                                                               |
+   | ----------- | ------------------------------------------------------------------ |
+   | ignore      | 如果使用层叠模块，那么这个模块的返回值将被忽略，不会被应用程序知道 |
+   | bad         | 此操作表示这个返回码应该被看作是模块验证失败的标志                 |
+   | die         | 终止层叠模块验证过程，立刻返回到应用程序                           |
+   | ok          | 告诉 PAM 这个模块的返回值将直接作为所有层叠模块的返回值。          |
+   | done        | 终止后续层叠模块的验证，把控制权立刻交回应用程序                   |
+   | N(非负整数) | 就表示需要忽略后面 N 个同样类型的模块。                            |
+   | reset       | 清除所有层叠模块的返回状态，从下一个层叠模块重新开始验证           |
+
+### `Linux-PAM` 模块路径
+
+模块路径即要调用模块的位置，路径写法支持绝对路径和动态路径。
+
+| 路径写法 | 具体说明                                |
+| -------- | --------------------------------------- |
+| 绝对路径 | 如：`/server/pam_module/pam_mariadb.so` |
+| 相对路径 | 如：`pam_nologin.so`                    |
+
+> 相对路径写法，需要将模块存放在 `Linux-PAM` 模块的默认路径下！
+
+| 操作系统       | `Linux-PAM` 模块的默认路径           |
+| -------------- | ------------------------------------ |
+| `Debian10.x`   | `/usr/lib/x86_64-linux-gnu/security` |
+| 一般 64 位系统 | `/lib64/security`                    |
+| 一般 32 为系统 | `/lib/security`                      |
+
+> 提示： 同一个模块，可以出现在不同的类型中，并且在不同的类型中所执行的操作都不相同。这是由于每个模块，针对不同的模块类型，编制了不同的执行函数。
+
+### `Linux-PAM` 模块参数
+
+模块参数可用于修改给定 PAM 的特定行为。参数可以有多个,参数之间用空格分隔开（如果参数中包含空格，则该参数应该使用 `方括号` 括起来）
+
+1. 使用支持 MariaDB 数据库认证的模块，可能需要类似如下的参数：
+
+   ```sh
+   pam_vsftpd auth required pam_mariadb.so user=www passwd=wwwpasswd \
+         db=vsftpd [query=select user_name from internet_service \
+         where user_name='%u' and password=PASSWORD('%p') and \
+         service='web_proxy']
+   ```
