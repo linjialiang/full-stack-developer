@@ -19,7 +19,7 @@ $ apt install vsftpd
 
 ## 配置文件
 
-配置文件源码参考 [`vsftpd.conf`](./source/vsftpd.conf)
+配置文件源码参考 [vsftpd.conf](./source/vsftpd.conf)
 
 1. 输出有用的配置信息：
 
@@ -61,7 +61,7 @@ $ apt install vsftpd
    | userlist_file=/etc/vsftpd/user_list      | 仅允许 user_list 列出的用户，登陆 vsftpd       |
    | pam_service_name=vsftpd                  | 此字符串是 vsftpd 将使用的 PAM 服务的名称      |
 
-   > 提示：关于 vsftpd 配置参数的详细讲解，请到[`vsfptd.conf 选项说明`](./manual/03-vsftpd.conf选项说明.md)查阅
+   > 提示：关于 vsftpd 配置参数的详细讲解，请到 [vsfptd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) 查阅
 
 3. 修改 vsftpd 的 PAM 配置文件
 
