@@ -39,6 +39,7 @@ samba 配置文件下，可以根据自己需要，配置多个共享分组，�
 | `path = 路径`                        | 该共享分组路径                         |
 | `browseable = yes/no`                | 指定该共享是否可以浏览                 |
 | `writable = yes/no`                  | 指定该共享路径是否可写                 |
+| `read only = yes/no`                 | 指定该共享路径是否只读                 |
 | `available = yes/no`                 | 指定该共享资源是否可用                 |
 | `admin users = user1, @group1`       | 指定该共享的管理员（具有完全控制权限） |
 | `valid users = user1, user2`         | 允许访问该共享的用户                   |
@@ -46,8 +47,8 @@ samba 配置文件下，可以根据自己需要，配置多个共享分组，�
 | `write list = user1, user2, @group1` | 允许写入该共享的用户                   |
 | `public = yes/no`                    | 指定该共享是否允许 guest 账户访问      |
 | `guest ok = yes/no`                  | 与 `public` 相同                       |
-| `create mask = 0777`                 | 操作文件权限                           |
-| `directory mask = 0777`              | 操作目录权限                           |
+| `create mask = 0644`                 | 操作文件权限                           |
+| `directory mask = 0755`              | 操作目录权限                           |
 
 > 提示：`writable` 和 `read only` 不能同时设置成 `yes`！
 
@@ -62,8 +63,12 @@ samba 配置文件下，可以根据自己需要，配置多个共享分组，�
    path = /server/www
    browseable = yes
    writable = yes
+   read only = no
    available = yes
-   public = yes
-   create mask = 0777
-   directory mask = 0777
+   admin users = www
+   valid users = @www
+   write list = @www
+   public = no
+   create mask = 0644
+   directory mask = 0755
    ```
