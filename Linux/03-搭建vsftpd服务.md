@@ -239,12 +239,12 @@ $ apt install vsftpd
 
 ### 限制到家目录
 
-    设置了 `virtual_use_local_privs=yes` 以后，虚拟用户的权限与本地用户完全相同，所以同样需要使用 `chroot_local_user` 来限制家目录：
+设置了 `virtual_use_local_privs=yes` 以后，虚拟用户的权限与本地用户完全相同，所以同样需要使用 `chroot_local_user` 来限制家目录：
 
-    ```sh
-    chroot_local_user=YES
-    chroot_list_enable=YES
-    chroot_list_file=/etc/vsftpd/chroot_list
-    ```
+```sh
+chroot_local_user=YES
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd/chroot_list
+```
 
 > 提示：虚拟用户登陆，最大的好处就是我们之后可以通过 web 后台来控制！
