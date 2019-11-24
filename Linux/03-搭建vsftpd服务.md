@@ -31,37 +31,43 @@ $ apt install vsftpd
 
 2. 相关配置参数讲解：
 
-   | vsftpd 参数                              | 参数描述                                       |
-   | ---------------------------------------- | ---------------------------------------------- |
-   | anonymous_enable=NO                      | 禁用匿名用户登陆                               |
-   | local_enable=YES                         | 启用本地用户登陆                               |
-   | ssl_enable=NO                            | 禁用 ftps                                      |
-   | write_enable=YES                         | 允许 ftp 客户端写操作                          |
-   | listen=NO                                | 禁用 ipv4 监听方式                             |
-   | listen_ipv6=YES                          | 启用 ipv6 监听方式                             |
-   | listen_port=21                           | 监听端口                                       |
-   | port_enable=NO                           | 禁用主动模式                                   |
-   | pasv_enable=YES                          | 启用被动模式                                   |
-   | pasv_max_port=21001                      | 被动模式，端口号区间最小值                     |
-   | pasv_min_port=21099                      | 被动模式，端口号区间最大值                     |
-   | accept_timeout=60                        | ftp 连接的最长响应时间                         |
-   | file_open_mode=0666                      | 上传文件的权限                                 |
-   | idle_session_timeout=300                 | ftp 命令发出的最长响应时间                     |
-   | local_max_rate=8192                      | 本地用户最大数据传输速率                       |
-   | local_umask=022                          | 本地用户权限                                   |
-   | max_per_ip=3                             | 最多可连接 ip 数量                             |
-   | max_clients=10                           | 最多可连接的客户端数量                         |
-   | max_login_fails=3                        | 登陆失败 3 次，禁止登陆                        |
-   | trans_chunk_size=8192                    | 获得更加平滑的带宽限制器                       |
-   | chroot_local_user=YES                    | 将用户绑定到家目录，chroot_list 列出的用户除外 |
-   | chroot_list_enable=YES                   | 将用户绑定到家目录，chroot_list 列出的用户除外 |
-   | chroot_list_file=/etc/vsftpd/chroot_list | 将用户绑定到家目录，chroot_list 列出的用户除外 |
-   | userlist_enable=YES                      | 仅允许 user_list 列出的用户，登陆 vsftpd       |
-   | userlist_deny=NO                         | 仅允许 user_list 列出的用户，登陆 vsftpd       |
-   | userlist_file=/etc/vsftpd/user_list      | 仅允许 user_list 列出的用户，登陆 vsftpd       |
-   | pam_service_name=vsftpd                  | 此字符串是 vsftpd 将使用的 PAM 服务的名称      |
+   | vsftpd 参数                              | 参数描述                                                |
+   | ---------------------------------------- | ------------------------------------------------------- |
+   | anonymous_enable=NO                      | 禁用匿名用户登陆                                        |
+   | local_enable=YES                         | 启用本地用户登陆                                        |
+   | ssl_enable=NO                            | 禁用 ftps                                               |
+   | download_enable=YES                      | 允许 ftp 客户端下载文件                                 |
+   | write_enable=YES                         | 允许 ftp 客户端写操作                                   |
+   | file_open_mode=0666                      | 上传文件的权限                                          |
+   | local_umask=022                          | 本地用户权限                                            |
+   | listen=NO                                | 禁用 ipv4 监听方式                                      |
+   | listen_ipv6=YES                          | 启用 ipv6 监听方式                                      |
+   | listen_port=21                           | 监听端口                                                |
+   | port_enable=NO                           | 禁用主动模式                                            |
+   | pasv_enable=YES                          | 启用被动模式                                            |
+   | pasv_max_port=21001                      | 被动模式，端口号区间最小值                              |
+   | pasv_min_port=21099                      | 被动模式，端口号区间最大值                              |
+   | accept_timeout=60                        | 被动模式，60 秒无法连接成功就主动断开连接               |
+   | idle_session_timeout=600                 | 600 秒内，vsftpd 没有收到该客户端的操作指令，则断开链接 |
+   | data_connection_timeout=500              | 文件传输时，超过 500 秒没有完成就断开传输               |
+   | local_max_rate=8192                      | 本地用户最大数据传输速率                                |
+   | local_root=/server/www/default           | 设置本地用户的缺省目录                                  |
+   | max_per_ip=3                             | 最多可连接 ip 数量                                      |
+   | max_clients=10                           | 最多可连接的客户端数量                                  |
+   | max_login_fails=3                        | 登陆失败 3 次，禁止登陆                                 |
+   | trans_chunk_size=8192                    | 获得更加平滑的带宽限制器                                |
+   | chroot_local_user=YES                    | 将用户绑定到家目录，chroot_list 列出的用户除外          |
+   | chroot_list_enable=YES                   | 将用户绑定到家目录，chroot_list 列出的用户除外          |
+   | chroot_list_file=/etc/vsftpd/chroot_list | 将用户绑定到家目录，chroot_list 列出的用户除外          |
+   | userlist_enable=YES                      | 仅允许 user_list 列出的用户，登陆 vsftpd                |
+   | userlist_deny=NO                         | 仅允许 user_list 列出的用户，登陆 vsftpd                |
+   | userlist_file=/etc/vsftpd/user_list      | 仅允许 user_list 列出的用户，登陆 vsftpd                |
+   | pam_service_name=vsftpd                  | 设置 PAM 认证服务所使用的配置文件名                     |
+   | virtual_use_local_privs=yes              | 虚拟用户将使用与本地用户相同的权限                      |
+   | guest_enable=yes                         | 开启虚拟用户登陆                                        |
+   | guest_username=www                       | 虚拟用户映射的系统用户                                  |
 
-   > 提示：关于 vsftpd 配置参数的详细讲解，请到 [vsfptd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) 查阅
+> 提示：关于 vsftpd 配置参数的详细讲解，请到 [vsfptd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) 查阅
 
 3. 修改 vsftpd 的 PAM 配置文件
 
