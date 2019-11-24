@@ -1,0 +1,2 @@
+auth required pam_mysql.so user=vsftpd passwd=123456 host=localhost db=vsftpd table=user_pam usercolumn=name passwdcolumn=password crypt=2
+account required pam_mysql.so user=vsftpd passwd=123456 host=localhost db=vsftpd table=user_pam usercolumn=name passwdcolumn=password crypt=2
