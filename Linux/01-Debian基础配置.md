@@ -176,29 +176,62 @@ $ cp /etc/apt/sources.list{,.bak}
 $ vi /etc/apt/sources.list
 ```
 
-1. `sources.list` 案例：
+1. 完整的 `sources.list` 案例：
 
    ```conf
+   ## 安全更新（重要）
+   deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
+   deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
+
+   ## Debian 软件包镜像
+   # 基础仓库
    deb http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
    deb-src http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
-
+   # 更新仓库
    deb http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
    deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
-
+   # 后移植版本仓库
    deb http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
    deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
 
-   deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
-   deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
    ```
 
-2. 操作源镜像
+2. 常规 `sources.list` 案例：
+
+   通常并不需要 `non-free` 和 `contrib` 区块，具体如下：
+
+   ```conf
+   ## 安全更新（重要）
+   deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
+   deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
+
+   ## Debian 软件包镜像
+   # 基础仓库
+   deb http://mirrors.ustc.edu.cn/debian/ buster main
+   deb-src http://mirrors.ustc.edu.cn/debian/ buster main
+   # 更新仓库
+   deb http://mirrors.ustc.edu.cn/debian/ buster-updates main
+   deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main
+   # 后移植版本仓库
+   deb http://mirrors.ustc.edu.cn/debian/ buster-backports main
+   deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main
+   ```
+
+3. 操作源镜像
 
    | 指令               | 描述                 |
    | ------------------ | -------------------- |
    | `apt update`       | 更新本地源文件到最新 |
    | `apt upgrade`      | 更新软件包           |
    | `apt dist-upgrade` | 跨大版本更新软件包   |
+
+4. 镜像区块说明
+
+   | 镜像区块 | 描述                                                        |
+   | -------- | ----------------------------------------------------------- |
+   | main     | 遵从 Debian 自由软件指导方针（DFSG），并且不依赖于 non-free |
+   | non-free | 不遵从 Debian 自由软件指导方针（DFSG）                      |
+   | contrib  | 遵从 Debian 自由软件指导方针（DFSG），但依赖于 non-free     |
 
 ## 美化 bash 终端
 
