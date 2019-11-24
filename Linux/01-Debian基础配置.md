@@ -233,6 +233,8 @@ $ vi /etc/apt/sources.list
    | non-free | 不遵从 Debian 自由软件指导方针（DFSG）                      |
    | contrib  | 遵从 Debian 自由软件指导方针（DFSG），但依赖于 non-free     |
 
+   > 事实上收录到 `non-free` 和 `contrib` 仓库上的包是非常少的，而 `main` 仓库就有 5 万多个包！
+
 ## 美化 bash 终端
 
 修改用户根目录下的 `.bashrc` 可以美化 bash 控制台，具体如下：
