@@ -315,4 +315,11 @@ chroot_list_file=/etc/vsftpd/chroot_list
    | file_open_mode=0640 | ftp 上传的文件权限为 `640`         |
    | local_umask=027     | 修改了 linux 本地用户的权限为`750` |
 
-   > 提示：如果 web 用户需要更多的，权限就增加用户组权限即可！
+   `/server/php/etc/php-fpm.d/www.conf` 参数修改：
+
+   | 参数          | 描述                                    |
+   | ------------- | --------------------------------------- |
+   | user=nobody   | 必须修改为： `user=nginx` 或 `user=www` |
+   | group=nogroup | 不需要修改                              |
+
+> 提示：如果 web 用户需要更多的，权限就增加用户组权限即可！

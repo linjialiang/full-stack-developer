@@ -2,17 +2,19 @@
 
 ```ini
 [www]
-;FPM 子进程运行的Unix用户，必须设置
-user = nobody
-;FPM 子进程运行的Unix用户组，必须设置。
-group = nogroup
+;FPM 子进程运行的Unix用户，必须拥有文件的相关操作权限
+user = nginx
+;FPM 子进程运行的Unix用户组，必须操作文件的相关拥有权限
+group = nginx
 
 ;默认是以 TCP 端口监听的
 ;listen = 127.0.0.1:9000
 ;我们修改成为，在unix套接字上监听
 listen = /server/run/php/php73-fpm.sock
 listen.backlog = 511
+;必须跟web用户一致
 listen.owner = nginx
+;必须跟web用户组一致
 listen.group = nginx
 listen.mode = 0660
 listen.allowed_clients = 127.0.0.1
