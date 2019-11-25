@@ -80,7 +80,7 @@ samba 的配置文件内容主要分为以下 3 类：
 | `[homes]`        | 默认模块 |
 | `[自定义共享名]` | 共享模块 |
 
-### 全局模块
+> 全局模块和默认模块不需要修改，主要修改 `自定义共享模块` 即可！
 
 ### 共享模块
 
@@ -92,17 +92,21 @@ samba 配置文件下，可以根据自己需要，配置多个共享分组，�
 | `comment = message`                  | 该共享分组描述                         |
 | `path = 路径`                        | 该共享分组路径                         |
 | `browseable = yes/no`                | 指定该共享是否可以浏览                 |
-| `writable = yes/no`                  | 指定该共享路径是否可写                 |
 | `read only = yes/no`                 | 指定该共享路径是否只读                 |
 | `available = yes/no`                 | 指定该共享资源是否可用                 |
 | `admin users = user1, @group1`       | 指定该共享的管理员（具有完全控制权限） |
 | `valid users = user1, user2`         | 允许访问该共享的用户                   |
-| `invalid users = user1, user2`       | 禁止访问该共享的用户                   |
 | `write list = user1, user2, @group1` | 允许写入该共享的用户                   |
-| `public = yes/no`                    | 指定该共享是否允许 guest 账户访问      |
-| `guest ok = yes/no`                  | 与 `public` 相同                       |
+| `guest ok = yes/no`                  | 指定该共享是否允许 guest 账户访问      |
 | `create mask = 0640`                 | 上传文件权限                           |
 | `directory mask = 0750`              | 上传目录权限                           |
+| `directory mask = 0750`              | 上传目录权限                           |
+| `directory mask = 0750`              | 上传目录权限                           |
+| `force group = test`                 | 上传文件的所属用户                     |
+| `force user = test`                  | 上传文件的所属用户组                   |
+| ~~`invalid users = user1, user2`~~   | 禁止访问该共享的用户                   |
+| ~~`writable = yes/no`~~              | ~~指定该共享路径是否可写~~             |
+| ~~`public = yes/no`~~                | ~~指定该共享是否允许 guest 账户访问~~  |
 
 > 提示：`writable` 和 `read only` 不能同时设置成 `yes`！
 
@@ -113,18 +117,14 @@ samba 配置文件下，可以根据自己需要，配置多个共享分组，�
 1. 最简单的一个共享分组
 
    ```sh
-   ...
-   [www]
-   comment = www
-   path = /server/www
-   browseable = yes
-   writable = yes
-   read only = no
-   available = yes
-   admin users = www
-   valid users = @www
-   write list = @www
-   public = no
-   create mask = 0644
-   directory mask = 0755
+   [test]
+      	admin users = test
+      	comment = this is my test samba
+      	create mask = 0640
+      	directory mask = 0750
+      	force group = test
+      	force user = test
+      	path = /test
+      	valid users = test
+      	write list = test
    ```
