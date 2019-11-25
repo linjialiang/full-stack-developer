@@ -200,6 +200,15 @@ $ apt install vsftpd
    | crypt=3  | md5 加密                     |
    | crypt=4  | SHA1 加密                    |
 
+6. 创建映射用户
+
+   创建一个 `Linux用户`，所有 vsftpd 虚拟用户都映射到该用户上
+
+   ```sh
+   $ groupadd -g 2001 www
+   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2001 -s /usr/sbin/nologin -M -g www www
+   ```
+
 ### 创建虚拟用户单独配置文件
 
 在 `/server/vsftpd` 目录下，创建与虚拟用户同名的配置文件，并自定义根目录地址，具体操作如下：
