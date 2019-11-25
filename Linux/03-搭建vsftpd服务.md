@@ -206,8 +206,11 @@ $ apt install vsftpd
 
    ```sh
    $ groupadd -g 2001 www
-   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2001 -s /usr/sbin/nologin -M -g www www
+   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2001 -s /usr/sbin/nologin -d /server/www/default -M -g www www
+   $ mkdir /server/www/default
    ```
+
+   > 提示：映射的 Linux 用户的家目录必须是存在的，并且映射的 Linux 用户需要允许访问家目录（进入目录的权限，`chmod +x`）
 
 ### 创建虚拟用户单独配置文件
 
@@ -260,7 +263,7 @@ chroot_list_file=/etc/vsftpd/chroot_list
 
 ## vsfptd 附录
 
-1. 问题一：vsftpd 目录权限设置
+1. vsftpd 权限设置
 
    ```sh
    任何linux服务权限都需要考虑到Linux权限问题，即：
@@ -269,3 +272,40 @@ chroot_list_file=/etc/vsftpd/chroot_list
             file_open_mode=0666
             local_umask=022
    ```
+
+2. vsftpd 站点根目录权限
+
+   根目录权限允许设置成 对应用户有执行权限，其它用户不可见，即：
+
+   ```sh
+   $ chown www:www /server/www
+   $ chmod 100 /server/www
+   $ chown www:www /server/www/qyadmin
+   $ chmod 010 /server/www/qyadmin
+   ```
+
+3. vsftpd 站点文件权限设置
+
+   通常处理 web 的用户与 ftp 用户是不同的，所以我们一般保证：
+
+   | 文件分类 | web 用户权限  | ftp 用户权限      |
+   | -------- | ------------- | ----------------- |
+   | 目录     | 可执行（1-x） | 执行+读+写(5-rwx) |
+   | 文件     | 可读（4-r）   | 读+写（6-rw）     |
+
+4. web 用户对目录权限说明
+
+   为了保证站点内容只允许 `ftp用户` 和 `web用户` 操作，我们可以将 `web用户` 加入到 `ftp用户组` 中，即：
+
+   ```sh
+   $ usermod -G www nginx
+   ```
+
+   接着按如下表设置文件权限即可：
+
+   | 文件分类 | 用户权限          | 用户组权限 | 其他用户权限 |
+   | -------- | ----------------- | ---------- | ------------ |
+   | 目录     | 执行+读+写(5-rwx) | 执行(1-x)  | 空(0)        |
+   | 文件     | 读+写(4-rw)       | 读(4-r)    | 空(0)        |
+
+   > 提示：如果 web 用户需要更多的，权限就增加用户组权限即可！
