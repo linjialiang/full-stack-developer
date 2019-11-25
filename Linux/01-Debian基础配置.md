@@ -217,6 +217,25 @@ $ vi /etc/apt/sources.list
    deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main
    ```
 
+   > 163 源镜像，应该是浙江地区最快的镜像了吧：
+
+   ```conf
+   ## 安全更新（重要）
+   deb http://mirrors.163.com/debian-security/ buster/updates main
+   deb-src http://mirrors.163.com/debian-security/ buster/updates main
+
+   ## Debian 软件包镜像
+   # 基础仓库
+   deb http://mirrors.163.com/debian/ buster main
+   deb-src http://mirrors.163.com/debian/ buster main
+   # 更新仓库
+   deb http://mirrors.163.com/debian/ buster-updates main
+   deb-src http://mirrors.163.com/debian/ buster-updates main
+   # 后移植版本仓库
+   deb http://mirrors.163.com/debian/ buster-backports main
+   deb-src http://mirrors.163.com/debian/ buster-backports main
+   ```
+
 3. 操作源镜像
 
    | 指令               | 描述                 |
