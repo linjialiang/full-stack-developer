@@ -188,7 +188,7 @@ $ cp www.conf{.default,}
 
 1. 工作池用户
 
-   与 nginx 的用户保持一致：
+   与 nginx 的用户保持一致即可：
 
    ```sh
    # 创建一个名为nginx，id号为2000的用户组
@@ -196,6 +196,8 @@ $ cp www.conf{.default,}
    # 创建一个名为nginx，id号为2000的用户，所属用户组为nginx，并且不创建家目录（-M 不创建家目录）
    $ useradd -c 'Users of the Nginx service and php-fpm service' -u 2000 -s /usr/sbin/nologin -M -g nginx nginx
    ```
+
+   > 提示：自己创建的用户权限与 nobody 差不多，好处是跟 nobody 区分开，这样就不允许 web 以外的用户操作，具体讲解见 `搭建vsftpd服务`
 
 2. 创建 unix 套接字监听文件所在目录：
 
