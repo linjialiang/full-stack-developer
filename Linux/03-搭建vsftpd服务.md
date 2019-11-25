@@ -248,3 +248,15 @@ chroot_list_file=/etc/vsftpd/chroot_list
 ```
 
 > 提示：虚拟用户登陆，最大的好处就是我们之后可以通过 web 后台来控制！
+
+## vsfptd 附录
+
+1. 问题一：vsftpd 目录权限设置
+
+   ```sh
+   任何linux服务权限都需要考虑到自身权限问题，即：
+       1. chmod chown 设置的权限
+       2. vsfptd 设置的权限
+            file_open_mode=0666
+            local_umask=022
+   ```
