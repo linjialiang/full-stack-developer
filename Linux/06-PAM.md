@@ -10,6 +10,7 @@
 | 模块路径     | `/usr/lib/x86_64-linux-gnu/security`                                         |
 | 配置文件路径 | `/etc/pam.d/` 目录下的一系列配置文件                                         |
 | 官方地址     | http://www.linux-pam.org/                                                    |
+| 中文手册     | https://www.docs4dev.com/docs/zh/linux-pam/1.1.2/reference                   |
 
 > 提示：上文指的是 `Debian10.x` 下的 PAM 模块路径，其他发行版路径可能不一样！
 
