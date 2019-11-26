@@ -52,15 +52,12 @@ samba 有三个守护进程，分别为：
 
    指令格式：`pdbedit [选项] 用户名`
 
-   | 选项          | 选项说明                                      |
-   | ------------- | --------------------------------------------- |
-   | `-a`          | 添加系统用户为 smb 用户                       |
-   | `-r`          | 修改 smb 用户名（允许跟系统用户名不同）       |
-   | `-x`          | 删除 smb 用户                                 |
-   | `-L`          | 列出 smb 用户列表，读取 passdb.tdb 数据库文件 |
-   | `-L -v`       | 列出 smb 用户列表，并附带详细信息             |
-   | `-c "[D]" -u` | 暂停 smb 用户                                 |
-   | `-c "[]" -u`  | 恢复 smb 用户                                 |
+   | 选项    | 选项说明                                      |
+   | ------- | --------------------------------------------- |
+   | `-a`    | 添加系统用户为 smb 用户                       |
+   | `-x`    | 删除 smb 用户                                 |
+   | `-L`    | 列出 smb 用户列表，读取 passdb.tdb 数据库文件 |
+   | `-L -v` | 列出 smb 用户列表，并附带详细信息             |
 
    使用 `pdbedit -h` 查看更多相关指令
 
@@ -74,57 +71,87 @@ samba 虽然有多个守护进程，但是配置项都在 `/etc/samba/smb.conf` 
 
 samba 的配置文件内容主要分为以下 3 类：
 
-| 内容分类         | 描述     |
-| ---------------- | -------- |
-| `[global]`       | 全局模块 |
-| `[homes]`        | 默认模块 |
-| `[自定义共享名]` | 共享模块 |
+| 内容分类         | 描述         |
+| ---------------- | ------------ |
+| `[global]`       | 全局模块     |
+| `[homes]`        | 默认共享模块 |
+| `[自定义共享名]` | 共享模块     |
 
 > 全局模块和默认模块不需要修改，主要修改 `自定义共享模块` 即可！
+
+### 全局模块
+
+有几个参数需要设置，具体如下：
+
+| 参数                           | 操作        | 参数说明                                          |
+| ------------------------------ | ----------- | ------------------------------------------------- |
+| `security = USER`              | 新增        | 将 samba 设置成，必须用户认证（新版就是默认设置） |
+| `map to guest = bad user`      | 注释        | 将登陆不成功的用户自动改成 `guest` 用户           |
+| `usershare allow guests = yes` | 修改为 `no` | 允许 `guest` 用户登陆                             |
+
+> 提示： `guest` 在 Linux 下面就是 `nobody`
+
+### 默认共享模块
+
+`共享模块` 没有设置的参数，将自动获取该模块里的参数,参数与 `共享模块` 完全相同！
 
 ### 共享模块
 
 samba 配置文件下，可以根据自己需要，配置多个共享分组，具体参数如下：
 
-| `[共享分组]`参数                     | 参数说明                               |
-| ------------------------------------ | -------------------------------------- |
-| `[共享分组]`                         | 该共享分组名                           |
-| `comment = message`                  | 该共享分组描述                         |
-| `path = 路径`                        | 该共享分组路径                         |
-| `browseable = yes/no`                | 指定该共享是否可以浏览                 |
-| `read only = yes/no`                 | 指定该共享路径是否只读                 |
-| `available = yes/no`                 | 指定该共享资源是否可用                 |
-| `admin users = user1, @group1`       | 指定该共享的管理员（具有完全控制权限） |
-| `valid users = user1, user2`         | 允许访问该共享的用户                   |
-| `write list = user1, user2, @group1` | 允许写入该共享的用户                   |
-| `guest ok = yes/no`                  | 指定该共享是否允许 guest 账户访问      |
-| `create mask = 0640`                 | 上传文件权限                           |
-| `directory mask = 0750`              | 上传目录权限                           |
-| `directory mask = 0750`              | 上传目录权限                           |
-| `directory mask = 0750`              | 上传目录权限                           |
-| `force group = test`                 | 上传文件的所属用户                     |
-| `force user = test`                  | 上传文件的所属用户组                   |
-| ~~`invalid users = user1, user2`~~   | 禁止访问该共享的用户                   |
-| ~~`writable = yes/no`~~              | ~~指定该共享路径是否可写~~             |
-| ~~`public = yes/no`~~                | ~~指定该共享是否允许 guest 账户访问~~  |
+| `[共享分组]`参数                     | 参数说明                                  |
+| ------------------------------------ | ----------------------------------------- |
+| `[共享分组]`                         | 该共享分组名                              |
+| `comment = message`                  | 该共享分组描述                            |
+| `path = 路径`                        | 该共享分组路径                            |
+| `browseable = yes/no`                | 指定该共享是否可以浏览                    |
+| `read only = yes/no`                 | 指定该共享路径是否只读                    |
+| `available = yes/no`                 | 指定该共享资源是否可用                    |
+| `admin users = user1, @group1`       | 此列表的用户将映射为 `系统用户 root` 登陆 |
+| `valid users = user1, user2`         | 允许访问该共享的用户                      |
+| `write list = user1, user2, @group1` | 允许写入该共享的用户                      |
+| `guest ok = yes/no`                  | 指定该共享是否允许 guest 账户访问         |
+| `create mask = 0640`                 | 上传文件权限                              |
+| `directory mask = 0750`              | 上传目录权限                              |
+| `force group = test`                 | 指定上传文件的所属用户为 test             |
+| `force user = test`                  | 指定上传文件的所属用户组为 test           |
+| `invalid users = user1, user2`       | 禁止访问该共享的用户                      |
+| `writable = yes/no`                  | 指定该共享路径是否任意用户可写            |
+| `public = yes/no`                    | 指定该共享是否允许 guest 账户访问         |
 
 > 提示：`writable` 和 `read only` 不能同时设置成 `yes`！
 
 ## 创建 samba 用户
 
-## 局域网直接开发
+我们推荐使用 `pdbedit` 工具将 `Linux用户` 变成 samba 用户，使用 `smbpasswd` 来修改用户的 samba 密码
 
-1. 最简单的一个共享分组
+1. 创建 Linux 系统用户
 
    ```sh
-   [test]
-      	admin users = test
-      	comment = this is my test samba
-      	create mask = 0640
-      	directory mask = 0750
-      	force group = test
-      	force user = test
-      	path = /test
-      	valid users = test
-      	write list = test
+   $ groupadd test
+   $ useradd -c 'this is samba user' -u 3001 -M -g test test
    ```
+
+2. 将 Linux 用户变成 smb 用户
+
+   ```sh
+   $ pdbedit -a test
+   # 或者
+   $ pdbedit -a -u test
+   ```
+
+3. 删除 smb 用户
+
+   ```sh
+   $ pdbedit -x test
+   ```
+
+4. 查看 smb 用户
+
+   ```sh
+   $ pdbedit -L
+   # 或者
+   $ pdbedit -Lv
+   ```
+
+> 这是一个 smb 配置文件案例点击 [smb.conf](./source/smb.conf) 查阅
