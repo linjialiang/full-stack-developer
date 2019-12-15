@@ -2,13 +2,14 @@
 
 > 该文档是基于 composer 官方手册的精简版本！
 
-| 指令                    | 描述                         |
-| ----------------------- | ---------------------------- |
-| composer init           | 初始化 composer              |
-| composer install        | 安装 composer 包             |
-| composer update         | 更新 composer 包             |
-| composer require        | 申明当前 composer 包的依赖项 |
-| composer create-project | 创建项目                     |
+| 指令                    | 描述                               |
+| ----------------------- | ---------------------------------- |
+| composer init           | 初始化 composer                    |
+| composer install        | 安装 composer 包                   |
+| composer update         | 更新 composer 包                   |
+| composer require        | 申明并安装当前 composer 包的依赖项 |
+| composer remove         | 移除当前 composer 包的依赖项       |
+| composer create-project | 创建 composer 项目                 |
 
 > 次要指令
 
@@ -149,7 +150,7 @@ $ composer require
 2. 申明依赖举例:
 
    ```sh
-   $ composer require topthink/framework:6.0.*-dev linjialiang/hash:0.0.6
+   $ composer require topthink/framework:6.0.x-dev linjialiang/hash:0.0.6
    ```
 
 > 注意：`:version` 缺省为最新版本，也可以自己指定一个固定版本号，支持使用通配符指定次版本号

@@ -15,17 +15,21 @@ WAMP 将自带以下两款 web 端数据库管理系统：
 
 ## 安装 phpMyAdmin
 
-phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，有 PHP 语言编写。
+phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写。
 
 ```sh
 $ c:
-$ cd C:\wamp\base\default
+$ cd C:\\wamp
 $ composer create-project phpmyadmin/phpmyadmin pma
 $ composer update
 ```
 
-> 提示：浏览器输入 `localhost/phpmyadmin` 网址，即可访问！
-
 ## 安装 adminer
 
-adminer 是一个单文件、简洁的数据库管理系统，高效的执行效率使得其大受程序员欢迎！
+adminer 是 PHP 语言编写，支持多种数据库系统，由于其出色的执行速度使得其大受程序员欢迎！
+
+```sh
+$ cd C:\\wamp
+$ composer create-project vrana/adminer
+$ composer update
+```
