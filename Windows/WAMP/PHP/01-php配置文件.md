@@ -15,6 +15,7 @@ serialize_precision = -1
 disable_functions =
 disable_classes =
 zend.enable_gc = On
+zend.exception_ignore_args = Off
 expose_php = On
 max_execution_time = 30
 max_input_time = 60
@@ -27,7 +28,6 @@ log_errors_max_len = 1024
 ignore_repeated_errors = Off
 ignore_repeated_source = Off
 report_memleaks = On
-html_errors = On
 variables_order = "GPCS"
 request_order = "GP"
 register_argc_argv = Off
@@ -49,20 +49,20 @@ allow_url_include = Off
 default_socket_timeout = 60
 ;extension=bz2
 ;extension=curl
+;extension=ffi
 ;extension=fileinfo
 ;extension=gd2
 ;extension=gettext
 ;extension=gmp
 ;extension=intl
 ;extension=imap
-;extension=interbase
 ;extension=ldap
 extension=mbstring
 ;extension=exif      ; Must be after mbstring as it depends on it
 ;extension=mysqli
 ;extension=oci8_12c  ; Use with Oracle Database 12c Instant Client
 ;extension=odbc
-;extension=openssl
+extension=openssl
 ;extension=pdo_firebird
 extension=pdo_mysql
 ;extension=pdo_oci
@@ -104,13 +104,6 @@ odbc.max_persistent = -1
 odbc.max_links = -1
 odbc.defaultlrl = 4096
 odbc.defaultbinmode = 1
-[Interbase]
-ibase.allow_persistent = 1
-ibase.max_persistent = -1
-ibase.max_links = -1
-ibase.timestampformat = "%Y-%m-%d %H:%M:%S"
-ibase.dateformat = "%Y-%m-%d"
-ibase.timeformat = "%H:%M:%S"
 [MySQLi]
 mysqli.max_persistent = -1
 mysqli.allow_persistent = On
@@ -178,6 +171,7 @@ ldap.max_links = -1
 [opcache]
 [curl]
 [openssl]
+[ffi]
 [Xdebug]
 zend_extension=xdebug
 xdebug.profiler_append = 0

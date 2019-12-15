@@ -100,6 +100,21 @@ Alias /adminer ${WAMP_ROOT}/base/adminer
     </RequireAll>
 </Directory>
 
+Alias /phpmyadmin ${WAMP_ROOT}/base/phpmyadmin
+<Directory ${WAMP_ROOT}/base/phpmyadmin>
+    Options FollowSymLinks
+    DirectoryIndex index.php
+    <RequireAll>
+        Require local
+    </RequireAll>
+</Directory>
+<Directory ${WAMP_ROOT}/base/phpmyadmin/libraries>
+    Require all denied
+</Directory>
+<Directory ${WAMP_ROOT}/base/phpmyadmin/setup/lib>
+    Require all denied
+</Directory>
+
 <IfModule include_module>
     Include "${WAMP_ROOT}/web/sites/*.conf"
 </IfModule>

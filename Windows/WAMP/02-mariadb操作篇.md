@@ -83,10 +83,12 @@ datadir = "c:/wamp/web/data"
    > mysql_install_db.exe --datadir=c:/wamp/web/data --password=123456
    ```
 
-   | 便捷操作                                        |
-   | ----------------------------------------------- |
-   | 双击 `mysql_install_db.exe` 生成 `datadir` 目录 |
-   | 默认路径：`c:\wamp\base\mariadb\data`           |
+   > 便捷操作：
+
+   | 步骤 | 具体操作                                        |
+   | ---- | ----------------------------------------------- |
+   | 01   | 双击 `mysql_install_db.exe` 生成 `datadir` 目录 |
+   | 02   | 默认路径：`c:\wamp\base\mariadb\data`           |
 
 2. 移除 `datadir` 文件
 
