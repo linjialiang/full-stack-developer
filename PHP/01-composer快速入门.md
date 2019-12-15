@@ -316,12 +316,12 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
 ### Windows 下全局调用 `composer.phar`
 
-| 步骤 | 操作说明                                          |
-| ---- | ------------------------------------------------- |
-| 01   | 将 `composer.phar` 移动到 php 跟目录              |
-| 02   | 打开 cmd，进入 php 根目录，并执行第 3 步骤指令    |
-| 03   | `echo @php "%~dp0composer.phar" %\*>composer.bat` |
-| 04   | 将 `php 根目录` 的路径加入到系统环境变量中        |
+| 步骤 | 操作说明                                         |
+| ---- | ------------------------------------------------ |
+| 01   | 将 `composer.phar` 移动到 php 跟目录             |
+| 02   | 打开 cmd，进入 php 根目录，并执行第 3 步骤指令   |
+| 03   | `echo @php "%~dp0composer.phar" %*>composer.bat` |
+| 04   | 将 `php 根目录` 的路径加入到系统环境变量中       |
 
 ### 切换 composer 镜像
 
@@ -333,10 +333,22 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
    $ composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
    ```
 
+   > 取消配置
+
+   ```sh
+   $ composer config -g --unset repos.packagist
+   ```
+
 2. 仅限当前工程使用镜像，全局操作中 `去掉 -g` 即可：
 
    ```sh
    $ composer config repo.packagist composer https://mirrors.aliyun.com/composer/
+   ```
+
+   > 取消配置
+
+   ```sh
+   $ composer config --unset repos.packagist
    ```
 
 3. 恢复官方镜像：
@@ -349,6 +361,24 @@ composer 在不同平台安装基本一致，[访问官方](https://getcomposer.
 
    ```sh
    $ composer -vvv require alibabacloud/sdk
+   ```
+
+5. 清除缓存
+
+   ```sh
+   $ composer clear
+   ```
+
+6. 若项目之前已通过其他源安装，则需要更新 composer.lock 文件，执行命令：
+
+   ```sh
+   $ composer update --lock
+   ```
+
+7. 执行诊断命令：
+
+   ```sh
+   $ composer diagnose
    ```
 
 ## 附录一：Linux 操作 composer 须知
