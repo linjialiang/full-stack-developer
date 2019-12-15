@@ -56,8 +56,8 @@ WAMP 开发环境目录
 |   |   ├─bin                               加入系统环境变量
 |   |
 |   ├─default                               httpd站点缺省位置
-|   |   ├─adminer                           数据库管理系统
-|   |   ├─phpmyadmin                        数据库管理系统
+|   |   ├─pma                               phpMyAdmin 数据库管理系统
+|   |   |   ├─adminer                       adminer 数据库管理系统
 |   |   ├─index.php                         关于 PHP 配置的信息
 |   |
 ├─web                                       wamp配置目录
