@@ -213,3 +213,7 @@ error_reporting(错误级别别名与位运算符组合);
 | 04   | 将 `C:\wamp\base\ImageMagick\bin` 加入到 `系统变量` 中   |
 
 > 提示：`ImageMagick` 必须加入的是 `系统变量` 而不是 `用户变量`(httpd 不会获取 `用户变量`信息)！
+
+## 安装 composer
+
+composer 安装教程请查阅 [composer 快速入门](./../../PHP/01-composer快速入门.md)

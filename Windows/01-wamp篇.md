@@ -17,7 +17,6 @@ WAMP 开发环境涉及到的软件包列表如下：
 | 01   | `httpd-2.4.41-win64-VS16.zip`             | web 服务器   |
 | 02   | `mariadb-10.4.11-winx64.zip`              | 数据库系统   |
 | 03   | `php-7.4.0-Win32-vc15-x64.zip`            | php 解释器   |
-| 04   | `composer-1.9.1.7z`                       | 包管理程序   |
 | 05   | `php_xdebug-2.9.0-7.4-vc15-x86_64.dll.7z` | php 报错扩展 |
 | 06   | `php_imagick-3.4.4-7.4-ts-vc15-x64.zip`   | php 图形扩展 |
 | 07   | `ImageMagick-7.0.7-11-vc15-x64.zip`       | 图形控制程序 |
@@ -87,12 +86,13 @@ WAMP 开发环境目录
 
 通过自己搭建 wamp，可深入了解各类软件的作用
 
-| wamp 具体搭建                                |
-| -------------------------------------------- |
-| [httpd 操作篇](./WAMP/01-httpd操作篇.md)     |
-| [mariadb 操作篇](./WAMP/02-mariadb操作篇.md) |
-| [php 操作篇](./WAMP/03-php操作篇.md)         |
-| [wamp 维护篇](./WAMP/04-wamp维护篇.md)       |
+| wamp 具体搭建                                             |
+| --------------------------------------------------------- |
+| [httpd 操作篇](./WAMP/01-httpd操作篇.md)                  |
+| [mariadb 操作篇](./WAMP/02-mariadb操作篇.md)              |
+| [php 操作篇](./WAMP/03-php操作篇.md)                      |
+| [安装 MariaDB 管理系统](./WAMP/04-安装mariadb管理系统.md) |
+| [wamp 维护篇](./WAMP/05-wamp维护篇.md)                    |
 
 ## 源码参考
 
