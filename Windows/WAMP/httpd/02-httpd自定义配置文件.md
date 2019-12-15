@@ -11,6 +11,7 @@ LoadModule php7_module ${WAMP_ROOT}/base/php/php7apache2_4.dll
     PHPINIDir "${WAMP_ROOT}/base/php"
 </IfModule>
 
+ServerName www.example.com:${HTTP_PORT}
 ServerAdmin admin@example.com
 
 <Directory />
@@ -91,28 +92,28 @@ LogLevel warn
     SSLRandomSeed connect builtin
 </IfModule>
 
-Alias /adminer ${WAMP_ROOT}/base/adminer
-<Directory ${WAMP_ROOT}/base/adminer>
-    Options FollowSymLinks
-    DirectoryIndex adminer.php
-    <RequireAll>
-        Require local
-    </RequireAll>
-</Directory>
-
-Alias /phpmyadmin ${WAMP_ROOT}/base/phpmyadmin
-<Directory ${WAMP_ROOT}/base/phpmyadmin>
+Alias /phpmyadmin ${WAMP_ROOT}/pma
+<Directory ${WAMP_ROOT}/pma>
     Options FollowSymLinks
     DirectoryIndex index.php
     <RequireAll>
         Require local
     </RequireAll>
 </Directory>
-<Directory ${WAMP_ROOT}/base/phpmyadmin/libraries>
+<Directory ${WAMP_ROOT}/pma/libraries>
     Require all denied
 </Directory>
-<Directory ${WAMP_ROOT}/base/phpmyadmin/setup/lib>
+<Directory ${WAMP_ROOT}/pma/setup/lib>
     Require all denied
+</Directory>
+
+Alias /adminer ${WAMP_ROOT}/adminer/adminer
+<Directory ${WAMP_ROOT}/adminer/adminer>
+    Options FollowSymLinks
+    DirectoryIndex index.php
+    <RequireAll>
+        Require local
+    </RequireAll>
 </Directory>
 
 <IfModule include_module>
