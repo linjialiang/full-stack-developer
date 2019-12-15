@@ -164,57 +164,6 @@ pid-file="c:/wamp/base/conf/mariadb.pid"
 
 > 提示：需要保证目录存在，并且 `mariadb.pid` 文件不能创建！
 
-## ~~配置 phpmyadmin~~
-
-~~phpmyadmin 是一款非常优秀的 web 端数据库管理平台，使用语言 php，支持 mysql 和 mariadb（当前已经移除，需要可自行添加）~~
-
-1.  phpmyadmin 默认配置文件
-
-    `libraries/config.default.php` 是 phpmyadmin 的默认配置文件，建议不要修改
-
-2.  创建 phpmyadmin 配置文件
-
-    所有自己配置的内容都放在 `config.inc.php` 文件内（phpmyadmin 根目录，如果不存在就需要手动新建一个）！
-
-3.  `config.sample.inc.php` 文件
-
-    这是让我们参考的文件，我们也可以直接复制一份黏贴到 `config.inc.php` 文件
-
-    > 简洁的 config.inc.php 案例：
-
-    ```php
-    <?php
-    # 短语密码,cookie认证时不能为空，大于32为佳
-    $cfg['blowfish_secret'] = 'fvNqC4^HR8WELJ7$C5UD2a&xk6w@Rfr4M(MBU';
-    $i = 0;
-    $i++;
-    # 设置登陆方式为cookie
-    $cfg['Servers'][$i]['auth_type'] = 'cookie';
-    $cfg['Servers'][$i]['host'] = 'localhost';
-    $cfg['Servers'][$i]['compress'] = false;
-    $cfg['Servers'][$i]['AllowNoPassword'] = false;
-    $cfg['UploadDir'] = '';
-    $cfg['SaveDir'] = '';
-    # 设置主题
-    $cfg['ThemeDefault'] = 'original';
-    ?>
-    ```
-
-4.  提示部分功能未启用的解决方法
-
-    | 删除数据库        | 将 `phpmyadmin` 数据库删除                               |
-    | ----------------- | -------------------------------------------------------- |
-    | 登陆 `phpMyAdmin` | 首页找到原因那里，进入原因页面                           |
-    | 创建数据库        | 点击 `Create` 会自动创建 `phpmyadmin` 数据库，这样即可！ |
-
-5.  phpMyAdmin 一些注意事项
-
-    |                                                                                 |
-    | ------------------------------------------------------------------------------- |
-    | 删除`phpmyadmin`数据库，高级功能将无法使用(找到原因 `>` 点击 `Create` 自动创建) |
-    | phpMyAdmin 需要 php 开启 mysqli 扩展                                            |
-    | cookie 登陆方式默认需要用户的密码不为空（空密码登陆需要另外配置）               |
-
 ## 附录一：
 
 `InnoDB` 索引的 mariadb 如何拷贝数据库到另一台服务器上？

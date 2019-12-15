@@ -217,3 +217,15 @@ error_reporting(错误级别别名与位运算符组合);
 ## 安装 composer
 
 composer 安装教程请查阅 [composer 快速入门](./../../PHP/01-composer快速入门.md)
+
+## 附录
+
+1. php 不能动态加载 `php_curl.dll` 扩展
+
+   答：因为 httpd 的 bin 目录下缺少 1 个 openssl 库文件 `libssh2.dll`：
+
+   | 步骤 | 具体操作                                    |
+   | ---- | ------------------------------------------- |
+   | 01   | 在 php 根目录下找到 `libssh2.dll` 文件      |
+   | 02   | 将 `libssh2.dll` 复制到 httpd 的 bin 目录下 |
+   | 03   | 重启 httpd 服务                             |
