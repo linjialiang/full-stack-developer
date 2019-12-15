@@ -6,22 +6,21 @@
 
 | 最新版本 | 百度网盘地址                                    | 密码   |
 | -------- | ----------------------------------------------- | ------ |
-| `v5.0.2` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
+| `v6.0.0` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
 
 ## 软件列表
 
 WAMP 开发环境涉及到的软件包列表如下：
 
-| 序号 | 包名                                    | 描述           |
-| ---- | --------------------------------------- | -------------- |
-| 01   | `httpd-2.4.41-win64-VS16.zip`           | web 服务器     |
-| 02   | `mariadb-10.4.8-winx64.zip`             | 数据库系统     |
-| 03   | `php-7.3.11-Win32-VC15-x64.zip`         | php 解释器     |
-| 04   | `adminer-4.7.4.php.7z`                  | 数据库管理系统 |
-| 05   | `composer-1.9.0.7z`                     | 包管理程序     |
-| 06   | `php_xdebug.7z`                         | php 报错扩展   |
-| 07   | `php_imagick-3.4.4-7.3-ts-vc15-x64.zip` | php 图形扩展   |
-| 08   | `ImageMagick-7.0.7-11-vc15-x64.zip`     | 图形控制程序   |
+| 序号 | 包名                                      | 描述         |
+| ---- | ----------------------------------------- | ------------ |
+| 01   | `httpd-2.4.41-win64-VS16.zip`             | web 服务器   |
+| 02   | `mariadb-10.4.11-winx64.zip`              | 数据库系统   |
+| 03   | `php-7.4.0-Win32-vc15-x64.zip`            | php 解释器   |
+| 04   | `composer-1.9.1.7z`                       | 包管理程序   |
+| 05   | `php_xdebug-2.9.0-7.4-vc15-x86_64.dll.7z` | php 报错扩展 |
+| 06   | `php_imagick-3.4.4-7.4-ts-vc15-x64.zip`   | php 图形扩展 |
+| 07   | `ImageMagick-7.0.7-11-vc15-x64.zip`       | 图形控制程序 |
 
 > 注意：WAMP 开发环境需要 `VC14_x64` 运行库支持
 
@@ -46,12 +45,10 @@ WAMP 开发环境目录
 |   |  ├─my.ini                             mariadb配置文件
 |   |  └─ ...
 |   |
-|   ├─php                                   php 7.3版本
+|   ├─php                                   php 7.4版本
 |   |  ├─ext                                模块目录
 |   |  ├─php.ini                            php主配置文件
 |   |  └─ ...
-|   |
-|   ├─adminer                               网页版数据库管理系统
 |   |
 |   ├─conf                                  公用配置文件目录
 |   |   ├─httpd.conf                        httpd的公用配置文件
@@ -60,6 +57,9 @@ WAMP 开发环境目录
 |   |   ├─bin                               加入系统环境变量
 |   |
 |   ├─default                               httpd站点缺省位置
+|   |   ├─adminer                           数据库管理系统
+|   |   ├─phpmyadmin                        数据库管理系统
+|   |   ├─index.php                         关于 PHP 配置的信息
 |   |
 ├─web                                       wamp配置目录
 |   ├─sites                                 站点配置文件目录
