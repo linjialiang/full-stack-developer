@@ -233,6 +233,10 @@ xdebug.remote_port = 9000
    | 02   | 找到 `CLI Interpreter` ，并点击 `...` 增加 php 版本 |
    | 03   | 菜单： `运行 > 编辑配置`，选择 `+` 按需增加配置     |
 
+   > 附录：phpstrom 调试图标
+
+   ![调试图标](./static/phpstrom图标及功能.jpg)
+
 ## 参考来源
 
 | 序号 | 参考来源地址                                       |
