@@ -39,9 +39,9 @@ WAMP 开发环境目录
 |   |  |  └─ ...
 |   |  └─ ...
 |   |
-|   ├─mariadb                               mariadb 10.4版本
-|   |  ├─bin                                mariadb可执行程序目录
-|   |  ├─my.ini                             mariadb配置文件
+|   ├─MariaDB                               MariaDB 10.4版本
+|   |  ├─bin                                MariaDB 可执行程序目录
+|   |  ├─my.ini                             MariaDB 配置文件
 |   |  └─ ...
 |   |
 |   ├─php                                   php 7.4版本
@@ -57,8 +57,9 @@ WAMP 开发环境目录
 |   |
 |   ├─default                               httpd站点缺省位置
 |   |   ├─pma                               phpMyAdmin 数据库管理系统
-|   |   |   ├─adminer                       adminer 数据库管理系统
+|   |   ├─adminer                           adminer 数据库管理系统
 |   |   ├─index.php                         关于 PHP 配置的信息
+|   |   ├─u.php                             php 探针
 |   |
 ├─web                                       wamp配置目录
 |   ├─sites                                 站点配置文件目录
@@ -86,26 +87,26 @@ WAMP 开发环境目录
 
 通过自己搭建 wamp，可深入了解各类软件的作用
 
-| wamp 具体搭建                                             |
-| --------------------------------------------------------- |
-| [httpd 操作篇](./WAMP/01-httpd操作篇.md)                  |
-| [mariadb 操作篇](./WAMP/02-mariadb操作篇.md)              |
-| [php 操作篇](./WAMP/03-php操作篇.md)                      |
-| [安装 MariaDB 管理系统](./WAMP/04-安装mariadb管理系统.md) |
-| [wamp 维护篇](./WAMP/05-wamp维护篇.md)                    |
+| 序号 | wamp 具体搭建                                             |
+| ---- | --------------------------------------------------------- |
+| 01   | [httpd 操作篇](./WAMP/01-httpd操作篇.md)                  |
+| 02   | [mariadb 操作篇](./WAMP/02-mariadb操作篇.md)              |
+| 03   | [php 操作篇](./WAMP/03-php操作篇.md)                      |
+| 04   | [安装 MariaDB 管理系统](./WAMP/04-安装mariadb管理系统.md) |
+| 05   | [wamp 维护篇](./WAMP/05-wamp维护篇.md)                    |
 
 ## 源码参考
 
 如果大家想要偷懒，可以直接拷贝我的配置文件
 
-| 源码参考                                                       |
-| -------------------------------------------------------------- |
-| [httpd 主配置文件](./WAMP/httpd/01-httpd主配置文件.md)         |
-| [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| [mariadb 配置文件](./WAMP/mariadb/01-mariadb配置文件.md)       |
-| [php 配置文件](./WAMP/php/01-php配置文件.md)                   |
+| 序号 | 源码参考                                                       |
+| ---- | -------------------------------------------------------------- |
+| 01   | [httpd 主配置文件](./WAMP/httpd/01-httpd主配置文件.md)         |
+| 02   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
+| 03   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
+| 04   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
+| 05   | [mariadb 配置文件](./WAMP/mariadb/01-mariadb配置文件.md)       |
+| 06   | [php 配置文件](./WAMP/php/01-php配置文件.md)                   |
 
 ## 版本说明
 
