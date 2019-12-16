@@ -144,3 +144,11 @@ Alias /adminer ${WAMP_ROOT}/adminer/adminer
     </RequireAll>
 </Directory>
 ```
+
+## 附录
+
+1. 删除多余的 MariaDB 用户
+
+   MariaDB 默认有多个用户，Windows 下只需保留 `root@localhost`，建议将其余的删除。
+
+   > 提示：通过 phpMyAdmin 或 adminer 可以更加轻松的管理数据库！
