@@ -182,6 +182,57 @@ Xdebug 为与运行 PHP 脚本交互的调试器客户机提供了一个接口�
 | 全部配置 | https://xdebug.org/docs/all_settings  |
 | 全部函数 | https://xdebug.org/docs/all_functions |
 
+### Xdebug 配置项目案例
+
+```ini
+[Xdebug]
+zend_extension=xdebug
+
+xdebug.collect_params = 4
+xdebug.dump.* = *
+xdebug.dump_undefined = 1
+xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.gc_stats_enable = 1
+xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.profiler_enable = 1
+xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
+
+xdebug.remote_enable = 1
+xdebug.remote_autostart = 1
+xdebug.idekey = qywl
+xdebug.remote_host = localhost
+xdebug.remote_port = 9000
+```
+
+## 配置 PHPSTORM 调试
+
+网络上的配置 DEBUG 文章太杂太乱,在 PHPSTROM 跳来跳去的,实在让人心烦意乱,本章重新整理描述。
+
+1. 首先浏览器安装 xdebug 插件
+
+   | 浏览器  | 对应插件                  |
+   | ------- | ------------------------- |
+   | firefox | Xdebug Helper for Firefox |
+   | chrome  | Xdebug Helper             |
+
+2. phpstrom 配置 Debug
+
+   | 步骤 | 具体操作                                                            |
+   | ---- | ------------------------------------------------------------------- |
+   | 01   | 菜单：`文件 > 设置 > 语言 & 框架 > PHP > Debug`                     |
+   | 02   | 找到 `Pre-configuration` 标题下的第 3 条信息                        |
+   | 03   | 点击 `Start Listening` ，当变为 `stop Listening`                    |
+   | 04   | 找到 `Xdebug` 标题，勾选全部内容，端口设置为跟 php.ini 配置文件一致 |
+   | 05   | php 文件做好断点后，在浏览器中输入对应的网址，即可开始断点查询      |
+
+   > 如果不依赖浏览器插件，还需要：
+
+   | 步骤 | 具体操作                                            |
+   | ---- | --------------------------------------------------- |
+   | 01   | 菜单：`文件 > 设置 > 语言 & 框架 > PHP`             |
+   | 02   | 找到 `CLI Interpreter` ，并点击 `...` 增加 php 版本 |
+   | 03   | 菜单： `运行 > 编辑配置`，选择 `+` 按需增加配置     |
+
 ## 参考来源
 
 | 序号 | 参考来源地址                                       |
