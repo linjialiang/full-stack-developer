@@ -72,17 +72,26 @@ sc config <service-name> start=<set-value>
 
 ## 附录：wamp 使用说明书
 
-| 步骤 | 说明                                                                   |
-| ---- | ---------------------------------------------------------------------- |
-| 01   | 将 `wamp.7z` 解压到 C 盘根目录                                         |
-| 02   | 将 `C:\wamp\base\ImageMagick\bin` 加入系统变量(启动 `magick` 扩展必备) |
-| 03   | 使用 `C:\wamp\install.bat` 脚本安装系统服务                            |
-| 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                           |
-| 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                    |
-| 06   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统             |
-| 07   | MariaDB 的 root 密码默认为 `123456`                                    |
+| 步骤 | 使用说明书                                                                       |
+| ---- | -------------------------------------------------------------------------------- |
+| 01   | 将 `wamp.7z` 解压到 C 盘根目录                                                   |
+| 02   | 将 `C:\wamp\base\ImageMagick\bin` 加入`系统环境变量`(启动 `php_magick` 扩展必备) |
+| 03   | 使用 `C:\wamp\install.bat` 脚本安装系统服务                                      |
+| 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                                     |
+| 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                              |
+| 06   | 将 `C:\wamp\base\php` 加入环境变量(方便操作)                                     |
+| 07   | 将 `C:\wamp\base\httpd\bin` 加入环境变量 (方便操作)                              |
+| 08   | 将 `C:\wamp\base\mariadb\bin` 加入环境变量 (方便操作)                            |
+| 09   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统                       |
+| 10   | `http://localhost/phpmyadmin` 可以进入网页版 MariaDB 管理系统                    |
+| 11   | 通过使用 composer 来更新 adminer 以及 phpMyAdmin 到最新稳定版                    |
+| 12   | MariaDB 的 `root@localhost` 密码默认为 `123456`                                  |
 
-> 如果想要更换目录，需修改以下几个文件的内容：
+> 提示：`C:\wamp\base\ImageMagick\bin` 必须加入到 `系统环境变量` （httpd 无法获取 `用户环境变量`）
+
+### 更换 WAMP 路径
+
+如果要更改 wamp 的更路径，需要修改以下几个文件的内容：
 
 | 步骤 | 修改内容                                              |
 | ---- | ----------------------------------------------------- |

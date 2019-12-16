@@ -210,9 +210,9 @@ error_reporting(错误级别别名与位运算符组合);
 | 01   | 将 `php_imagick.dll` 拷贝到 php 的扩展目录               |
 | 02   | php.ini 文件增加 `extension=imagick`                     |
 | 03   | 将 `ImageMagick` 运行库解压到 `C:\wamp\base\ImageMagick` |
-| 04   | 将 `C:\wamp\base\ImageMagick\bin` 加入到 `系统变量` 中   |
+| 04   | 将 `C:\wamp\base\ImageMagick\bin` 加入到 `系统环境变量`  |
 
-> 提示：`ImageMagick` 必须加入的是 `系统变量` 而不是 `用户变量`(httpd 不会获取 `用户变量`信息)！
+> 提示：`C:\wamp\base\ImageMagick\bin` 必须加入的 `系统环境变量` (httpd 无法获取 `用户环境变量`)！
 
 ## 安装 composer
 
