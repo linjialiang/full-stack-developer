@@ -174,15 +174,18 @@ ldap.max_links = -1
 [ffi]
 [Xdebug]
 zend_extension=xdebug
-xdebug.profiler_append = 0
+
+xdebug.collect_params = 4
+xdebug.dump_undefined = 1
+xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.gc_stats_enable = 1
+xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
 xdebug.profiler_enable = 1
-xdebug.profiler_enable_trigger = 0
-xdebug.profiler_output_dir ="C:\wamp\web\logs\xdebug"
-xdebug.trace_output_dir ="C:\wamp\web\logs\xdebug"
-xdebug.profiler_output_name = "cache.out.%t-%s"
+xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
+
 xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
-xdebug.remote_handler = "dbgp"
-xdebug.remote_host = "127.0.0.1"
-xdebug.idekey= PHPSTROM
+xdebug.idekey = qywl
+xdebug.remote_host = localhost
+xdebug.remote_port = 9000
 ```
