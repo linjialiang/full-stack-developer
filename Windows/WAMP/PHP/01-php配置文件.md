@@ -185,7 +185,7 @@ xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
 
 xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
-xdebug.idekey = qywl
+xdebug.idekey = WAMP
 xdebug.remote_host = localhost
 xdebug.remote_port = 9000
 ```
