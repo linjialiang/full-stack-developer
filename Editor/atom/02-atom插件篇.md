@@ -38,12 +38,11 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 | language-ini    | ini 扩展文件语法高亮    |
 | language-notenv | .env 扩展文件语法高亮   |
 
-| html 相关插件(5) | 插件描述                  |
+| html 相关插件(4) | 插件描述                  |
 | ---------------- | ------------------------- |
 | autoprefixer     | css3 后缀自动完成         |
 | open-in-browser  | html 页面从默认浏览器打开 |
 | color-picker     | 颜色选择                  |
-| emmet            | 前端神器                  |
 | double-tag       | html 标签同步修改         |
 
 | vim 相关插件(3)  | 插件描述                   |
