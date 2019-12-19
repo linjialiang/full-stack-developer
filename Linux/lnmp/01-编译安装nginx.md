@@ -145,7 +145,7 @@ $ curl -I 127.0.0.1
    | 启用开机启动 | `/lib/systemd/systemd-sysv-install enable nginx`  |
    | 禁用开机启动 | `/lib/systemd/systemd-sysv-install disable nginx` |
 
-   > 本地服务加入开启启动方法为 `sustemctl enable nginx`
+   > 本地服务加入开启启动方法为 `systemctl enable nginx`
 
 3. nginx 一键启动文件常用指令：
 

@@ -17,6 +17,7 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NGINX_PATH=/server/nginx
+NGINX_PID=/server/run/nginx/nginx.pid
 DAEMON=${NGINX_PATH}/sbin/nginx
 NAME=nginx
 DESC=nginx
@@ -36,7 +37,7 @@ test -x $DAEMON || exit 0
 # Try to extract nginx pidfile
 PID=$(cat ${NGINX_PATH}/conf/nginx.conf | grep -Ev '^\s*#' | awk 'BEGIN { RS="[;{}]" } { if ($1 == "pid") print $2 }' | head -n1)
 if [ -z "$PID" ]; then
-    PID=${NGINX_PATH}/logs/nginx.pid
+    PID=${NGINX_PID}
 fi
 
 if [ -n "$ULIMIT" ]; then
