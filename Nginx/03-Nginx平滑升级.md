@@ -142,6 +142,8 @@ $ cd /package/lnmp/nginx-1.16.1
    --http-log-path=/server/logs/nginx_access/access.log \
    ```
 
+   > 提示：构建选项增加了 pid 文件路径后，`nginx.conf` 下的 pid 选项就可以移除了！
+
 2. 编译新版 Nginx
 
    ```sh
