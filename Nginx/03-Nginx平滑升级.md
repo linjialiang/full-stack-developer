@@ -175,51 +175,69 @@ configure arguments: --prefix=/server/nginx --builddir=/package/lnmp/nginx-1.16.
 
    ```sh
    $ ps -ef|grep nginx
-   root      3442     1  0 12月18 ?      00:00:00 nginx: master process /server/nginx/sbin/nginx
-   nginx     3443  3442  0 12月18 ?      00:00:00 nginx: worker process
-   nginx     3444  3442  0 12月18 ?      00:00:00 nginx: worker process
-   nginx     3445  3442  0 12月18 ?      00:00:00 nginx: worker process
-   nginx     3446  3442  0 12月18 ?      00:00:00 nginx: worker process
-   root     10745  3943  0 10:17 pts/0    00:00:00 grep nginx
-   root     20623  3442  0 09:14 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
-   nginx    20624 20623  0 09:14 ?        00:00:00 nginx: worker process
-   nginx    20625 20623  0 09:14 ?        00:00:00 nginx: worker process
-   nginx    20626 20623  0 09:14 ?        00:00:00 nginx: worker process
-   nginx    20627 20623  0 09:14 ?        00:00:00 nginx: worker process
+   root     13080  3943  0 12:02 pts/0    00:00:00 grep nginx
+   root     28576     1  0 11:56 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
+   nginx    28577 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28578 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28579 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28580 28576  0 11:56 ?        00:00:00 nginx: worker process
    ```
 
-   > 由于 lnmp 升级 nginx 时没有处理，现在就变成 2 个了：
-
-2. 使用 `cat` 指令来查看，当前 `nginx.pid` 值
+   > 使用 `cat` 指令来查看，当前 `nginx.pid` 值（旧版 pid 值）：
 
    ```sh
    $ cat /server/run/nginx/nginx.pid
-   20623
+   28576
    ```
 
-   > 提示：由此判定，3442 是 lnmp 升级 nginx 时遗留的主进程
+2. 平滑升级 Nginx 进程
 
-3. 使用 `kill -WINCH <pid>` 正常关闭遗留的 Nginx 的进程
-
-   ```sh
-   $ kill -WINCH 3442
-   ```
-
-4. 使用 kill -USR2 <pid> 来平滑升级 Nginx 可执行文件
+   > 使用 `kill -USR2 <pid>` 升级 Nginx 可执行文件
 
    ```sh
    $ kill -USR2 `cat /server/run/nginx/nginx.pid`
    ```
 
-5. 使用 `kill -WINCH <pid>` 正常关闭旧版的 Nginx 的进程
+   > 使用 `cat` 指令来查看，当前 `nginx.pid` 值（新版 pid 值）：
 
    ```sh
-   $ kill -WINCH 20624
+   $ cat /server/run/nginx/nginx.pid
+   13170
    ```
 
-## 信号控制平滑升级全解
+3. 使用 ps 查看当前 Nginx 的进程 id：
 
-### Nginx 进程信号支持的 Linux 信号
+   ```sh
+   root     13170 28576  0 12:04 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
+   nginx    13171 13170  0 12:04 ?        00:00:00 nginx: worker process
+   nginx    13172 13170  0 12:04 ?        00:00:00 nginx: worker process
+   nginx    13173 13170  0 12:04 ?        00:00:00 nginx: worker process
+   nginx    13174 13170  0 12:04 ?        00:00:00 nginx: worker process
+   root     13177  3943  0 12:04 pts/0    00:00:00 grep nginx
+   root     28576     1  0 11:56 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
+   nginx    28577 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28578 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28579 28576  0 11:56 ?        00:00:00 nginx: worker process
+   nginx    28580 28576  0 11:56 ?        00:00:00 nginx: worker process
+   ```
+
+   > 当前信息说明了平滑升级成功：
+
+   | 序号 | 信息说明                                                     |
+   | ---- | ------------------------------------------------------------ |
+   | 01   | Nginx 新版进程与旧版进程同时运行                             |
+   | 02   | Nginx 新版主进程是旧版主进程的一个子进程                     |
+   | 03   | 旧版进程依然运行着，表示之前浏览页面的客户端页面响应没有丢失 |
+
+4. 平滑关闭旧版 Nginx 主进程
+
+   > 使用 `kill -WINCH <pid>` 指令实现：当进程没有访问者时，系统自动关闭当前进程
+
+   ```sh
+   $ kill -WINCH 28576
+   ```
+
+## 附录一：Nginx 进程支持的 Linux 信号
 
 1. Nginx 主进程（master）支持的 kill 信号：
 
@@ -241,58 +259,12 @@ configure arguments: --prefix=/server/nginx --builddir=/package/lnmp/nginx-1.16.
    | USR1      | 重新打开日志文件     |
    | WINCH     | 正常关闭 worker 进程 |
 
-3. 案例：升级 Nginx 可执行文件
+## 附录二：Nginx 平滑升级后如何控制启动？
 
-   ```sh
-   $ kill -USR2 `cat /server/run/nginx/nginx.pid`
-   ```
+平滑升级后，不能直接使用 `service` 方式控制 Nginx，必须先使用如下方式关闭后才行：
 
-### 升级可执行文件
-
-> 使用 `kill -USR2 <pid>` 来升级 Nginx 可执行文件
-
-1. 直接使用 cat 读取 nginx.pid 的值
-
-   ```sh
-   $ kill -USR2 `cat /server/nginx/logs/nginx.pid`
-   ```
-
-2. 使用 ps 查看 Nginx 的主进程 id：
-
-   ```sh
-   $ ps -ef|grep nginx
-   root      4337     1  0 14:12 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
-   nobody    4338  4337  0 14:12 ?        00:00:00 nginx: worker process
-   root     21404   622  0 15:54 pts/0    00:00:00 grep nginx
-   $ kill -USR2 4337
-   ```
-
-3. 升级可执行文件后的效果：
-
-   > 发下现在有两个 Nginx 主进程，旧版 Nginx 主进程依然还在：
-
-   ```sh
-   $ ps -ef|grep nginx
-   root      4337     1  0 14:12 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
-   nobody    4338  4337  0 14:12 ?        00:00:00 nginx: worker process
-   root     21409  4337  0 16:05 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
-   nobody   21410 21409  0 16:05 ?        00:00:00 nginx: worker process
-   root     21412   622  0 16:05 pts/0    00:00:00 grep nginx
-   ```
-
-   > 查看下 nginx.pid 下记录的 pid 值：
-
-   ```sh
-   $ cat /server/nginx/logs/nginx.pid
-   21409
-   ```
-
-   > 这里可以清晰的告诉我们，主进程的 pid 已经是新版 Nginx 的了
-
-### 关闭旧的主进程
-
-> 使用 `kill -WINCH <pid>` 来正常关闭旧版 Nginx 的主进程
-
-```sh
-$ kill -WINCH 4337
-```
+| 平滑升级后     | 控制 Nginx 关闭的指令            |
+| -------------- | -------------------------------- |
+| 快速关闭 Nginx | /server/nginx/sbin/nginx -s stop |
+| 正常关闭 Nginx | /server/nginx/sbin/nginx -s quit |
+| 强制关闭 Nginx | pkill -9 nginx                   |
