@@ -13,7 +13,7 @@ $ apt upgrade
 
 ## 更新 Nginx
 
-此次 Nginx 没有更新，不过为了帮助大家了解 Nginx 重新编译的过程，这里以禁用模块为例子：
+此次 Nginx 没有更新，不过为了帮助大家了解 Nginx 重新编译的过程，这里编译了最新开发版本并禁用了一些模块，具体如下：
 
 1. 检测依赖包是否更新
 
@@ -31,17 +31,19 @@ $ apt upgrade
 3. Nginx 编译具体操作
 
    ```sh
-   $ mkdir /package/lnmp/nginx-1.16.1-update
-   $ tar -xzvf /package/lnmp/nginx-1.16.1.tar.gz -C /package/lnmp/nginx-1.16.1-update
-   $ mkdir /package/lnmp/nginx-1.16.1-update/nginx-1.16.1/nginx_bulid
-   $ cd /package/lnmp/nginx-1.16.1-update/nginx-1.16.1/
+   $ tar -xzvf /package/lnmp/nginx-1.17.6.tar.gz
+   $ mkdir /package/lnmp/nginx-1.17.6/nginx_bulid
+   $ cd /package/lnmp/nginx-1.17.6/
    ```
 
    > 构建 Nginx 指令
 
    ```sh
    ./configure --prefix=/server/nginx \
-   --builddir=/package/lnmp/nginx-1.16.1-update/nginx-1.16.1/nginx_bulid \
+   --builddir=/package/lnmp/nginx-1.17.6/nginx_bulid \
+   --error-log-path=/server/logs/nginx_error/error.log \
+   --pid-path=/server/run/nginx/nginx.pid \
+   --http-log-path=/server/logs/nginx_access/access.log \
    --with-threads \
    --with-file-aio \
    --with-http_ssl_module \
@@ -74,21 +76,25 @@ $ apt upgrade
    $ make -j4
    ```
 
-4. 将 Nginx 替换成重新编译的版本
-
-   将刚刚编译后产生的可执行文件，拷贝到 /server/nginx/sbin 下：
+4. 备份旧版 nginx 可执行文件
 
    ```sh
-   $ cp -p -r /package/lnmp/nginx-1.16.1-update/nginx-1.16.1/nginx_bulid/nginx /server/nginx/sbin/
+   $ mv /server/nginx/sbin/nginx{,-v1.16.1}
    ```
 
-   > 提示：由于版本没有变化，所以必须先暂停 nginx，将可执行文件重命名后再执行以上代码！
+5. 将刚刚编译后产生的可执行文件，拷贝到 /server/nginx/sbin 下：
 
-5. 重新启动 Nginx
+   ```sh
+   $ cp -p -r /package/lnmp/nginx-1.17.6/nginx_bulid/nginx /server/nginx/sbin/
+   ```
+
+6. 重启 nginx
 
    ```sh
    $ /server/nginx/sbin/nginx -s stop
    $ /server/nginx/sbin/nginx
    ```
 
-   > 提示：如果需要平滑升级，请查阅 [Nginx 平滑升级](https://gitee.com/linjialiang/programmer/blob/master/Debian/Nginx/03-Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7.md)
+7. 平滑升级
+
+   如果需要平滑升级，请查阅 [Nginx 平滑升级](../../Nginx/03-Nginx平滑升级.md)
