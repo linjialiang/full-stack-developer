@@ -115,12 +115,12 @@ $ cd /package/lnmp/nginx-1.16.1
 
    > 提示：其中有两个模块通常可以不用编译：
 
-   | 模块                   | 模块说明                      | 编译指令      |
-   | ---------------------- | ----------------------------- | ------------- |
-   | ngx_mail_core_module   | 邮件代理服务                  | --with-mail   |
-   | ngx_stream_core_module | 实现 TCP/UDP 代理以及负载均衡 | --with-stream |
+   | 模块                   | 模块说明                                 | 编译指令      |
+   | ---------------------- | ---------------------------------------- | ------------- |
+   | ngx_mail_core_module   | 邮件代理服务                             | --with-mail   |
+   | ngx_stream_core_module | 实现 TCP/UDP 网络层的 `代理以及负载均衡` | --with-stream |
 
-   > 不需要的可以移除这部分构建选项：
+   > 可以移除的部分构建选项：
 
    ```sh
    --with-mail \
@@ -154,38 +154,98 @@ $ cd /package/lnmp/nginx-1.16.1
 $ cp -p -r /package/lnmp/nginx-1.16.1/nginx_bulid/nginx /server/nginx/sbin/
 ```
 
-1. 查看当前的 Nginx 版本：
+### 查看当前的 Nginx 版本
+
+```sh
+$ /server/nginx/sbin/nginx -V
+nginx version: nginx/1.16.1
+built by gcc 8.3.0 (Debian 8.3.0-6)
+built with OpenSSL 1.1.1d  10 Sep 2019
+TLS SNI support enabled
+configure arguments: --prefix=/server/nginx --builddir=/package/lnmp/nginx-1.16.1/nginx_bulid --error-log-path=/server/logs/nginx_error/error.log --pid-path=/server/run/nginx/nginx.pid --http-log-path=/server/logs/nginx_access/access.log --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_image_filter_module --with-http_geoip_module --with-http_dav_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --without-http_ssi_module --without-http_uwsgi_module --without-http_scgi_module --without-http_grpc_module --with-mail --with-mail_ssl_module --with-stream --with-stream_ssl_module --with-stream_realip_module --with-stream_geoip_module --with-stream_ssl_preread_module --with-pcre=/package/lnmp/pcre-8.43 --with-pcre-jit --with-zlib=/package/lnmp/zlib-1.2.11 --with-openssl=/package/lnmp/openssl-1.1.1d --with-debug
+```
+
+### 修改配置文件
+
+由于本次构建，加入了日志文件和 pid 路径，所以 `nginx.conf` 下 pid 和日志的路径配置可以移除！
+
+### 平滑升级可执行文件
+
+1. 使用 ps 查看旧版 Nginx 的主进程 id：
 
    ```sh
-   $ /server/nginx/sbin/nginx -V
-   nginx version: nginx/1.17.1
+   $ ps -ef|grep nginx
+   root      3442     1  0 12月18 ?      00:00:00 nginx: master process /server/nginx/sbin/nginx
+   nginx     3443  3442  0 12月18 ?      00:00:00 nginx: worker process
+   nginx     3444  3442  0 12月18 ?      00:00:00 nginx: worker process
+   nginx     3445  3442  0 12月18 ?      00:00:00 nginx: worker process
+   nginx     3446  3442  0 12月18 ?      00:00:00 nginx: worker process
+   root     10745  3943  0 10:17 pts/0    00:00:00 grep nginx
+   root     20623  3442  0 09:14 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
+   nginx    20624 20623  0 09:14 ?        00:00:00 nginx: worker process
+   nginx    20625 20623  0 09:14 ?        00:00:00 nginx: worker process
+   nginx    20626 20623  0 09:14 ?        00:00:00 nginx: worker process
+   nginx    20627 20623  0 09:14 ?        00:00:00 nginx: worker process
    ```
 
-## 信号控制平滑升级
+   > 由于 lnmp 升级 nginx 时没有处理，现在就变成 2 个了：
 
-> 使用信号控制 Nginx 平滑升级
+2. 使用 `cat` 指令来查看，当前 `nginx.pid` 值
 
-### 主进程信号：
+   ```sh
+   $ cat /server/run/nginx/nginx.pid
+   20623
+   ```
 
-> Nginx 主进程支持的 kill 信号：
+   > 提示：由此判定，3442 是 lnmp 升级 nginx 时遗留的主进程
 
-| 信号      | 描述                                                                                                          |
-| --------- | ------------------------------------------------------------------------------------------------------------- |
-| TERM, INT | 快速关机                                                                                                      |
-| QUIT      | 优雅的关机                                                                                                    |
-| HUP       | 更改配置，跟上更改的时区（仅适用于 FreeBSD 和 Linux），使用新配置启动新的 worker 进程，正常关闭旧 worker 进程 |
-| USR1      | 重新打开日志文件                                                                                              |
-| USR2      | 升级可执行文件                                                                                                |
-| WINCH     | 正常关闭 Nginx 主进程                                                                                         |
+3. 使用 `kill -WINCH <pid>` 正常关闭遗留的 Nginx 的进程
 
-> Nginx `worker 进程`支持的 kill 信号：
+   ```sh
+   $ kill -WINCH 3442
+   ```
 
-| 信号      | 描述                 |
-| --------- | -------------------- |
-| TERM, INT | 快速关机             |
-| QUIT      | 优雅的关机           |
-| USR1      | 重新打开日志文件     |
-| WINCH     | 正常关闭 worker 进程 |
+4. 使用 kill -USR2 <pid> 来平滑升级 Nginx 可执行文件
+
+   ```sh
+   $ kill -USR2 `cat /server/run/nginx/nginx.pid`
+   ```
+
+5. 使用 `kill -WINCH <pid>` 正常关闭旧版的 Nginx 的进程
+
+   ```sh
+   $ kill -WINCH 20624
+   ```
+
+## 信号控制平滑升级全解
+
+### Nginx 进程信号支持的 Linux 信号
+
+1. Nginx 主进程（master）支持的 kill 信号：
+
+   | 信号      | 描述                                                                             |
+   | --------- | -------------------------------------------------------------------------------- |
+   | TERM, INT | 快速关机                                                                         |
+   | QUIT      | 优雅的关机                                                                       |
+   | HUP       | 更改配置，跟上更改的时区，使用新配置启动新的 worker 进程，正常关闭旧 worker 进程 |
+   | USR1      | 重新打开日志文件                                                                 |
+   | USR2      | 升级可执行文件                                                                   |
+   | WINCH     | 正常关闭 Nginx 主进程                                                            |
+
+2. Nginx 工作进程（worker）支持的 kill 信号：
+
+   | 信号      | 描述                 |
+   | --------- | -------------------- |
+   | TERM, INT | 快速关机             |
+   | QUIT      | 优雅的关机           |
+   | USR1      | 重新打开日志文件     |
+   | WINCH     | 正常关闭 worker 进程 |
+
+3. 案例：升级 Nginx 可执行文件
+
+   ```sh
+   $ kill -USR2 `cat /server/run/nginx/nginx.pid`
+   ```
 
 ### 升级可执行文件
 
