@@ -8,7 +8,6 @@ After=network.target
 
 [Service]
 Type=simple
-# PIDFile=/server/php/var/run/php-fpm.pid
 PIDFile=/server/run/php/php73-fpm.pid
 ExecStart=/server/php/sbin/php-fpm --nodaemonize --fpm-config /server/php/etc/php-fpm.conf
 ExecReload=/bin/kill -USR2 $MAINPID

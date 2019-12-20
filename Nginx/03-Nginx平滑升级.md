@@ -79,9 +79,7 @@ $ cd /package/lnmp/nginx-1.16.1
    ```sh
    ./configure --prefix=/server/nginx \
    --builddir=/package/lnmp/nginx-1.16.1/nginx_bulid \
-   --error-log-path=/server/logs/nginx_error/error.log \
    --pid-path=/server/run/nginx/nginx.pid \
-   --http-log-path=/server/logs/nginx_access/access.log \
    --with-threads \
    --with-file-aio \
    --with-http_ssl_module \

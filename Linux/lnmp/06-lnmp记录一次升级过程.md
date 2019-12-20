@@ -36,7 +36,9 @@ $ apt upgrade
 
 > 由于本次跨次要版本升级，之前的动态扩展都失效，这些都需要重新编译安装。
 
-1. 安装必备扩展库
+1. 安装必备依赖项
+
+   `php 7.4` 比 `php 7.3` 多 2 个依赖包：
 
    ```sh
    $ apt install libonig-dev libcurl4-openssl-dev
@@ -71,3 +73,7 @@ $ apt upgrade
    $ mv /server/php/lib/php{,-v7.3.11}.ini
    $ cp -p -r /package/lnmp/php-7.4.1/php.ini-development /server/php/lib/php.ini
    ```
+
+4. 安装 pecl 扩展
+
+   php 跨大版本，所有 pecl 扩展库都应该重新编译，具体请查看 [为 php 安装 pecl 扩展](./04-为php安装pecl扩展.md)
