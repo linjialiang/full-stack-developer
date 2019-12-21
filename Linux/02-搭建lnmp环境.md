@@ -69,6 +69,8 @@ LNMP 开发环境目录
 |
 ├─ lnmp_del.sh                               LNMP 环境一键移除
 |
+├─ lnmp_tar.sh                               LNMP 环境一键解压 .tar.gz 包
+|
 └─ lnmp_dir.sh                               LNMP 目录一键生成
 ```
 
@@ -76,6 +78,7 @@ LNMP 开发环境目录
 | ----------------- | ----------------------------------- |
 | LNMP 目录一键生成 | [lnmp_dir.sh](./source/lnmp_dir.sh) |
 | LNMP 环境一键移除 | [lnmp_del.sh](./source/lnmp_del.sh) |
+| LNMP 环境批量解压 | [lnmp_tar.sh](./source/lnmp_tar.sh) |
 
 ## 章节导航
 
