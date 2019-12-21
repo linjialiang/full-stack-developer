@@ -9,3 +9,4 @@ Linux 知识量及其庞大，我会将我使用到的知识点，在这里罗�
 | 03   | [vsFTP 配置选项](./03-vsftpd.conf选项说明.md) |
 | 04   | [Linux 守护进程](./04-linux守护进程.md)       |
 | 05   | [Systemd 入门教程](./05-systemd入门教程.md)   |
+| 06   | [Systemd 实战篇](./05-systemd实战篇.md)       |
