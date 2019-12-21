@@ -32,10 +32,9 @@ Systemd 就是为了解决上述问题而诞生的。它的设计目标是，为
    使用了 Systemd，就不需要再用 init 了。Systemd 取代了 initd，成为系统的第一个进程（PID 等于 1），其他进程都是它的子进程。
 
    ```sh
+   # 查看 Systemd 的版本命令
    $ systemctl --version
    ```
-
-   > 上面的命令查看 Systemd 的版本
 
 ## 三、Systemd 体系
 
