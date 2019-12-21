@@ -64,10 +64,10 @@ $ cd /package/nginx-1.16.1
 --with-stream_realip_module \
 --with-stream_geoip_module \
 --with-stream_ssl_preread_module \
---with-pcre=/package/lnmp/pkg/pcre-8.43 \
+--with-pcre=/package/pkg/pcre-8.43 \
 --with-pcre-jit \
---with-zlib=/package/lnmp/pkg/zlib-1.2.11 \
---with-openssl=/package/lnmp/pkg/openssl-1.1.1d \
+--with-zlib=/package/pkg/zlib-1.2.11 \
+--with-openssl=/package/pkg/openssl-1.1.1d \
 --with-debug
 ```
 
