@@ -8,12 +8,18 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 
 | 必备           | 操作                                                                          |
 | -------------- | ----------------------------------------------------------------------------- |
-| libgd 开发库   | `apt install libgd-dev`                                                       |
-| geoip 开发库   | `apt install libgeoip-dev`                                                    |
+| libgd 开发库   | libgd-dev                                                                     |
+| geoip 开发库   | libgeoip-dev                                                                  |
 | nginx 源码包   | [nginx-1.16.1.tar.gz](http://nginx.org/download/nginx-1.16.1.tar.gz)          |
 | openssl 依赖库 | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/openssl-1.1.1d.tar.gz) |
 | pcre 依赖库    | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz)              |
 | zlib 依赖库    | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz)                      |
+
+1. 安装 Nginx 必备开发库
+
+   ```sh
+   $ apt install libgd-dev libgeoip-dev
+   ```
 
 软件包根目录为 `/package/lnmp` ，处理软件包过程如下指令：
 
