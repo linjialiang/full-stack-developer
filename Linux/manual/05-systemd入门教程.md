@@ -627,3 +627,11 @@ Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以
    # 指定日志文件保存多久
    $ journalctl --vacuum-time=1years
    ```
+
+## 参考来源
+
+| 序号 | 参考来源                                                                            |
+| ---- | ----------------------------------------------------------------------------------- |
+| 01   | http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html               |
+| 02   | https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87) |
+| 03   | https://www.freedesktop.org/software/systemd/man/systemd.unit.html                  |
