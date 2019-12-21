@@ -43,6 +43,11 @@ LNMP 开发环境目录
 |   |
 |   ├─ data                                  mariadb 数据库系统数据存放目录
 |   |
+|   ├─ run                                   LNMP 存放 pid、socket文件 的根目录
+|   |   ├─ nginx                             存放 Nginx 进程的 pid文件
+|   |   ├─ mariadb                           存放 MariaDB 进程的 pid、socket文件
+|   |   ├─ php                               存放 php-fpm 进程的 pid文件
+|   |
 |   ├─ default                               nginx 站点缺省位置
 |   |   ├─ pma                               phpMyAdmin 数据库管理系统
 |   |   ├─ adminer                           adminer 数据库管理系统
