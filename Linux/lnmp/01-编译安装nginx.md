@@ -6,14 +6,14 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 
 编译 Nginx 需要的准备好的软件包：
 
-| 必备           | 操作                                                                          |
-| -------------- | ----------------------------------------------------------------------------- |
-| libgd 开发库   | libgd-dev                                                                     |
-| geoip 开发库   | libgeoip-dev                                                                  |
-| nginx 源码包   | [nginx-1.16.1.tar.gz](http://nginx.org/download/nginx-1.16.1.tar.gz)          |
-| openssl 依赖库 | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/openssl-1.1.1d.tar.gz) |
-| pcre 依赖库    | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/pcre-8.43.tar.gz)              |
-| zlib 依赖库    | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz)                      |
+| 必备           | 操作                                                     |
+| -------------- | -------------------------------------------------------- |
+| libgd 开发库   | libgd-dev                                                |
+| geoip 开发库   | libgeoip-dev                                             |
+| Nginx 源码包   | [nginx-1.16.1.tar.gz](http://nginx.org/en/download.html) |
+| openssl 依赖库 | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/) |
+| pcre 依赖库    | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/)         |
+| zlib 依赖库    | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz) |
 
 1. 安装 Nginx 必备开发库
 
@@ -21,62 +21,61 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
    $ apt install libgd-dev libgeoip-dev
    ```
 
-软件包根目录为 `/package/lnmp` ，处理软件包过程如下指令：
+   > 提示：使用 `./configure` 指令构建时，会提示缺失的依赖包相关信息！
 
-| 过程 | 指令                 |
-| ---- | -------------------- |
-| 下载 | `$ wget <下载地址>`  |
-| 解包 | `$ tar -xzvf <包名>` |
+2. 创建 Nginx 构建目录
 
-> 提示：使用 `./configure` 指令构建会提示缺失的依赖包！
-
-## 编译 Nginx 需要的目录
-
-| 目录                   | 指令                                     |
-| ---------------------- | ---------------------------------------- |
-| Nginx 编译（安装）路径 | `/server/nginx`                          |
-| Nginx 源码路径         | `/package/lnmp/nginx-1.16.1`             |
-| Nginx 构建路径         | `/package/lnmp/nginx-1.16.1/nginx_bulid` |
+   ```sh
+   $ mkdir /package/nginx-1.16.1/nginx_bulid
+   ```
 
 ## 构建指令
 
-该构建指令完全可用于部署环境，其中 `mail模块` 和 `stream模块` 按需选择
+此次列出的构建选项，可运用于开发环境以及部署环境，具体如下：
 
-1. 进入 `Nginx源码` 根目录
+```sh
+$ cd /package/nginx-1.16.1
+./configure --prefix=/server/nginx \
+--builddir=/package/nginx-1.16.1/nginx_bulid \
+--pid-path=/server/run/nginx/nginx.pid \
+--with-threads \
+--with-file-aio \
+--with-http_ssl_module \
+--with-http_v2_module \
+--with-http_realip_module \
+--with-http_image_filter_module \
+--with-http_geoip_module \
+--with-http_dav_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_auth_request_module \
+--with-http_secure_link_module \
+--with-http_degradation_module \
+--with-http_slice_module \
+--with-http_stub_status_module \
+--without-http_ssi_module \
+--without-http_uwsgi_module \
+--without-http_scgi_module \
+--without-http_grpc_module \
+--with-mail \
+--with-mail_ssl_module \
+--with-stream \
+--with-stream_ssl_module \
+--with-stream_realip_module \
+--with-stream_geoip_module \
+--with-stream_ssl_preread_module \
+--with-pcre=/package/lnmp/pkg/pcre-8.43 \
+--with-pcre-jit \
+--with-zlib=/package/lnmp/pkg/zlib-1.2.11 \
+--with-openssl=/package/lnmp/pkg/openssl-1.1.1d \
+--with-debug
+```
+
+> 提示：添加了 `--pid-path=` 构建选项后，`nginx.conf` 文件下的 pid 参数就可有可无了！
+
+1. `mail模块` 和 `stream模块` 按需选择：
 
    ```sh
-   $ mkdir -p /server/nginx
-   $ mkdir /package/lnmp/nginx-1.16.1/nginx_bulid
-   $ cd /package/lnmp/nginx-1.16.1
-   ```
-
-2. Nginx 构建指令
-
-   构建时添加了 `--pid-path=` 选项后，`nginx.conf` 下的 `pid` 参数就可有可无了
-
-   ```sh
-   ./configure --prefix=/server/nginx \
-   --builddir=/package/lnmp/nginx-1.16.1/nginx_bulid \
-   --pid-path=/server/run/nginx/nginx.pid \
-   --with-threads \
-   --with-file-aio \
-   --with-http_ssl_module \
-   --with-http_v2_module \
-   --with-http_realip_module \
-   --with-http_image_filter_module \
-   --with-http_geoip_module \
-   --with-http_dav_module \
-   --with-http_gunzip_module \
-   --with-http_gzip_static_module \
-   --with-http_auth_request_module \
-   --with-http_secure_link_module \
-   --with-http_degradation_module \
-   --with-http_slice_module \
-   --with-http_stub_status_module \
-   --without-http_ssi_module \
-   --without-http_uwsgi_module \
-   --without-http_scgi_module \
-   --without-http_grpc_module \
    --with-mail \
    --with-mail_ssl_module \
    --with-stream \
@@ -84,37 +83,24 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
    --with-stream_realip_module \
    --with-stream_geoip_module \
    --with-stream_ssl_preread_module \
-   --with-pcre=/package/lnmp/pkg/pcre-8.43 \
-   --with-pcre-jit \
-   --with-zlib=/package/lnmp/pkg/zlib-1.2.11 \
-   --with-openssl=/package/lnmp/pkg/openssl-1.1.1d \
+   ```
+
+2. 用于部署环境则不需要如下构建选项：
+
+   ```sh
    --with-debug
    ```
 
-   > 其中 `mail模块` 和 `stream模块` 按需选择：
+> 提示：使用 `./configure -h` 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
 
-   ```sh
-   --with-mail \
-   --with-mail_ssl_module \
-   --with-stream \
-   --with-stream_ssl_module \
-   --with-stream_realip_module \
-   --with-stream_geoip_module \
-   --with-stream_ssl_preread_module \
-   ```
+### 编译并安装
 
-   > 提示：使用 `./configure -h` 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
+```sh
+$ make -j4
+$ make install
+```
 
-3. 编译并安装
-
-   编译安装并不需要切换到 `--builddir` 目录
-
-   ```sh
-   $ make -j4
-   $ make install
-   ```
-
-   > `-j4` 使用 `cat /proc/cpuinfo| grep "processor"| wc -l` 查看 `逻辑核心数` 来指定
+> 提示：编译选项 `-j4` ，可通过 `cat /proc/cpuinfo| grep "processor"| wc -l` 指令查看 `逻辑核心数` 来确定。
 
 ## 测试 Nginx
 
