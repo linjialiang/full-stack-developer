@@ -145,11 +145,11 @@ $ make install
 
 Nginx 三个比较常用的配置文件示例：
 
-| 配置文件                                    | 描述               | 具体操作     |
-| ------------------------------------------- | ------------------ | ------------ |
-| [nginx.conf](./source/nginx.conf)           | nginx 主配置文件   | 替换         |
-| [fastcgi-tp.conf](./source/fastcgi-tp.conf) | `tp6` 基本配置项   | 新增         |
-| [sites.conf](./source/sites.conf)           | `tp6` 站点配置模版 | 按需新建多个 |
+| 配置文件                                          | 描述               | 具体操作     |
+| ------------------------------------------------- | ------------------ | ------------ |
+| [nginx.conf](./source/nginx/nginx.conf)           | nginx 主配置文件   | 替换         |
+| [fastcgi-tp.conf](./source/nginx/fastcgi-tp.conf) | `tp6` 基本配置项   | 新增         |
+| [sites.conf](./source/nginx/sites.conf)           | `tp6` 站点配置模版 | 按需新建多个 |
 
 配置文件对应路径：
 
@@ -189,39 +189,4 @@ $ pkill -9 nginx
 
 用 Systemd 来管理守护进程更方便，建议为 Nginx 添加 Systemd 单元（Unit）
 
-```sh
-#!
-```
-
-## 开机启动
-
-使用 `systemctl` 可以引导 nginx 在系统开启时自动启动
-
-1. `init.d` 目录下创建一个 `控制 Nginx 启动的文件`
-
-   ```sh
-   $ touch /etc/init.d/nginx
-   $ chmod +x /etc/init.d/nginx
-   ```
-
-   > 文件内容查看 [nginx 一键启动](./source/nginx一键启动文件.md)
-
-2. 将一键启动脚本加入开机自动启动
-
-   | 非本地服务   | 指令                                              |
-   | ------------ | ------------------------------------------------- |
-   | 启用开机启动 | `/lib/systemd/systemd-sysv-install enable nginx`  |
-   | 禁用开机启动 | `/lib/systemd/systemd-sysv-install disable nginx` |
-
-   > 本地服务加入开启启动方法为 `systemctl enable nginx`
-
-3. nginx 一键启动文件常用指令：
-
-   | 操作                      | 指令                           |
-   | ------------------------- | ------------------------------ |
-   | 启动 Nginx                | `/etc/init.d/nginx start`      |
-   | 停止 Nginx                | `/etc/init.d/nginx stop`       |
-   | 重新加载 Nginx            | `/etc/init.d/nginx reload`     |
-   | 验证 Nginx 配置文件正确性 | `/etc/init.d/nginx configtest` |
-
-## 附录：
+> 提示：单元文件配置详情，请查阅 [Systemd 实战篇](./../manual/06-systemd实战篇.md)

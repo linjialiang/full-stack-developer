@@ -11,6 +11,7 @@ server_array=(
     "/server/php"
     "/server/sites"
     "/server/default"
+    "/server/www"
     "/server/run"
     "/server/run/nginx"
     "/server/run/mariadb"

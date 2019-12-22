@@ -485,7 +485,8 @@ systemd 单元文件的语法来源于 XDG 桌面项配置文件 `.desktop` 文�
 
    - Type：定义启动时的进程行为。它有以下几种值。
    - Type=simple：默认值，执行 ExecStart 指定的命令，启动主进程
-   - Type=forking：以 fork 方式从父进程创建子进程，创建后父进程会立即退出
+   - Type=forking：以 fork 方式从父进程创建子进程，创建后父进程会立即退出，建议配合 "PIDFile="
+   - PIDFile=：该服务 PID 文件的路径，强烈建议在 Type=forking 的情况下明确设置此选项。
    - Type=oneshot：一次性进程，Systemd 会等当前服务退出，再继续往下执行
    - Type=dbus：当前服务通过 D-Bus 启动
    - Type=notify：当前服务启动完毕，会通知 Systemd，再继续往下执行
@@ -493,7 +494,7 @@ systemd 单元文件的语法来源于 XDG 桌面项配置文件 `.desktop` 文�
    - ExecStart：启动当前服务的命令
    - ExecStartPre：启动当前服务之前执行的命令
    - ExecStartPost：启动当前服务之后执行的命令
-   - ExecReload：重启当前服务时执行的命令
+   - ExecReload：重新加载当前服务配置时执行的命令
    - ExecStop：停止当前服务时执行的命令
    - ExecStopPost：停止当其服务之后执行的命令
    - RestartSec：自动重启当前服务间隔的秒数
