@@ -104,15 +104,20 @@ $ make install
 
 ## 测试 Nginx
 
-使用 curl 可以很便捷地测试 Nginx 是否安装成功，具体指令如下：
+1. 启动 Nginx 自带的守护进程
 
-```sh
-$ cd /server/nginx/sbin
-$ ./nginx
-$ curl -I 127.0.0.1
-```
+   ```sh
+   $ cd /server/nginx/sbin
+   $ ./nginx
+   ```
 
-1. 成功信号
+2. 使用 curl 测试 Nginx 守护进程是否启动成功
+
+   ```sh
+   $ curl -I 127.0.0.1
+   ```
+
+3. 成功信号
 
    ```sh
    HTTP/1.1 200 OK
@@ -126,7 +131,7 @@ $ curl -I 127.0.0.1
    Accept-Ranges: bytes
    ```
 
-2. 失败输出
+4. 失败输出
 
    ```sh
    curl: (7) Failed to connect to 127.0.0.1 port 80: 拒绝连接
