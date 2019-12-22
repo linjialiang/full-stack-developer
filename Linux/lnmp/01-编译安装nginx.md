@@ -2,7 +2,7 @@
 
 Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查阅 [Nginx 篇](./../../Nginx/README.md)
 
-## 必备安装包准备
+## 一、必备安装包准备
 
 编译 Nginx 需要的准备好的软件包：
 
@@ -29,7 +29,9 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
    $ mkdir /package/nginx-1.16.1/nginx_bulid
    ```
 
-## 构建指令
+## 二、编译安装
+
+### Nginx 构建指令
 
 此次列出的构建选项，可运用于开发环境以及部署环境，具体如下：
 
@@ -37,6 +39,7 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 $ cd /package/nginx-1.16.1
 ./configure --prefix=/server/nginx \
 --builddir=/package/nginx-1.16.1/nginx_bulid \
+--error-log-path=/server/logs/nginx/error.log \
 --pid-path=/server/run/nginx/nginx.pid \
 --with-threads \
 --with-file-aio \
@@ -53,6 +56,7 @@ $ cd /package/nginx-1.16.1
 --with-http_degradation_module \
 --with-http_slice_module \
 --with-http_stub_status_module \
+--http-log-path=/server/logs/nginx/access.log \
 --without-http_ssi_module \
 --without-http_uwsgi_module \
 --without-http_scgi_module \
@@ -102,9 +106,9 @@ $ make install
 
 > 提示：编译选项 `-j4` ，可通过 `cat /proc/cpuinfo| grep "processor"| wc -l` 指令查看 `逻辑核心数` 来确定。
 
-## 测试 Nginx
+## 三、测试 Nginx
 
-1. 启动 Nginx 自带的守护进程
+1. 启动 Nginx 守护进程
 
    ```sh
    $ cd /server/nginx/sbin
@@ -137,9 +141,57 @@ $ make install
    curl: (7) Failed to connect to 127.0.0.1 port 80: 拒绝连接
    ```
 
-## Systemd 单元(Unit)
+## 四、修改配置文件
 
-我们推荐使用 Systemd 单元（Unit）来管理 Nginx 守护进程
+Nginx 三个比较常用的配置文件示例：
+
+| 配置文件                                    | 描述               | 具体操作     |
+| ------------------------------------------- | ------------------ | ------------ |
+| [nginx.conf](./source/nginx.conf)           | nginx 主配置文件   | 替换         |
+| [fastcgi-tp.conf](./source/fastcgi-tp.conf) | `tp6` 基本配置项   | 新增         |
+| [sites.conf](./source/sites.conf)           | `tp6` 站点配置模版 | 按需新建多个 |
+
+配置文件对应路径：
+
+| 配置文件        | 路径                               |
+| --------------- | ---------------------------------- |
+| nginx.conf      | /server/nginx/con/nginx.conf       |
+| fastcgi-tp.conf | /server/nginx/conf/fastcgi-tp.conf |
+| sites.conf      | `/server/sites/*.conf`             |
+
+## 五、Nginx 的控制方法
+
+| 操作         | 指令                               |
+| ------------ | ---------------------------------- |
+| 启动 nginx   | /server/nginx/sbin/nginx           |
+| 正常关闭     | /server/nginx/sbin/nginx -s quit   |
+| 快速关闭     | /server/nginx/sbin/nginx -s stop   |
+| 重新载入     | /server/nginx/sbin/nginx -s reload |
+| 重新打开日志 | /server/nginx/sbin/nginx -s reopen |
+| 检测配置文件 | /server/nginx/sbin/nginx -t        |
+| 显示帮助信息 | /server/nginx/sbin/nginx -h        |
+| 列出配置信息 | /server/nginx/sbin/nginx -T        |
+
+> 其他控制方式：
+
+```sh
+# 指定配置文件,启动 Nginx
+$ /server/nginx/sbin/nginx -c /server/nginx/conf/nginx.conf
+
+# 检测指定的 Nginx 配置文件
+$ /server/nginx/sbin/nginx -t -c /server/nginx/conf/nginx.conf
+
+# 强制停止 Nginx 进程
+$ pkill -9 nginx
+```
+
+## 六、Systemd 单元(Unit)
+
+用 Systemd 来管理守护进程更方便，建议为 Nginx 添加 Systemd 单元（Unit）
+
+```sh
+#!
+```
 
 ## 开机启动
 
@@ -172,10 +224,4 @@ $ make install
    | 重新加载 Nginx            | `/etc/init.d/nginx reload`     |
    | 验证 Nginx 配置文件正确性 | `/etc/init.d/nginx configtest` |
 
-## 附录：Nginx 配置文件
-
-| 配置文件                                    | 描述                 |
-| ------------------------------------------- | -------------------- |
-| [fastcgi-tp.conf](./source/fastcgi-tp.conf) | `tp6` 基本配置项     |
-| [nginx.conf](./source/nginx.conf)           | nginx 主配置文件案例 |
-| [sites.conf](./source/sites.conf)           | `tp6` 站点配置模版   |
+## 附录：
