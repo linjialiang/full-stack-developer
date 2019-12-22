@@ -76,11 +76,11 @@ LNMP 开发环境目录
 
 ### LNMP 脚本列表
 
-| LNMP 脚本         | 脚本路径                            |
-| ----------------- | ----------------------------------- |
-| LNMP 目录一键生成 | [lnmp_dir.sh](./source/lnmp_dir.sh) |
-| LNMP 环境一键移除 | [lnmp_del.sh](./source/lnmp_del.sh) |
-| LNMP 环境批量解压 | [lnmp_tar.sh](./source/lnmp_tar.sh) |
+| LNMP 脚本         | 脚本路径                                 |
+| ----------------- | ---------------------------------------- |
+| LNMP 目录一键生成 | [lnmp_dir.sh](./lnmp/source/lnmp_dir.sh) |
+| LNMP 环境一键移除 | [lnmp_del.sh](./lnmp/source/lnmp_del.sh) |
+| LNMP 环境批量解压 | [lnmp_tar.sh](./lnmp/source/lnmp_tar.sh) |
 
 ### LNMP 包文件列表
 

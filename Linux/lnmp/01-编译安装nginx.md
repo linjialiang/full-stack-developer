@@ -137,6 +137,10 @@ $ make install
    curl: (7) Failed to connect to 127.0.0.1 port 80: 拒绝连接
    ```
 
+## Systemd 单元(Unit)
+
+我们推荐使用 Systemd 单元（Unit）来管理 Nginx 守护进程
+
 ## 开机启动
 
 使用 `systemctl` 可以引导 nginx 在系统开启时自动启动
