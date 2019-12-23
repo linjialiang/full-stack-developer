@@ -98,23 +98,45 @@ Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service → 
 
 单间修改下 MariaDB，是它更加适合我们的个人需求，操作列表如下：
 
-| 　序号 | 需要修改的配置项          |
-| ------ | ------------------------- |
-| 01     | 修改 MariaDB 数据存放路径 |
-| 02     | 允许远程链接              |
-| 03     | 创建 MariaDB 远程用户     |
+| 　序号 | 需要修改的配置项                |
+| ------ | ------------------------------- |
+| 01     | 修改 MariaDB 的 PID 文件路径    |
+| 02     | 修改 MariaDB 的 socket 文件路径 |
+| 03     | 修改 MariaDB 的 socket 文件路径 |
+| 04     | 修改 MariaDB 索引日志存放路径   |
+| 05     | 允许远程链接                    |
+| 06     | 创建 MariaDB 远程用户           |
+
+### 首先，停止 MariaDB 服务
+
+```sh
+$ service mariadb stop
+# 或者
+$ systemctl stop mariadb
+```
+
+### 修改配置文件
+
+```sh
+$ cp -p -r /etc/mysql/my.cnf{,.bak}
+$ vim /etc/mysql/my.cnf
+```
+
+`my.cnf` 文件修改的参数如下：
+
+| 参数          | 参数值                          |
+| ------------- | ------------------------------- |
+| socket        | /server/run/mariadb/mysqld.sock |
+| pid-file      | /server/run/mariadb/mysqld.pid  |
+| datadir       | /server/data                    |
+| log_bin       | /server/data/mariadb-bin        |
+| log_bin_index | /server/data/mariadb-bin.index  |
+
+> 注意：其中 socket 参数有 3 个，都需要修改！
 
 ### 修改 MariaDB 数据存放路径
 
 这里只是最简单的操作，想家详细的内容请参阅 [MariaDB 数据初始化篇](./../../MariaDB/02-mariadb数据初始化篇.md)
-
-1. 首先，停止 MariaDB 服务
-
-   ```sh
-   $ service mariadb stop
-   # 或者
-   $ systemctl stop mariadb
-   ```
 
 2. 备份 MariaDB 配置文件
 
@@ -129,22 +151,15 @@ Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service → 
 
    ```ini
    # datadir       = /var/lib/mysql
-   datadir       = /server/mysql
+   datadir       = /server/data
    ```
 
 4. 初始化数据目录
 
-   使用 `--initialize` 这个初始化数据目录：
+   使用 `mysql_install_db` 这个工具初始化数据目录：
 
    ```sh
-   $ mysqld --initialize --user=mysql
-   ```
-
-5. 如果 mysqld 无法识别数据目录，请使用以下指令：
-
-   ```sh
-   $ mysqld --initialize --user=mysql \
-   --datadir=/server/mysql
+   $ mysql_install_db --user=mysql --datadir=/server/data
    ```
 
 ### 远程连接
