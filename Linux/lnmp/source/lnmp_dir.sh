@@ -7,7 +7,6 @@ func_create(){
 server_array=(
     "/server"
     "/server/nginx"
-    "/server/mariadb"
     "/server/php"
     "/server/sites"
     "/server/default"

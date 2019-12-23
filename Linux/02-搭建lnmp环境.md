@@ -87,7 +87,6 @@ LNMP 开发环境目录
 | 包文件             | 包链接                                                    |
 | ------------------ | --------------------------------------------------------- |
 | Nginx 源码包       | [nginx-1.16.1.tar.gz](http://nginx.org/en/download.html)  |
-| MariaDB 源码包     | [mariadb-10.4.11.tar.gz](https://downloads.mariadb.org/)  |
 | PHP 源码包         | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)     |
 | PHP 错误提示扩展   | [php_xdebug](https://pecl.php.net/package/xdebug)         |
 | PHP 图片处理扩展   | [php_imagick](https://pecl.php.net/get/imagick-3.4.4.tgz) |
@@ -110,7 +109,7 @@ LNMP 开发环境目录
 | 序号 | LNMP 章节导航                                              |
 | ---- | ---------------------------------------------------------- |
 | 01   | [编译安装 Nginx](./lnmp/01-编译安装nginx.md)               |
-| 02   | [编译安装 MariaDB](./lnmp/02-编译安装mariadb.md)           |
+| 02   | [存储库安装 MariaDB](./lnmp/02-存储库安装mariadb.md)       |
 | 03   | [编译安装 PHP](./lnmp/03-编译安装php.md)                   |
 | 04   | [为 PHP 安装 PECL 扩展](./lnmp/04-为php安装pecl扩展.md)    |
 | 05   | [LNMP 维护篇](./lnmp/05-lnmp维护篇.md)                     |
