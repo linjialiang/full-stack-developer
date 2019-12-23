@@ -14,6 +14,12 @@
 $ systemctl enable nginx
 ```
 
+重新加载 `Systemd` 配置文件
+
+```sh
+$ systemctl daemon-reload
+```
+
 ### 不支持 Systemd 的软件
 
 1. 这类软件需要直接编写 Systemd 单元(Unit)文件，如：
@@ -30,6 +36,12 @@ $ systemctl enable nginx
 
    ```sh
    $ systemctl enable nginx
+   ```
+
+4. 重新加载 `Systemd` 配置文件
+
+   ```sh
+   $ systemctl daemon-reload
    ```
 
 > 提示：编写的单元文件必须要支持开机启动，否则无效，具体方法将下面讲解！
