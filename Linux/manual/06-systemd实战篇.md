@@ -16,12 +16,21 @@ $ systemctl enable nginx
 
 ### 不支持 Systemd 的软件
 
-```sh
-# 1. 这类软件需要直接编写 Systemd 单元(Unit)文件；
-# 2. 将单元文件移动至 /usr/lib/systemd/system 目录；
-# 3. 使用类似如下指令加入开机启动：
-$ systemctl enable nginx
-```
+1. 这类软件需要直接编写 Systemd 单元(Unit)文件，如：
+
+   Nginx 单元文件请参考：[nginx.service](./../lnmp/source/nginx/nginx.service)
+
+2. 将单元文件移动至 /usr/lib/systemd/system 目录：
+
+   ```sh
+   $ cp nginx.service /usr/lib/systemd/system/
+   ```
+
+3. 使用类似如下指令加入开机启动：
+
+   ```sh
+   $ systemctl enable nginx
+   ```
 
 > 提示：编写的单元文件必须要支持开机启动，否则无效，具体方法将下面讲解！
 
@@ -90,6 +99,8 @@ WantedBy=multi-user.target
 Alias=mysql mysqld
 ```
 
+> 提示： `multi-user.target` 这个 target 通常总是开机启动的
+
 ### 附录：修改开机默认运行的 `target`
 
 Debian 10.x 采用加载 `target` 的方式来替代之前的启动级别
@@ -113,12 +124,21 @@ Debian 10.x 采用加载 `target` 的方式来替代之前的启动级别
    | 3        | multi-user.target |
    | 5        | graphical.target  |
 
-   > 提示：对于终端服务器，我们采用 `multi-user.target` 开机启动即可
+   > 提示：`graphical.target` 包含 `multi-user.target`，所以发行版默认启动的只要是其中任何一个就可以了
 
 3. `target` 相关指令
 
-   | target 指令 | 指令描述 |
-   | ----------- | -------- |
-
+   ```sh
+   # 查看当前默认启动的 target：
+   $ systemctl get-default
+   # 修改默认启动的 target 为 multi-user.target
+   $ systemctl set-default multi-user.target
+   ```
 
 ## 三、单元(Unit)文件案例
+
+这里列出了自己编写的 Unit 文件：
+
+| 程序  | Unit 文件路径                                         |
+| ----- | ----------------------------------------------------- |
+| nginx | [nginx.service](./../lnmp/source/nginx/nginx.service) |

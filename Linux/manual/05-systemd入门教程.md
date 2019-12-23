@@ -62,15 +62,14 @@ Systemd 就是为了解决上述问题而诞生的。它的设计目标是，为
 
 1. 分析系统状态
 
-   | 指令                                         | 描述                            |
-   | -------------------------------------------- | ------------------------------- |
-   | `$ systemctl status`                         | 显示系统状态                    |
-   | `$ systemctl`                                | 输出激活的单元                  |
-   | `$ systemctl list-units`                     | 输出运行失败的单元              |
-   | `$ systemctl --failed`                       | 输出运行失败的单元              |
-   | `$ systemctl list-unit-files`                | 查看所有已安装服务              |
-   | `$ systemctl list-unit-files --type=service` | 列出指定类型的配置文件          |
-   | `$ systemctl status pid`                     | 显示 cgroup slice, 内存和父 PID |
+   | 指令                                         | 描述                   |
+   | -------------------------------------------- | ---------------------- |
+   | `$ systemctl status`                         | 显示系统状态           |
+   | `$ systemctl`                                | 输出激活的单元         |
+   | `$ systemctl list-units`                     | 输出运行失败的单元     |
+   | `$ systemctl --failed`                       | 输出运行失败的单元     |
+   | `$ systemctl list-unit-files`                | 查看所有已安装服务     |
+   | `$ systemctl list-unit-files --type=service` | 列出指定类型的配置文件 |
 
    > 提示：所有可用的单元文件存放在 `/usr/lib/systemd/system/` 和 `/etc/systemd/system/` 目录（后者优先级更高）。
 
