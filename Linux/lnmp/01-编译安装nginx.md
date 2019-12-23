@@ -151,6 +151,10 @@ Nginx 三个比较常用的配置文件示例：
 | [fastcgi-tp.conf](./source/nginx/fastcgi-tp.conf) | `tp6` 基本配置项   | 新增         |
 | [sites.conf](./source/nginx/sites.conf)           | `tp6` 站点配置模版 | 按需新建多个 |
 
+- 关于 Nginx 错误日志
+
+  Nginx 错误日志基于 main 区块，所以在站点配置文件里不应该在设置 `error_log` 参数，这跟 httpd 有所区别
+
 配置文件对应路径：
 
 | 配置文件        | 路径                               |
