@@ -156,8 +156,6 @@ $ mkdir /server/run/mariadb
 $ chown mysql /server/run/mariadb/
 ```
 
-> 提示：亲测除了二进制日志的目录必须创建外，其它两个目录都可以自动生成！
-
 ### 初始化数据目录
 
 使用 `mysql_install_db` 这个工具初始化数据目录：
@@ -196,35 +194,29 @@ MariaDB 自带了守护进程启动方式，但是使用 Systemd 控制更加优
 
    Systemd 常用的操作 MariaDB 指令：
 
-   | 操作类型     | 指令                      |
-   | ------------ | ------------------------- |
-   | 启动 MariaDB | systemctl start mariadb   |
-   | 关闭 MariaDB | systemctl stop mariadb    |
-   | 重启 MariaDB | systemctl restart mariadb |
+   | 操作类型     | 指令                    |
+   | ------------ | ----------------------- |
+   | 启动 MariaDB | systemctl start mysqld  |
+   | 关闭 MariaDB | systemctl stop mariadb  |
+   | 重启 MariaDB | systemctl restart mysql |
 
-### 远程连接
+### 允许客户端远程连接
 
-默认情况下 MariaDB 只能通过本地管理数据，为了方便管理我们需要开启远程管理（这对数据库安全构成很大威胁）
+默认情况下 MariaDB 只能通过 shell 终端或本地客户端管理数据，为了方便管理我们需要开启远程管理（开启远程是有风险的）
 
 1. 修改 MariaDB 配置文件里的 `bind-address` 参数即可：
 
-   | bind-address 参数值 | 描述                                         |
-   | ------------------- | -------------------------------------------- |
-   | 0.0.0.0             | 允许所有 IP 远程链接                         |
-   | 127.0.0.1           | 只允许本地链接                               |
-   | 192.168.66.103      | 只允许 IP 为 `192.168.66.103` 的用户远程链接 |
+   bind-address 不允许设置 ip 段，不允许设置多 ip
 
-   > 备注：`bind-address` 不允许设置 ip 段，不允许设置多 ip
+   | bind-address 参数值 | 描述                                              |
+   | ------------------- | ------------------------------------------------- |
+   | 0.0.0.0             | 允许所有 IP 远程链接（本地+远程客户端都可以访问） |
+   | 127.0.0.1           | 只允许本地客户端链接（默认值）                    |
+   | 192.168.66.103      | 只允许 IP 为 192.168.66.103 的用户通过客户端链接  |
 
-   ```ini
-   ...
-   # bind-address        = 127.0.0.1
-   bind-address        = 0.0.0.0
-   ...
+   > 注意：bind-address 无论怎么设置，shell 终端都可以登陆 MariaDB，两者无关！
 
-   ```
-
-2. 创建远程的超级管理员用户
+2. 创建远程客户端的超级管理员用户
 
    ```sh
    $ service mariadb start
