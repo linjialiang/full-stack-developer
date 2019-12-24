@@ -1,4 +1,4 @@
-[Uint]
+[Unit]
 Description=Nginx 1.16.1
 Wants=mariadb.service php-fpm.service
 

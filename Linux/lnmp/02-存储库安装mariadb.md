@@ -149,11 +149,11 @@ $ vim /etc/mysql/my.cnf
 
 ```sh
 $ mkdir /server/data
-$ chown mysql:mysql /server/data/
+$ chown mysql /server/data/
 $ mkdir /server/logs/mariadb
-$ chown mysql:mysql /server/logs/mariadb/
+$ chown mysql /server/logs/mariadb/
 $ mkdir /server/run/mariadb
-$ chown mysql:mysql /server/run/mariadb/
+$ chown mysql /server/run/mariadb/
 ```
 
 > 提示：亲测除了二进制日志的目录必须创建外，其它两个目录都可以自动生成！

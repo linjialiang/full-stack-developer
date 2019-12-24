@@ -1,4 +1,4 @@
-[Uint]
+[Unit]
 Description=MariaDB 10.4.x
 Wants=nginx.service php-fpm.service
 
