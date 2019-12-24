@@ -143,33 +143,64 @@ $ vim /etc/mysql/my.cnf
 
 > 修改后的配置文件请参考 [my.cnf](./source/mariadb/my.cnf)
 
-### 修改 MariaDB 数据存放路径
+### 创建必要目录
 
-这里只是最简单的操作，想家详细的内容请参阅 [MariaDB 数据初始化篇](./../../MariaDB/02-mariadb数据初始化篇.md)
+创建必要目录，并设置用户权限为 MariaDB 用户
 
-1. 备份 MariaDB 配置文件
+```sh
+$ mkdir /server/data
+$ chown mysql:mysql /server/data/
+$ mkdir /server/logs/mariadb
+$ chown mysql:mysql /server/logs/mariadb/
+$ mkdir /server/run/mariadb
+$ chown mysql:mysql /server/run/mariadb/
+```
+
+> 提示：亲测除了二进制日志的目录必须创建外，其它两个目录都可以自动生成！
+
+### 初始化数据目录
+
+使用 `mysql_install_db` 这个工具初始化数据目录：
+
+```sh
+$ /usr/bin/mysql_install_db --user=mysql \
+--datadir=/server/data \
+--skip-test-db
+```
+
+## 六、启动 MariaDB
+
+MariaDB 自带了守护进程启动方式，但是使用 Systemd 控制更加优秀
+
+1. 使用 MariaDB 自带的程序操作方法：
+
+   | 操作类型     | 指令                    |
+   | ------------ | ----------------------- |
+   | 启用 MariaDB | `$ mysqld_safe &`       |
+   | 停止 MariaDB | `$ mysqladmin shutdwon` |
+
+2. 使用 Systemd 单元(Unit)文件操作 MariaDB
+
+   经过修改的 MariaDB 已经无法通过之前 Unit 文件来管理，需要如下修改：
+
+   | Unit 文件        | 路径                                                         |
+   | ---------------- | ------------------------------------------------------------ |
+   | 自带的 Unit 文件 | /usr/lib/systemd/system/mariadb.service                      |
+   | 可用的 Unit 文件 | 源码请查看 [mariadb.server](./source/mariadb/mariadb.server) |
+
+   修改 MariaDB 自带的 Unit 文件，然后使用重新加载 systemd 配置：
 
    ```sh
-   $ cp -p -r /etc/mysql/my.cnf{,.bak}
-   $ vim /etc/mysql/my.cnf
+   $ systemctl daemon-reload
    ```
 
-   提示：MariaDB 的主配置文件是 `/etc/mysql/my.cnf`
+   Systemd 常用的操作 MariaDB 指令：
 
-2. `my.cnf` 文件修改的内容如下：
-
-   ```ini
-   # datadir       = /var/lib/mysql
-   datadir       = /server/data
-   ```
-
-3. 初始化数据目录
-
-   使用 `mysql_install_db` 这个工具初始化数据目录：
-
-   ```sh
-   $ mysql_install_db --user=mysql --datadir=/server/data
-   ```
+   | 操作类型     | 指令                      |
+   | ------------ | ------------------------- |
+   | 启动 MariaDB | systemctl start mariadb   |
+   | 关闭 MariaDB | systemctl stop mariadb    |
+   | 重启 MariaDB | systemctl restart mariadb |
 
 ### 远程连接
 

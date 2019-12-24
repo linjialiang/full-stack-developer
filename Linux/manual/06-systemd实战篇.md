@@ -108,7 +108,8 @@ MariaDB 的 [Install] 区块案例：
 ```sh
 [Install]
 WantedBy=multi-user.target
-Alias=mysql mysqld
+Alias=mysql.service
+Alias=mysqld.service
 ```
 
 > 提示： `multi-user.target` 这个 target 通常总是开机启动的
