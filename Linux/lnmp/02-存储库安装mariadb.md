@@ -122,15 +122,22 @@ $ cp -p -r /etc/mysql/my.cnf{,.bak}
 $ vim /etc/mysql/my.cnf
 ```
 
-`my.cnf` 文件修改的参数如下：
+> my.cnf 文件修改的参数如下：
 
-| 参数          | 参数值                          |
-| ------------- | ------------------------------- |
-| socket        | /server/run/mariadb/mysqld.sock |
-| pid-file      | /server/run/mariadb/mysqld.pid  |
-| datadir       | /server/data                    |
-| log_bin       | /server/data/mariadb-bin        |
-| log_bin_index | /server/data/mariadb-bin.index  |
+| 属性                   | my.cnf 对应参数及参数值                                        |
+| ---------------------- | -------------------------------------------------------------- |
+| 套接字                 | socket = /server/run/mariadb/mariadb.sock                      |
+| pid 文件               | pid-file = /server/run/mariadb/mariadb.pid                     |
+| 数据目录               | datadir = /server/data                                         |
+| 二进制日志记录格式     | binlog_format = mixed                                          |
+| 二进制日志路径         | log_bin = /server/logs/mariadb/bin_log/mariadb-bin             |
+| 二进制日志索引文件路径 | log_bin_index = /server/logs/mariadb/bin_log/mariadb-bin.index |
+| 关闭慢查询日志         | slow_query_log = 0                                             |
+| 慢查询日志路径         | slow_query_log_file = /server/logs/mariadb/mariadb-slow.log    |
+| 关闭通用日志           | general_log = 0                                                |
+| 通用日志文件           | general_log_file = /server/logs/mariadb/mariadb.log            |
+| 错误日志记录级别       | log_warnings = 0                                               |
+| 错误日志文件           | log-error = /server/logs/mariadb/err.log                       |
 
 > 注意：其中 socket 参数有 3 个，都需要修改！
 
@@ -138,7 +145,7 @@ $ vim /etc/mysql/my.cnf
 
 这里只是最简单的操作，想家详细的内容请参阅 [MariaDB 数据初始化篇](./../../MariaDB/02-mariadb数据初始化篇.md)
 
-2. 备份 MariaDB 配置文件
+1. 备份 MariaDB 配置文件
 
    ```sh
    $ cp -p -r /etc/mysql/my.cnf{,.bak}
@@ -147,14 +154,14 @@ $ vim /etc/mysql/my.cnf
 
    提示：MariaDB 的主配置文件是 `/etc/mysql/my.cnf`
 
-3. `my.cnf` 文件修改的内容如下：
+2. `my.cnf` 文件修改的内容如下：
 
    ```ini
    # datadir       = /var/lib/mysql
    datadir       = /server/data
    ```
 
-4. 初始化数据目录
+3. 初始化数据目录
 
    使用 `mysql_install_db` 这个工具初始化数据目录：
 
