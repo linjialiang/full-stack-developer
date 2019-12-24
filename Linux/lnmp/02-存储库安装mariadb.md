@@ -124,22 +124,24 @@ $ vim /etc/mysql/my.cnf
 
 > my.cnf 文件修改的参数如下：
 
-| 属性                   | my.cnf 对应参数及参数值                                        |
-| ---------------------- | -------------------------------------------------------------- |
-| 套接字                 | socket = /server/run/mariadb/mariadb.sock                      |
-| pid 文件               | pid-file = /server/run/mariadb/mariadb.pid                     |
-| 数据目录               | datadir = /server/data                                         |
-| 二进制日志记录格式     | binlog_format = mixed                                          |
-| 二进制日志路径         | log_bin = /server/logs/mariadb/bin_log/mariadb-bin             |
-| 二进制日志索引文件路径 | log_bin_index = /server/logs/mariadb/bin_log/mariadb-bin.index |
-| 关闭慢查询日志         | slow_query_log = 0                                             |
-| 慢查询日志路径         | slow_query_log_file = /server/logs/mariadb/mariadb-slow.log    |
-| 关闭通用日志           | general_log = 0                                                |
-| 通用日志文件           | general_log_file = /server/logs/mariadb/mariadb.log            |
-| 错误日志记录级别       | log_warnings = 0                                               |
-| 错误日志文件           | log-error = /server/logs/mariadb/err.log                       |
+| 属性                   | my.cnf 对应参数及参数值                             |
+| ---------------------- | --------------------------------------------------- |
+| 套接字                 | socket = /server/run/mariadb/mariadb.sock           |
+| pid 文件               | pid-file = /server/run/mariadb/mariadb.pid          |
+| 数据目录               | datadir = /server/data                              |
+| 二进制日志记录格式     | binlog_format = mixed                               |
+| 二进制日志文件过期时间 | expire_logs_days = 30                               |
+| 二进制日志每个文件容量 | max_binlog_size = 100M                              |
+| 二进制日志路径         | log_bin = /server/logs/mariadb/bin_log              |
+| 二进制日志索引文件路径 | log_bin_index = /server/logs/mariadb/bin_log.index  |
+| 关闭慢查询日志         | slow_query_log = 0                                  |
+| 慢查询日志路径         | slow_query_log_file = /server/logs/mariadb/slow.log |
+| 关闭通用日志           | general_log = 0                                     |
+| 通用日志文件           | general_log_file = /server/logs/mariadb/general.log |
+| 错误日志记录级别       | log_warnings = 0                                    |
+| 错误日志文件           | log_error = /server/logs/mariadb/err.log            |
 
-> 注意：其中 socket 参数有 3 个，都需要修改！
+> 修改后的配置文件请参考 [my.cnf](./source/mariadb/my.cnf)
 
 ### 修改 MariaDB 数据存放路径
 
