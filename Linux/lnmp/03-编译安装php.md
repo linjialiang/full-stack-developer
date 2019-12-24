@@ -80,16 +80,33 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 
 ## 三、PHP 命令行工具
 
-`php-config` 是一个简单的命令行脚本用于获取所安装的 PHP 配置的信息。使用 -h 来查看：
+`php-config` 是一个简单的命令行脚本用于获取所安装的 PHP 配置的信息。具体如下：
 
 ```sh
-$ cd /server/php/bin
-./php-config -h
+$ cd /server/php/bin/php-config
+Usage: /server/php/bin/php-config [OPTION]
+Options:
+  --prefix            [/server/php]
+  --includes          [-I/server/php/include/php -I/server/php/include/php/main -I/server/php/include/php/TSRM -I/server/php/include/php/Zend -I/server/php/include/php/ext -I/server/php/include/php/ext/date/lib]
+  --ldflags           []
+  --libs              [-lcrypt   -lresolv -lcrypt -lrt -lrt -lm -ldl  -lxml2 -lssl -lcrypto -lcurl -lxml2 -lonig -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lz -lssl -lcrypto -lcrypt ]
+  --extension-dir     [/server/php/lib/php/extensions/no-debug-non-zts-20190902]
+  --include-dir       [/server/php/include/php]
+  --man-dir           [/server/php/php/man]
+  --php-binary        [/server/php/bin/php]
+  --php-sapis         [ cli fpm phpdbg cgi]
+  --ini-path          [/server/php/lib]
+  --ini-dir           []
+  --configure-options [--prefix=/server/php --enable-fpm --enable-mbstring --with-openssl=/package/pkg/openssl-1.1.1d --with-pcre-jit --enable-mysqlnd --with-pdo-mysql --with-curl=/package/pkg/curl-7.67.0 --without-cdb --without-sqlite3 --without-pdo-sqlite]
+  --version           [7.4.1]
+  --vernum            [70401]
 ```
 
-> 提示：在编译 php 扩展时，如果有多个 PHP 版本，可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
+1. 多版本 PHP 如何处理 php-config
 
-## 扩展库操作
+如果系统有多个 PHP 版本，在编译时可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
+
+## 四、扩展库操作
 
 PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./04-为php安装pecl扩展.md)
 
@@ -111,25 +128,25 @@ PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./
 
    > 提示：有些动态库是 `zend` 扩展库，需要使用 `zend_extension=<库名>` 开启，才能生效！
 
-## `php-fpm` 服务
+## 五、配置 php-fpm 服务
 
-想 Nginx 这类 web 服务，只能处理静态页面，如果想要处理 php 脚本，就必须借助类似 `php-fpm` 的服务！
+像 Nginx 这类 web 服务，只能处理静态页面，如果想要处理 php 脚本，就必须借助类似 `php-fpm` 的服务！
 
-### 配置 php-fpm
+### php-fpm 配置文件
 
-`php-fpm` 配置文件默认是在 `/server/php/etc` 下面：
+php-fpm 的所有配置文件默认都在 /server/php/etc 下：
 
-| 所属进程                    | 对应配置文件       | 数量     |
-| --------------------------- | ------------------ | -------- |
-| 主进程                      | `php-fpm.conf`     | 1        |
-| pool 进程（即：工作池进程） | `php-fpm.d/*.conf` | 没有限制 |
+| 进程类型         | 对应配置文件       | 数量     |
+| ---------------- | ------------------ | -------- |
+| 主进程(master)   | php-fpm.conf       | 1        |
+| 工作池进程(pool) | `php-fpm.d/*.conf` | 没有限制 |
 
 配置文件默认模块：
 
-| 所属进程  | 对应配置文件模块             |
-| --------- | ---------------------------- |
-| 主进程    | `php-fpm.conf.default`       |
-| pool 进程 | `php-fpm.d/www.conf.default` |
+| 进程类型   | 对应配置文件模块           |
+| ---------- | -------------------------- |
+| 主进程     | php-fpm.conf.default       |
+| 工作池进程 | php-fpm.d/www.conf.default |
 
 ### 创建主进程配置文件
 
