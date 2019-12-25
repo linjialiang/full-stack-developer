@@ -11,6 +11,8 @@ server_array=(
     "/server/sites"
     "/server/default"
     "/server/www"
+    "/server/data"
+    "/sercer/ImageMagick"
     "/server/run"
     "/server/run/nginx"
     "/server/run/mariadb"

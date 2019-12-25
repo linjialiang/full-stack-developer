@@ -84,17 +84,17 @@ LNMP 开发环境目录
 
 ### LNMP 包文件列表
 
-| 包文件             | 包链接                                                    |
-| ------------------ | --------------------------------------------------------- |
-| Nginx 源码包       | [nginx-1.16.1.tar.gz](http://nginx.org/en/download.html)  |
-| PHP 源码包         | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)     |
-| PHP 错误提示扩展   | [php_xdebug](https://pecl.php.net/package/xdebug)         |
-| PHP 图片处理扩展   | [php_imagick](https://pecl.php.net/get/imagick-3.4.4.tgz) |
-| openssl 依赖库     | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/)  |
-| pcre 依赖库        | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/)          |
-| zlib 依赖库        | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz)  |
-| curl 依赖库        | [curl-7.67.0.tar.gz](https://curl.haxx.se/download.html)  |
-| ImageMagick 依赖库 | [ImageMagick](https://imagemagick.org/download/)          |
+| 包文件             | 包链接                                                           |
+| ------------------ | ---------------------------------------------------------------- |
+| Nginx 源码包       | [nginx-1.16.1.tar.gz](http://nginx.org/en/download.html)         |
+| PHP 源码包         | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)            |
+| PHP 错误提示扩展   | [xdebug-2.9.0.tgz](https://pecl.php.net/package/xdebug)          |
+| PHP 图片处理扩展   | [imagick-3.4.4.tgz](https://pecl.php.net/get/imagick-3.4.4.tgz)  |
+| openssl 依赖库     | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/)         |
+| pcre 依赖库        | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/)                 |
+| zlib 依赖库        | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz)         |
+| curl 依赖库        | [curl-7.67.0.tar.gz](https://curl.haxx.se/download.html)         |
+| ImageMagick 依赖库 | [ImageMagick-7.0.9-10.tar.gz](https://imagemagick.org/download/) |
 
 ### 进行编译安装之前，请进行如下操作：
 
@@ -103,6 +103,14 @@ LNMP 开发环境目录
 | 01   | 使用 `lnmp_dir.sh` 脚本文件生成；     |
 | 02   | 将所需软件包全部下载到对应位置；      |
 | 03   | 使用 `lnmp_tar.sh` 脚本批量解压它们。 |
+
+其中 lnmp_dir.sh 脚本生成的部分目录需要特殊权限，列表如下：
+
+| 序号 | 权限                                |
+| ---- | ----------------------------------- |
+| 01   | # chown mysql /server/data/         |
+| 02   | # chown mysql /server/run/mariadb/  |
+| 03   | # chown mysql /server/logs/mariadb/ |
 
 ## 章节导航
 

@@ -240,17 +240,19 @@ $ cp www.conf.default www.conf
 
 修改几个选项的值：
 
-| 选项     | 选项值                                   |
-| -------- | ---------------------------------------- |
-| 子进程名 | [www]                                    |
-| listen   | /server/run/php/php-fpm.sock             |
-| group    | nogroup(Debian 发行版没有 nobody 用户组) |
+| 选项                                  | 说明                                            |
+| ------------------------------------- | ----------------------------------------------- |
+| [www]                                 | 子进程名，通常与子进程配置文件命名相同          |
+| listen = /server/run/php/php-fpm.sock | php-fpm 进程的 socket 文件                      |
+| group = nogroup                       | 默认为 nobody，但 debian 默认并没有这个用户组名 |
+| listen.owner = nobody                 | 监听用户，必须与 nginx 用户一致                 |
+| listen.group = nogroup                | 监听用户组，建议与 nginx 用户组一致             |
 
-> 提示：通常子进程名与子进程配置文件名一致即可
+> 提示：php-fpm 的监听用户，必须跟对应的 web 服务器的用户一致，这样才能实现监听
 
 1. 创建工作进程用户
 
-   用户一般与 nginx 主进程用户保持一致即可，具体操作见 [lnmp 维护篇](./05-lnmp维护篇.md)
+   这里直接使用 nobody 了，具体操作见 [lnmp 维护篇](./05-lnmp维护篇.md)
 
 2. 创建 unix 套接字监听文件的存放目录：
 

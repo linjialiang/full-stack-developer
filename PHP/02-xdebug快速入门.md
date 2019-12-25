@@ -189,12 +189,13 @@ Xdebug 为与运行 PHP 脚本交互的调试器客户机提供了一个接口�
 zend_extension=xdebug
 
 xdebug.collect_params = 4
+xdebug.dump_globals = 1
 xdebug.dump_undefined = 1
-xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.trace_output_dir = "/server/logs/xdebug"
 xdebug.gc_stats_enable = 1
-xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.gc_stats_output_dir = "/server/logs/xdebug"
 xdebug.profiler_enable = 1
-xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
+xdebug.profiler_output_dir = "/server/logs/xdebug"
 
 xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
