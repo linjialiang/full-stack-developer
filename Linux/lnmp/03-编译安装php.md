@@ -240,10 +240,11 @@ $ cp www.conf.default www.conf
 
 修改几个选项的值：
 
-| 选项     | 选项值                       |
-| -------- | ---------------------------- |
-| 子进程名 | [www]                        |
-| listen   | /server/run/php/php-fpm.sock |
+| 选项     | 选项值                                   |
+| -------- | ---------------------------------------- |
+| 子进程名 | [www]                                    |
+| listen   | /server/run/php/php-fpm.sock             |
+| group    | nogroup(Debian 发行版没有 nobody 用户组) |
 
 > 提示：通常子进程名与子进程配置文件名一致即可
 
@@ -273,13 +274,13 @@ php-fpm 自带了一套比较完善的进程管理指令，编译完成后还会
 
 ### 简单管理 php-fpm 守护进程
 
-| 管理类型     | 指令                               |
-| ------------ | ---------------------------------- |
-| 测试 php-fpm | /server/php/sbin/php-fpm -t        |
-| 启动 php-fpm | /server/php/sbin/php-fpm           |
-| 关闭 php-fpm | kill -9 `cat /var/run/php-fpm.pid` |
-| 关闭 php-fpm | pkill -9 php-fpm                   |
-| php-fpm 帮助 | /server/php/sbin/php-fpm -h        |
+| 管理类型     | 指令                                      |
+| ------------ | ----------------------------------------- |
+| 测试 php-fpm | /server/php/sbin/php-fpm -t               |
+| 启动 php-fpm | /server/php/sbin/php-fpm                  |
+| 关闭 php-fpm | kill -9 `cat /server/run/php/php-fpm.pid` |
+| 关闭 php-fpm | pkill -9 php-fpm                          |
+| php-fpm 帮助 | /server/php/sbin/php-fpm -h               |
 
 ### 使用 Systemd 管理 php-fpm 守护进程
 
@@ -299,6 +300,8 @@ php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译�
    $ cd /package/php-7.4.1/php_bulid/sapi/fpm
    $ cp ./php-fpm.service /usr/lib/systemd/system/
    ```
+
+   > 注意：修改 PIDFile 路径为 `/server/run/php/php-fpm.pif`
 
 2. 重新载入 Systemd 服务配置
 
