@@ -11,66 +11,63 @@
 
 `phpize` 可以将 PECL 扩展源码构建为可用 `./configure` 编译的源码，使用 `phpize --help` 可以查看帮助。
 
-1. 配置环境变量:
+### 配置环境变量:
 
-   将 `php 可执行程序目录` 的路径加入环境变量中，可以方便 `phpize` 操作
+将 php 可执行程序目录的路径加入环境变量中，可以方便后续操作
 
-   > 修改控制环境变量的文件
+1. 修改控制环境变量的文件
 
    ```sh
    $ cp /etc/profile{,.bak}
    $ vim /etc/profile
    ```
 
-   > `/etc/profile` 底部增加一行内容：
+2. `/etc/profile` 底部增加一行内容：
 
    ```sh
    export PATH=$PATH:/server/php/bin:/server/php/sbin
    ```
 
-   > 使用 `source` 指令重新激活文件：
+3. 使用 `source` 指令重新激活文件：
 
    ```sh
    $ source /etc/profile
    ```
 
-2. 指定 php 配置文件
+### 安装配置文件前的准备工作
 
-   使用 `phpize` 前，必须正确配置 `php.ini` 文件
+1. 检查 PHP 配置文件是否正确加载
 
-   | 指令                                           | 描述                          |
-   | ---------------------------------------------- | ----------------------------- |
-   | `php --ini`                                    | 查询 php 配置文件信息         |
-   | `/package/lnmp/php-7.3.11/php.ini-development` | php 配置文件模版 - 开发环境   |
-   | `/package/lnmp/php-7.3.11/php.ini-production`  | php 配置文件模版 - 开部署环境 |
-
-   > 具体操作如下：
+   使用 phpize 前，需要先正确加载 PHP 配置文件（php.ini）
 
    ```sh
-   $ cp -p -r /package/lnmp/php-7.3.11/php.ini-development /server/php/lib/php.ini
+   $ php --ini
+   # 如出现如下内容则配置文件正确加载
+   Loaded Configuration File:         /server/php/lib/php.ini
+   # 如出现如下内容则配置文件未加载
+   Loaded Configuration File: (none)
    ```
 
-3. 创建 PRCL 扩展源码目录
+   > 说明：加载 php 配置文件，请参考 [编译安装 php](./03-编译安装php.md)
+
+2. 创建 PRCL 扩展源码目录
 
    ```sh
-   $ mkdir -p /package/lnmp/php-ext
+   $ mkdir -p /package/ext
    ```
 
-   > PRCL 扩展的默认安装路径为 `/server/php/lib/php/extensions/no-debug-non-zts-20180731/`
+## 安装 PRCL 扩展 —— `Xdebug`
 
-## 安装 PRCL 扩展 —— `xdebug`
-
-1. xdebug 目录列表
-
-   | xdebug 目录 | 路径                                                    |
-   | ----------- | ------------------------------------------------------- |
-   | 源码路径    | `/package/lnmp/php-ext/xdebug-2.8.0`                    |
-   | 构建路径    | `mkdir /package/lnmp/php-ext/xdebug-2.8.0/xdebug_bulid` |
-
-2. 编译安装
+1. 创建构建目录
 
    ```sh
-   $ cd /package/lnmp/php-ext/xdebug-2.8.0
+   $ cd /package/ext/xdebug-2.9.0
+   $ mkdir xdebug_bulid
+   ```
+
+2. 编译并安装
+
+   ```sh
    $ phpize
    $ cd xdebug_bulid
    $ ../configure
@@ -79,32 +76,36 @@
    $ make install
    ```
 
-3. php.ini 文件添加扩展配置
+3. 备份 php.ini 文件
 
    ```sh
    $ cp /server/php/lib/php.ini{,.bak}
    $ vim /server/php/lib/php.ini
    ```
 
-   `php.ini` 底部增加如下如下：
+4. php.ini 文件底部增加如下如下：
 
    ```ini
    [Xdebug]
    zend_extension=xdebug
-   xdebug.profiler_append = 0
+
+   xdebug.collect_params = 4
+   xdebug.dump_globals
+   xdebug.dump_undefined = 1
+   xdebug.trace_output_dir = "/server/logs/xdebug"
+   xdebug.gc_stats_enable = 1
+   xdebug.gc_stats_output_dir = "/server/logs/xdebug"
    xdebug.profiler_enable = 1
-   xdebug.profiler_enable_trigger = 0
-   xdebug.profiler_output_dir ="/logs/php/xdebug"
-   xdebug.trace_output_dir ="/logs/php/xdebug"
-   xdebug.profiler_output_name = "cache.out.%t-%s"
+   xdebug.profiler_output_dir = "/server/logs/xdebug"
+
    xdebug.remote_enable = 1
    xdebug.remote_autostart = 1
-   xdebug.remote_handler = "dbgp"
-   xdebug.remote_host = "127.0.0.1"
-   xdebug.idekey= PHPSTROM
+   xdebug.idekey = qywl
+   xdebug.remote_host = localhost
+   xdebug.remote_port = 9000
    ```
 
-   配置文件指定的日志路径必须存在：
+5. 创建 xdebug 日志存放路径：
 
    ```sh
    $ mkdir -p /logs/php/xdebug
