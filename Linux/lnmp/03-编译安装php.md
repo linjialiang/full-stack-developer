@@ -47,28 +47,30 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    --with-openssl=/package/pkg/openssl-1.1.1d \
    --with-pcre-jit \
    --enable-mysqlnd \
+   --with-mysqli \
    --with-pdo-mysql \
+   --with-mysql-sock=/server/run/mariadb/mysqld.sock \
    --with-curl=/package/pkg/curl-7.67.0 \
-   --without-cdb \
    --without-sqlite3 \
    --without-pdo-sqlite
    ```
 
 3. 构建选项说明
 
-   | 构建选项             | 描述                                             |
-   | -------------------- | ------------------------------------------------ |
-   | --prefix=            | 指定 php 安装路径                                |
-   | --enable-fpm         | 构建 php-fpm 服务                                |
-   | --enable-mbstring    | 构建 mbstring 扩展                               |
-   | --with-openssl=      | 构建 openssl 扩展，`composer` 需要使用此扩展     |
-   | --with-pcre-jit      | 正则支持 jit 编译器                              |
-   | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）     |
-   | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）     |
-   | --with-curl=         | 构建 curl 扩展                                   |
-   | --without-cdb        | 禁止构建 cdb 扩展（1 种数据库系统的扩展）        |
-   | --without-sqlite3    | 禁止构建 sqlite3 扩展（1 种数据库系统的扩展）    |
-   | --without-pdo-sqlite | 禁止构建 pdo-sqlite 扩展（1 种数据库系统的扩展） |
+   | 构建选项             | 描述                                         |
+   | -------------------- | -------------------------------------------- |
+   | --prefix=            | 指定 php 安装路径                            |
+   | --enable-fpm         | 构建 php-fpm 服务                            |
+   | --enable-mbstring    | 构建 mbstring 扩展                           |
+   | --with-openssl=      | 构建 openssl 扩展                            |
+   | --with-pcre-jit      | 正则支持 jit 编译器                          |
+   | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动） |
+   | --with-mysqli        | 构建 mysqli 扩展（默认使用 mysqlnd 驱动）    |
+   | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动） |
+   | --with-mysql-sock=   | 指定 MariaDB 的 socket 文件路径              |
+   | --with-curl=         | 构建 curl 扩展                               |
+   | --without-sqlite3    | 禁止构建 sqlite3 数据库系统扩展              |
+   | --without-pdo-sqlite | 禁止构建 pdo-sqlite 数据库系统扩展           |
 
 4. 编译并安装
 
@@ -102,31 +104,29 @@ Options:
   --vernum            [70401]
 ```
 
-1. 多版本 PHP 如何处理 php-config
+> 注意：如果系统有多个 PHP 版本，在编译时可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
 
-如果系统有多个 PHP 版本，在编译时可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
+## 四、PHP 扩展库
 
-## 四、扩展库操作
+PHP 扩展分为静态扩展和动态扩展两类：
 
-PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./04-为php安装pecl扩展.md)
+| 扩展类型 | 扩展类型说明                       | 操作方式                    |
+| -------- | ---------------------------------- | --------------------------- |
+| 静态扩展 | 编译安装 PHP 时，一起安装的扩展    | 只能通过重新编译 PHP 来修改 |
+| 动态扩展 | 使用 `phpize` 编译安装的 PECL 扩展 | 通过操作 `php.ini` 来控制   |
 
-1. PHP 扩展分类：
+> 提示：php 源码自带的扩展库，支持静态安装和动态安装，如果两个都安装了，默认以静态扩展方式优先!
 
-   | 扩展类型 | 扩展类型说明                       | 操作方式                    |
-   | -------- | ---------------------------------- | --------------------------- |
-   | 静态扩展 | 编译安装 PHP 时，一起安装的扩展    | 只能通过重新编译 PHP 来修改 |
-   | 动态扩展 | 使用 `phpize` 编译安装的 PECL 扩展 | 通过操作 `php.ini` 来控制   |
+- 动态库操作：
 
-   > 提示：php 源码自带的扩展库，支持静态安装和动态安装，如果两个都安装了，默认以静态扩展方式优先!
+  PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./04-为php安装pecl扩展.md)
 
-2. 动态库操作：
+  | 操作       | 案例                                               |
+  | ---------- | -------------------------------------------------- |
+  | 开启动态库 | `php.ini` 文件里添加 `extension=<库名>`            |
+  | 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` 内容 |
 
-   | 操作       | 案例                                               |
-   | ---------- | -------------------------------------------------- |
-   | 开启动态库 | `php.ini` 文件里添加 `extension=<库名>`            |
-   | 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` 内容 |
-
-   > 提示：有些动态库是 `zend` 扩展库，需要使用 `zend_extension=<库名>` 开启，才能生效！
+  > 提示：有些动态库是 `zend` 扩展库，需要使用 `zend_extension=<库名>` 开启，才能生效！
 
 ## 五、配置 php-fpm 服务
 
@@ -141,7 +141,7 @@ php-fpm 的所有配置文件默认都在 /server/php/etc 下：
 | 主进程(master)   | php-fpm.conf       | 1        |
 | 工作池进程(pool) | `php-fpm.d/*.conf` | 没有限制 |
 
-配置文件默认模块：
+### 配置文件默认模块：
 
 | 进程类型   | 对应配置文件模块           |
 | ---------- | -------------------------- |
@@ -166,26 +166,19 @@ $ cd /server/php/etc/php-fpm.d
 $ cp www.conf{.default,}
 ```
 
-> 说明：默认的配置有些不满足要求，参考模版我们自定义一个配置文件。
+> 提示：默认的配置有些不满足要求，我们需要自己修改配置文件信息。
 
-1. 工作池用户
+1. 创建工作进程用户
 
-   与 nginx 的用户保持一致即可：
+   用户一般与 nginx 主进程用户保持一致即可，具体操作见 [lnmp 维护篇](./05-lnmp维护篇.md)
 
-   ```sh
-   # 创建一个名为nginx，id号为2000的用户组
-   $ groupadd -g 2000 nginx
-   # 创建一个名为nginx，id号为2000的用户，所属用户组为nginx，并且不创建家目录（-M 不创建家目录）
-   $ useradd -c 'Users of the Nginx service and php-fpm service' -u 2000 -s /usr/sbin/nologin -M -g nginx nginx
-   ```
-
-   > 提示：自己创建的用户权限与 nobody 差不多，好处是跟 nobody 区分开，这样就不允许 web 以外的用户操作，具体讲解见 `搭建vsftpd服务`
-
-2. 创建 unix 套接字监听文件所在目录：
+2. 创建 unix 套接字监听文件的存放目录：
 
    ```sh
    $ mkdir /var/run/php/
    ```
+
+   > 提示：使用 [lnmp_dir](./source/lnmp_dir.sh) 脚本会自动创建该目录！
 
 3. 创建 php-pfm 工作进程配置文件：
 
@@ -193,65 +186,49 @@ $ cp www.conf{.default,}
    $ vim /server/php/etc/php-fpm.d/www.conf
    ```
 
-   > 提示：具体配置请查阅 [php-fpm 工作进程配置详解](./source/php-fpm工作进程配置详解.md)
+   > 提示：具体配置信息请参考 [www.conf](./source/php/www.conf)
 
-### 简单控制 `php-fpm`：
+## 六、管理 php-fpm 进程
 
-| 操作                    | 指令                           |
-| ----------------------- | ------------------------------ |
-| 启动 `php-fpm`          | `/server/php/sbin/php-fpm`     |
-| 关闭 `php-fpm`          | `pkill -9 php-fpm`             |
-| 关闭 `php-fpm`          | `kill -9 /var/run/php-fpm.pid` |
-| 测试 `php-fpm` 配置文件 | `/server/php/sbin/php-fpm -t`  |
-| `php-fpm` 操作帮助选项  | `/server/php/sbin/php-fpm -h`  |
+php-fpm 自带了一套比较完善的进程管理指令，编译完成后还会在构建目录下生成 Unit 文件
 
-### 引导 `php-fpm` 开机启动
+### 简单管理 php-fpm 守护进程
 
-编译 php 时如果加上了 `--enable-fpm` 选项就会自动生成两个启动脚本具体如下：
+| 管理类型     | 指令                               |
+| ------------ | ---------------------------------- |
+| 测试 php-fpm | /server/php/sbin/php-fpm -t        |
+| 启动 php-fpm | /server/php/sbin/php-fpm           |
+| 关闭 php-fpm | kill -9 `cat /var/run/php-fpm.pid` |
+| 关闭 php-fpm | pkill -9 php-fpm                   |
+| php-fpm 帮助 | /server/php/sbin/php-fpm -h        |
 
-| 启动项      | 文件源码参考(pid 值做了修正)                  |
-| ----------- | --------------------------------------------- |
-| `systemctl` | [`php-fpm.service`](./source/php-fpm.service) |
-| `init.d`    | [`init.d.php-fpm`](./source/init.d.php-fpm)   |
+### 使用 Systemd 管理 php-fpm 守护进程
 
-> 编译源码的路径： `/package/lnmp/php-7.3.11/php_bulid/sapi/fpm`
+php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译完成后会自动生成两个启动脚本，具体参考如下：
 
-1. init 启动脚本
+| 启动项      | 启动文件(与源码略有不同)                    |
+| ----------- | ------------------------------------------- |
+| Unit 文件   | [php-fpm.service](./source/php-fpm.service) |
+| init.d 文件 | [init.d.php-fpm](./source/init.d.php-fpm)   |
+| 脚本目录    | /package/php-7.4.1/php_bulid/sapi/fpm       |
 
-   > 拷贝到 init.d 目录
+> 说明：这里只讨论 Systemd 操作，init.d 脚本已经不再推荐使用
+
+1. 将 nginx 的单元文件拷贝到 Systemd 的用户目录下：
 
    ```sh
-   $ cp init.d.php-fpm /etc/init.d/php-fpm
+   $ cd /package/php-7.4.1/php_bulid/sapi/fpm
+   $ cp ./php-fpm.service /usr/lib/systemd/system/
    ```
 
-   > 杀死之前打开的 nginx 进程，init 的才能正常使用，否则 pid 冲突
+2. 重新载入 Systemd 服务配置
 
    ```sh
-   $ ps -ef | grep php-fpm
-   $ kill -9 pid
-   # 或者
-   $ pkill -9 php-fpm
+   $ systemctl daemon-reload
    ```
 
-   > 接着使用 init 启动 php-fpm
-
-   | 操作           | 指令                         |
-   | -------------- | ---------------------------- |
-   | 启动 `php-fpm` | `/etc/init.d/php-fpm start`  |
-   | 关闭 `php-fpm` | `/etc/init.d/php-fpm stop`   |
-   | 重载 `php-fpm` | `/etc/init.d/php-fpm reload` |
-   | 测试 `php-fpm` | `/etc/init.d/php-fpm status` |
-
-2. systemctl 开机启动脚本
-
-   > 将启动脚本拷贝到 systemctl 系统目录下：
+3. 开机自动激活 Nginx 单元
 
    ```sh
-   $ cp /package/lnmp/php-7.3.11/php_bulid/sapi/fpm/php-fpm.service /usr/lib/systemd/system/php-fpm.service
-   ```
-
-   > 使用 `systemctl` 加入开机启动：
-
-   ```sh
-   systemctl enable php-fpm.service
+   $ systemctl enable php-fpm.service
    ```
