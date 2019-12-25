@@ -80,31 +80,88 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    $ make install
    ```
 
-## 三、PHP 命令行工具
+## 三、配置 PHP
 
-`php-config` 是一个简单的命令行脚本用于获取所安装的 PHP 配置的信息。具体如下：
+### PHP 命令行工具
+
+php-config 是一个简单的命令行脚本用于获取所安装的 PHP 配置的信息。
 
 ```sh
-$ cd /server/php/bin/php-config
-Usage: /server/php/bin/php-config [OPTION]
-Options:
-  --prefix            [/server/php]
-  --includes          [-I/server/php/include/php -I/server/php/include/php/main -I/server/php/include/php/TSRM -I/server/php/include/php/Zend -I/server/php/include/php/ext -I/server/php/include/php/ext/date/lib]
-  --ldflags           []
-  --libs              [-lcrypt   -lresolv -lcrypt -lrt -lrt -lm -ldl  -lxml2 -lssl -lcrypto -lcurl -lxml2 -lonig -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lz -lssl -lcrypto -lcrypt ]
-  --extension-dir     [/server/php/lib/php/extensions/no-debug-non-zts-20190902]
-  --include-dir       [/server/php/include/php]
-  --man-dir           [/server/php/php/man]
-  --php-binary        [/server/php/bin/php]
-  --php-sapis         [ cli fpm phpdbg cgi]
-  --ini-path          [/server/php/lib]
-  --ini-dir           []
-  --configure-options [--prefix=/server/php --enable-fpm --enable-mbstring --with-openssl=/package/pkg/openssl-1.1.1d --with-pcre-jit --enable-mysqlnd --with-pdo-mysql --with-curl=/package/pkg/curl-7.67.0 --without-cdb --without-sqlite3 --without-pdo-sqlite]
-  --version           [7.4.1]
-  --vernum            [70401]
+$ cd /server/php/bin/php-config -h
 ```
 
-> 注意：如果系统有多个 PHP 版本，在编译时可以使用 `--with-php-config` 选项来指定用于编译的 php 版本，该选项指定了 `php-config` 脚本的路径。
+| 命令行选项          | 说明                                   |
+| ------------------- | -------------------------------------- |
+| --prefix            | PHP 所安装的路径前缀，例如 /server/php |
+| --includes          | 列出用 -I 选项包含的所有文件           |
+| --ldflags           | PHP 编译时所使用的 LD 标志             |
+| --libs              | PHP 编译时所附加的库                   |
+| --extension-dir     | 扩展库的默认路径                       |
+| --include-dir       | 头文件的默认路径前缀                   |
+| --php-binary        | PHP CLI 或者 CGI 可执行文件的完整路径  |
+| --php-sapis         | 列出所有可用的 SAPI 模块               |
+| --ini-path          | php.ini 文件的存放路径                 |
+| --configure-options | 重现当前 PHP 在编译时的配置选项        |
+| --version           | PHP 版本号                             |
+| --vernum            | PHP 版本号，以整数表示                 |
+
+> 在编译扩展时，如果安装有多个 PHP 版本，可以在配置时用 --with-php-config 选项来指定使用哪一个版本编译，该选项指定了相对应的 php-config 脚本的路径。
+
+### 为 PHP 创建配置文件(php.ini)
+
+虽然编译安装后默认没有 php.ini 配置文件，但是 php 源码包包自带了两个可选的 php.ini 模版文件：
+
+| 配置文件模版 | 路径                                   |
+| ------------ | -------------------------------------- |
+| 开发环境推荐 | /package/php-7.4.1/php.ini-development |
+| 部署环境推荐 | /package/php-7.4.1/php.ini-production  |
+
+1. 查询 php 配置文件的存放路径
+
+   | 可查询程序 | 查询指令                              |
+   | ---------- | ------------------------------------- |
+   | php        | /server/php/bin/php --ini             |
+   | php-config | /server/php/bin/php-config --ini-path | . |
+
+   推荐使用 php 可执行文件查询：
+
+   ```sh
+   $ /server/php/bin/php --ini
+   Configuration File (php.ini) Path: /server/php/lib
+   Loaded Configuration File:         (none)
+   Scan for additional .ini files in: (none)
+   Additional .ini files parsed:      (none)
+   ```
+
+   查询结果分析：
+
+   | 序号 | 查询结果                           |
+   | ---- | ---------------------------------- |
+   | 01   | php.ini 存放目录是 /server/php/lib |
+   | 02   | 当前没有加载到配置文件             |
+
+2. 拷贝配置文件模版到 /server/php/lib 目录下：
+
+   ```sh
+   $ cp /package/php-7.4.1/php.ini-development /server/php/lib/php.ini
+   ```
+
+3. 查询 php.ini 配置文件是否呗加载
+
+   ```sh
+   $ /server/php/bin/php --ini
+   Configuration File (php.ini) Path: /server/php/lib
+   Loaded Configuration File:         /server/php/lib/php.ini
+   Scan for additional .ini files in: (none)
+   Additional .ini files parsed:      (none)
+   ```
+
+   查询结果分析：
+
+   | 序号 | 查询结果                               |
+   | ---- | -------------------------------------- |
+   | 01   | php.ini 存放目录是 /server/php/lib     |
+   | 02   | 加载了配置文件 /server/php/lib/php.ini |
 
 ## 四、PHP 扩展库
 
@@ -150,11 +207,24 @@ php-fpm 的所有配置文件默认都在 /server/php/etc 下：
 
 ### 创建主进程配置文件
 
-php-fpm 的主进程配置文件必须创建，使用默认模版的即可：
+php-fpm 的主进程配置文件必须创建：
 
 ```sh
 $ cd /server/php/etc
 $ cp php-fpm.conf{.default,}
+```
+
+修改几个选项的值：
+
+| 选项      | 选项值                       |
+| --------- | ---------------------------- |
+| pid       | /server/run/php/php-fpm.pid  |
+| error_log | /server/logs/php/php-fpm.log |
+
+创建 unix 套接字监听文件的存放目录：
+
+```sh
+$ mkdir /var/run/php/
 ```
 
 ### 创建工作进程配置文件
@@ -163,10 +233,17 @@ php-fpm 的工作进程配置文件必须创建，允许多个：
 
 ```sh
 $ cd /server/php/etc/php-fpm.d
-$ cp www.conf{.default,}
+$ cp www.conf.default www.conf
 ```
 
-> 提示：默认的配置有些不满足要求，我们需要自己修改配置文件信息。
+修改几个选项的值：
+
+| 选项     | 选项值                       |
+| -------- | ---------------------------- |
+| 子进程名 | [www]                        |
+| listen   | /server/run/php/php-fpm.sock |
+
+> 提示：通常子进程名与子进程配置文件名一致即可
 
 1. 创建工作进程用户
 
