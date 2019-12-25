@@ -14,7 +14,12 @@
 | 查看 Unit 状态 | service <Unit> status   |
 | 重载 Unti 配置 | systemctl reload <Unit> |
 
-其它原生的操作
+程序自带方式测试配置文件：
+
+| 管理守护进程      | 对应的指令                  |
+| ----------------- | --------------------------- |
+| 测试 nginx 配置   | /server/nginx/sbin/nginx -t |
+| 测试 php-fpm 配置 | /server/php/sbin/php-fpm -t |
 
 ## 统一路径
 
