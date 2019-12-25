@@ -1,44 +1,20 @@
 # LNMP 维护篇
 
-操作完前面 4 个小节，lnmp 环境已经搭建完成，并且也有基本操作，但是不够系统，本篇会系统全面的讲解 lnmp 环境的维护！
+操作完前面 4 个小节，lnmp 环境已经搭建完成，并且也有基本操作，本篇会系统全面的讲解 lnmp 环境的维护！
 
-## 服务启动
+## 一、管理 lnmp 相关进程
 
-推荐大家统一使用 systemctl 控制服务的启动：
+建议统一使用 systemd 来管理进程：
 
-1. MariaDB 启动操作：
+| 管理 Unit      | systemd 指令            |
+| -------------- | ----------------------- |
+| 启动 MariaDB   | service mysql start     |
+| 关闭 nginx     | systemctl nginx stop    |
+| 重启 php-fpm   | service php-fpm restart |
+| 查看 Unit 状态 | service <Unit> status   |
+| 重载 Unti 配置 | systemctl reload <Unit> |
 
-   | 操作 | 指令                      |
-   | ---- | ------------------------- |
-   | 启动 | `service mariadb start`   |
-   | 关闭 | `service mariadb stop`    |
-   | 重启 | `service mariadb restart` |
-   | 重载 | `service mariadb reload`  |
-   | 状态 | `service mariadb status`  |
-
-2. Nginx 启动操作：
-
-   | 操作     | 指令                         |
-   | -------- | ---------------------------- |
-   | 启动     | `service nginx start`        |
-   | 关闭     | `service nginx stop`         |
-   | 重启     | `service nginx restart`      |
-   | 重载     | `service nginx reload`       |
-   | 状态     | `service nginx status`       |
-   | 测试     | `service nginx configtest`   |
-   | 强行载入 | `service nginx force-reload` |
-
-3. php-fpm 启动操作：
-
-   | 操作     | 指令                         |
-   | -------- | ---------------------------- |
-   | 启动     | `service php-fpm start`      |
-   | 关闭     | `service php-fpm stop`       |
-   | 重启     | `service php-fpm restart`    |
-   | 重载     | `service php-fpm reload`     |
-   | 状态     | `service php-fpm status`     |
-   | 测试     | `service php-fpm configtest` |
-   | 强行退出 | `service php-fpm force-quit` |
+其它原生的操作
 
 ## 统一路径
 

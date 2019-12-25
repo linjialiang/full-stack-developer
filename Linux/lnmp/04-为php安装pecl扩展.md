@@ -7,7 +7,7 @@
 | [imagick](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
 | [xdebug](https://pecl.php.net/package/xdebug)   | 用于显示 PHP 错误的扩展 |
 
-## phpize 程序
+## 一、phpize 程序
 
 `phpize` 可以将 PECL 扩展源码构建为可用 `./configure` 编译的源码，使用 `phpize --help` 可以查看帮助。
 
@@ -56,7 +56,7 @@
    $ mkdir -p /package/ext
    ```
 
-## 安装 PRCL 扩展 —— `Xdebug`
+## 二、安装 PRCL 扩展 —— `Xdebug`
 
 1. 创建构建目录
 
@@ -111,7 +111,7 @@
    $ mkdir -p /logs/php/xdebug
    ```
 
-## 安装 PRCL 扩展 —— `imagick`
+## 三、安装 PRCL 扩展 —— `imagick`
 
 安装 `imagick` 扩展之前，需要先编译安装它的运行库 `ImageMagick`
 
