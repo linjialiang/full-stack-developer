@@ -17,6 +17,7 @@ listen.owner = nginx
 ;必须跟web用户组一致
 listen.group = nginx
 listen.mode = 0660
+; 允许FastCGI客户端连接的IPv4地址，多个地址用','分隔，为空则允许任何地址发来链接请求
 listen.allowed_clients = 127.0.0.1
 
 ;设置进程管理器以 static 管理子进程。
