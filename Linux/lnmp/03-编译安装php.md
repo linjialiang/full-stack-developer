@@ -316,3 +316,25 @@ php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译�
    ```sh
    $ systemctl enable php-fpm.service
    ```
+
+## 七、附录说明
+
+### 为什么 PHP 链接 MariaDB 不成功？
+
+答：一般是因为 php 程序找不到 MariaDB 的 socket 文件。
+
+1. 可能导致这种情况发生的事件：
+
+   | 序号 | 事件描述                                               |
+   | ---- | ------------------------------------------------------ |
+   | 01   | 编译 php 时，没有添加 `--with-mysql-sock` 这个构建选项 |
+   | 02   | socket 文件路径发生改变                                |
+
+2. 解决方法：通过修改 php.ini 配置文件是最简单的方式：
+
+   | 区块            | 具体要修改的参数                                         |
+   | --------------- | -------------------------------------------------------- |
+   | [Pdo_mysql]区块 | pdo_mysql.default_socket=/server/run/mariadb/mysqld.sock |
+   | [MySQLi]区块    | mysqli.default_socket=/server/run/mariadb/mysqld.sock    |
+
+   > 提示：当然你如果不嫌麻烦，完全可以重新安装，这或许是最佳的方式！

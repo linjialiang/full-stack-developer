@@ -49,17 +49,18 @@ $ apt upgrade
    如果有需要保存的配置文件，就应该要先保存好，再编译安装：
 
    ```sh
-   $ mkdir /package/lnmp/php-7.4.1/php_bulid
-   $ cd /package/lnmp/php-7.4.1/php_bulid/
+   $ mkdir /package/php-7.4.1/php_bulid
+   $ cd /package/php-7.4.1/php_bulid/
    $ ../configure --prefix=/server/php \
    --enable-fpm \
    --enable-mbstring \
-   --with-openssl=/package/lnmp/openssl-1.1.1d \
+   --with-openssl=/package/pkg/openssl-1.1.1d \
    --with-pcre-jit \
    --enable-mysqlnd \
+   --with-mysqli \
    --with-pdo-mysql \
-   --with-curl=/package/lnmp/curl-7.67.0 \
-   --without-cdb \
+   --with-mysql-sock=/server/run/mariadb/mysqld.sock \
+   --with-curl=/package/pkg/curl-7.67.0 \
    --without-sqlite3 \
    --without-pdo-sqlite
    $ make -j4
@@ -71,9 +72,49 @@ $ apt upgrade
 
    ```sh
    $ mv /server/php/lib/php{,-v7.3.11}.ini
-   $ cp -p -r /package/lnmp/php-7.4.1/php.ini-development /server/php/lib/php.ini
+   $ cp -p -r /package/php-7.4.1/php.ini-development /server/php/lib/php.ini
    ```
 
-4. 安装 pecl 扩展
+4. 管理动态扩展
 
-   php 跨大版本，所有 pecl 扩展库都应该重新编译，具体请查看 [为 php 安装 pecl 扩展](./04-为php安装pecl扩展.md)
+   跨不同版本的升级，动态扩展的处理方式是不一样的，具体请查看下文的 `附录一`。
+
+5. 平滑升级 php-fpm
+
+   使用 unix 信号来升级可执行文件 php-fpm
+
+   ```sh
+   $ kill -USR2 `cat /server/run/php/php-fpm.pid`
+   ```
+
+6. 平滑关闭旧版 Nginx 主进程
+
+   使用 unix 信号，当进程没有访问者时，系统自动关闭当前进程
+
+   ```sh
+   $ kill -WINCH <旧版pid>
+   ```
+
+   > 提示：亲测发现，平滑升级指令并不好用！
+
+## 附录一、管理 php 动态扩展
+
+首先确定 PHP 是否是大版本间的升级：
+
+| php 升级版本 | 操作说明                                       |
+| ------------ | ---------------------------------------------- |
+| 大版本升级   | 之前动态扩展无法使用，只能重新安装这些扩展     |
+| 小版本更新   | 之前动态扩展依然可用，将其移动到正确路径下即可 |
+
+1. 重新安装动态扩展
+
+   重新安装扩展请查看 [为 php 安装 pecl 扩展](./04-为php安装pecl扩展.md)
+
+2. 移动扩展到正确路径
+
+   通过 php-config 工具，可以查看 php 动态扩展的存放路径是否发生改变：
+
+   | 动态扩展存放路径 | 操作说明                                 |
+   | ---------------- | ---------------------------------------- |
+   | 发生改变         | 将之前的扩展移动到当下动态扩展存放路径中 |
+   | 没有改变         | 恭喜你，可以不用做任何操作了             |
