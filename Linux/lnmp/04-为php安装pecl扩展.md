@@ -76,6 +76,12 @@
    $ make install
    ```
 
+   > 说明：如果 /server/php/bin 没有加入环境变量，构建时需要加上 `--with-php-config` 选项：
+
+   ```sh
+   ../configure --with-php-config=/server/php/bin/php-config
+   ```
+
 3. 备份 php.ini 文件
 
    ```sh
