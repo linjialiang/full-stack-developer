@@ -1,6 +1,8 @@
 [Unit]
-Description=MariaDB 10.4.x
-Wants=nginx.service php-fpm.service
+Description=MariaDB 10.4.x database server
+Wants=nginx.service
+Wants=php-fpm.service
+After=network.target
 
 [Install]
 WantedBy=multi-user.target
@@ -9,5 +11,7 @@ Alias=mysqld.service
 
 [Service]
 Type=simple
+PIDFile=/server/run/mariadb/mysqld.pid
 ExecStart=/usr/bin/mysqld_safe
+ExecReload=/bin/kill -USR2 $MAINPID
 Restart=on-failure

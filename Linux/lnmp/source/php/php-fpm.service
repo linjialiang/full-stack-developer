@@ -1,5 +1,7 @@
 [Unit]
 Description=The PHP FastCGI Process Manager
+Wants=mariadb.service
+Wants=nginx.service
 After=network.target
 
 [Service]
@@ -7,17 +9,6 @@ Type=simple
 PIDFile=/server/run/php/php-fpm.pid
 ExecStart=/server/php/sbin/php-fpm --nodaemonize --fpm-config /server/php/etc/php-fpm.conf
 ExecReload=/bin/kill -USR2 $MAINPID
-
-PrivateTmp=true
-ProtectHome=true
-ProtectSystem=full
-PrivateDevices=true
-ProtectKernelModules=true
-ProtectKernelTunables=true
-ProtectControlGroups=true
-RestrictRealtime=true
-RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
-RestrictNamespaces=true
 
 [Install]
 WantedBy=multi-user.target

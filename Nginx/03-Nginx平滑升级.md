@@ -175,6 +175,11 @@ configure arguments: --prefix=/server/nginx --builddir=/package/lnmp/nginx-1.16.
 
 1. 使用 ps 查看旧版 Nginx 的主进程 id：
 
+   | 指令                | 说明                 |
+   | ------------------- | -------------------- |
+   | `ps -ef|grep nginx` | 需要查看进程用户     |
+   | `ps -ax|grep nginx` | 其它进程用户名相同时 |
+
    ```sh
    $ ps -ef|grep nginx
    root     13080  3943  0 12:02 pts/0    00:00:00 grep nginx
