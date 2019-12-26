@@ -22,6 +22,7 @@ server_array=(
     "/server/logs/mariadb"
     "/server/logs/php"
     "/server/logs/xdebug"
+    "/server/vsftpd"
 )
 
 package_array=(

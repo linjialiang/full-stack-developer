@@ -2,7 +2,7 @@
 
 vsftpd 可能是类 unix 系统中最安全、最快的 FTP 服务器。
 
-## 安装 vsfptd
+## 安装 vsftpd
 
 ```sh
 $ apt install vsftpd
@@ -14,17 +14,17 @@ $ apt install vsftpd
 
 | 知识点               | 链接                                                       |
 | -------------------- | ---------------------------------------------------------- |
-| vsftpd 配置选项      | [vsfptd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) |
+| vsftpd 配置选项      | [vsftpd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) |
 | 可插入式授权管理模块 | [Linux-PAM](./06-PAM.md)                                   |
 
 ## 配置文件
 
 配置文件参考源码:
 
-| 登陆方式     | 配置文件                                        |
-| ------------ | ----------------------------------------------- |
-| 系统用户登陆 | [vsftpd.conf](./source/vsftpd.conf)             |
-| 虚拟用户登陆 | [vsftpd.guest.conf](./source/vsftpd.guest.conf) |
+| 登陆方式     | 配置文件                                               |
+| ------------ | ------------------------------------------------------ |
+| 系统用户登陆 | [vsftpd.conf](./source/vsftpd/vsftpd.conf)             |
+| 虚拟用户登陆 | [vsftpd.guest.conf](./source/vsftpd/vsftpd.guest.conf) |
 
 ### 配置参数
 
@@ -70,11 +70,11 @@ $ apt install vsftpd
 | pam_service_name=vsftpd_guest  | 设置 PAM 认证服务所使用的配置文件名 |
 | guest_enable=yes               | 开启虚拟用户登陆                    |
 | guest_username=www             | 虚拟用户映射的系统用户              |
-| local_root=/server/www/default | 设置用户登陆时的根目录              |
+| local_root=/server/default     | 设置用户登陆时的默认根目录          |
 | user_config_dir=/server/vsftpd | 虚拟用户单独配置文件存放目录        |
 | virtual_use_local_privs=yes    | 虚拟用户将使用与本地用户相同的权限  |
 
-> 提示：关于 vsftpd 更多的配置参数，请参考 [vsfptd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md)
+> 提示：关于 vsftpd 更多的配置参数，请参考 [vsftpd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md)
 
 ## 系统用户登陆相关
 
@@ -109,7 +109,7 @@ $ apt install vsftpd
 
    ```sh
    $ mkdir /server/www/qyadmin
-   $ useradd -c 'Users of the vsfptd user' -u 2002 -s /usr/sbin/nologin -d /server/www/qyadmin -g www qyadmin
+   $ useradd -c 'Users of the vsftpd user' -u 2002 -s /usr/sbin/nologin -d /server/www/qyadmin -g www qyadmin
    ```
 
    设置目录权限，具体操作如下：
@@ -121,7 +121,7 @@ $ apt install vsftpd
 
 4. 指定允许登陆的系统用户
 
-   将系统用户加入 `/etc/vsfptd/user_list` 文件下，才能正常访问，`user_list` 文件具体内容如下：
+   将系统用户加入 `/etc/vsftpd/user_list` 文件下，才能正常访问，`user_list` 文件具体内容如下：
 
    ```conf
    www
@@ -145,21 +145,22 @@ $ apt install vsftpd
 
 2. MariaDB 相关操作
 
-   | 步骤 | 指令                                                       | 描述                             |
-   | ---- | ---------------------------------------------------------- | -------------------------------- |
-   | 01   | `CREATE DATABASE vsftpd;`                                  | 创建数据库                       |
-   | 02   | `CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';` | 创建数据库管理用户               |
-   | 02   | `GRANT PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost';`    | 授予用户操作 vsftpd 数据库的权限 |
-   | 03   | `FLUSH PRIVILEGES;`                                        | 刷新 MariaDB 权限表              |
-   | 04   | 见 `指令详情`                                              | 创建 user_pam 表                 |
-   | 05   | 见 `指令详情`                                              | 创建用户                         |
+   | 步骤 | 指令                                                                          | 描述                             |
+   | ---- | ----------------------------------------------------------------------------- | -------------------------------- |
+   | 01   | `CREATE DATABASE vsftpd;`                                                     | 创建数据库                       |
+   | 02   | `CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';`                    | 创建数据库管理用户               |
+   | 02   | `GRANT ALL PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost' WITH GRANT OPTION;` | 授予用户操作 vsftpd 数据库的权限 |
+   | 03   | `FLUSH PRIVILEGES;`                                                           | 刷新 MariaDB 权限表              |
+   | 04   | 见 `指令详情`                                                                 | 创建 user_pam 表                 |
+   | 05   | 见 `指令详情`                                                                 | 创建用户                         |
 
 3. MariaDB 指令详情
 
    ```sh
+   $ mysql
    MariaDB [(none)]> CREATE DATABASE vsftpd;
    MariaDB [(none)]> CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';
-   MariaDB [(none)]> GRANT PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost';
+   MariaDB [(none)]> GRANT ALL PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost' WITH GRANT OPTION;
    MariaDB [(none)]> FLUSH PRIVILEGES;
    MariaDB [(none)]> use vsftpd;
    MariaDB [(none)]> CREATE TABLE user_pam (id int AUTO_INCREMENT NOT NULL PRIMARY KEY, name varchar(30) NOT NULL, password char(41) binary NOT NULL);
@@ -171,7 +172,7 @@ $ apt install vsftpd
 
 4. 创建 pam 认证的配置文件
 
-   案例参考 [vsftpd_guest](./source/vsftpd_guest)
+   案例参考 [vsftpd_guest](./source/vsftpd/vsftpd_guest)
 
    ```sh
    $ vim /etc/pam.d/vsftpd_guest
@@ -205,9 +206,8 @@ $ apt install vsftpd
    创建一个 `Linux用户`，所有 vsftpd 虚拟用户都映射到该用户上
 
    ```sh
-   $ groupadd -g 2001 www
-   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2001 -s /usr/sbin/nologin -d /server/www/default -M -g www www
-   $ mkdir /server/www/default
+   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2003 -s /usr/sbin/nologin -d /server/default -M -U www
+   $ mkdir /server/default
    ```
 
    > 提示：映射的 Linux 用户的家目录必须是存在的，并且映射的 Linux 用户需要允许访问家目录（进入目录的权限，`chmod +x`）
@@ -219,7 +219,7 @@ $ apt install vsftpd
 1. 创建虚拟用户(www)的单独配置文件
 
    ```sh
-   $ vim /server/vsfptd/www
+   $ vim /server/vsftpd/www
    ```
 
    具体内容：
@@ -231,7 +231,7 @@ $ apt install vsftpd
 2. 创建虚拟用户(qyadmin)的单独配置文件
 
    ```sh
-   $ vim /server/vsfptd/qyadmin
+   $ vim /server/vsftpd/qyadmin
    ```
 
    具体内容：
@@ -261,14 +261,14 @@ chroot_list_file=/etc/vsftpd/chroot_list
 
 > 提示：虚拟用户登陆，最大的好处就是我们之后可以通过 web 后台来控制！
 
-## vsfptd 附录
+## vsftpd 附录
 
 1. vsftpd 权限设置
 
    ```sh
    任何linux服务权限都需要考虑到Linux权限问题，即：
        1. chmod chown 设置的权限
-       2. vsfptd 服务设置的权限
+       2. vsftpd 服务设置的权限
             file_open_mode=0666
             local_umask=022
    ```
