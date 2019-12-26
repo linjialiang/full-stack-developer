@@ -91,7 +91,7 @@ MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，
    vsftpd 的默认用户是系统默认创建 `www-data` 用户，为了是其权限更加单一，这里修改成自行创建的 `www` 非特权用户和用户组
 
    ```sh
-   $ useradd -c 'Users of the vsftpd service' -u 2002 -s /usr/sbin/nologin -d /server/default -M -U www
+   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2003 -s /usr/sbin/nologin -d /server/default -M -U www
    ```
 
    > 提示：关于 vsfptd 的更多介绍，请参考 [搭建 vsfptd 服务](./../03-搭建vsftpd服务.md)

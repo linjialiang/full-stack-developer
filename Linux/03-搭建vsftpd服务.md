@@ -92,8 +92,7 @@ $ apt install vsftpd
 
    ```sh
    $ mkdir /server/www
-   $ groupadd -g 2001 www
-   $ useradd -c 'Users of the vsftpd user' -u 2001 -s /usr/sbin/nologin -d /server/www -g www www
+   $ useradd -c 'Users of the vsftpd user' -u 2003 -s /usr/sbin/nologin -d /server/www -U www
    ```
 
    > 注意：将用户限制在家目录，用户对家目录不能拥有写的权限，否则 vsftpd 会拒绝登陆，具体操作如下：
@@ -109,14 +108,14 @@ $ apt install vsftpd
 
    ```sh
    $ mkdir /server/www/qyadmin
-   $ useradd -c 'Users of the vsftpd user' -u 2002 -s /usr/sbin/nologin -d /server/www/qyadmin -g www qyadmin
+   $ useradd -c 'Users of the vsftpd user' -u 2004 -s /usr/sbin/nologin -d /server/www/qyadmin -g www qyadmin
    ```
 
    设置目录权限，具体操作如下：
 
    ```sh
    $ chown www:www /server/www/qyadmin
-   $ chmod 755 /server/www/qyadmin
+   $ chmod 750 /server/www/qyadmin
    ```
 
 4. 指定允许登陆的系统用户
@@ -270,12 +269,12 @@ chroot_list_file=/etc/vsftpd/chroot_list
        1. chmod chown 设置的权限
        2. vsftpd 服务设置的权限
             file_open_mode=0666
-            local_umask=022
+            local_umask=026
    ```
 
 2. vsftpd 站点根目录权限
 
-   根目录权限允许设置成 对应用户有执行权限，其它用户不可见，即：
+   根目录权限允许设置成对应用户有执行权限，其它用户不可见，即：
 
    ```sh
    $ chown www:www /server/www
