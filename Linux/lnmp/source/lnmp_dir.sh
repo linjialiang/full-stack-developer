@@ -12,7 +12,7 @@ server_array=(
     "/server/default"
     "/server/www"
     "/server/data"
-    "/sercer/ImageMagick"
+    "/server/ImageMagick"
     "/server/run"
     "/server/run/nginx"
     "/server/run/mariadb"
