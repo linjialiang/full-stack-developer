@@ -87,7 +87,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 php-config 是一个简单的命令行脚本用于获取所安装的 PHP 配置的信息。
 
 ```sh
-$ cd /server/php/bin/php-config -h
+$ /server/php/bin/php-config -h
 ```
 
 | 命令行选项          | 说明                                   |
