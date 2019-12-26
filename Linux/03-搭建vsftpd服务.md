@@ -99,7 +99,7 @@ $ apt install vsftpd
 
    ```sh
    $ chown www:www /server/www
-   $ chmod a-w server/www
+   $ chmod a-w /server/www
    ```
 
 3. 创建更多的系统用户
