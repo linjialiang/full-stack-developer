@@ -79,7 +79,7 @@
    > 说明：如果 /server/php/bin 没有加入环境变量，构建时需要加上 `--with-php-config` 选项：
 
    ```sh
-   ../configure --with-php-config=/server/php/bin/php-config
+   $ ../configure --with-php-config=/server/php/bin/php-config
    ```
 
 3. 备份 php.ini 文件
@@ -144,7 +144,7 @@
    ```sh
    $ cd /package/pkg/ImageMagick-7.0.9-10/
    $ mkdir ImageMagick_bulid
-   $ ImageMagick_bulid/
+   $ cd ImageMagick_bulid/
    ```
 
 2. 编译并安装
@@ -178,10 +178,13 @@
    $ make install
    ```
 
-   | 文件       | 路径                                                        |
-   | ---------- | ----------------------------------------------------------- |
-   | 扩展文件   | `/server/php/lib/php/extensions/no-debug-non-zts-20180731/` |
-   | 扩展头文件 | `/server/php/include/php/`                                  |
+   > 说明：如果 /server/php/bin 没有加入环境变量，构建时需要加上 `--with-php-config` 选项：
+
+   ```sh
+   $ ../configure \
+   --with-php-config=/server/php/bin/php-config \
+   --with-imagick=/server/ImageMagick
+   ```
 
 3. php.ini 文件添加扩展信息
 
