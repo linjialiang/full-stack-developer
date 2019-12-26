@@ -21,144 +21,151 @@
 | 测试 nginx 配置   | /server/nginx/sbin/nginx -t |
 | 测试 php-fpm 配置 | /server/php/sbin/php-fpm -t |
 
-## 统一路径
+## 二、统一 pid 和 socket 路径
 
-默认情况下 3 个服务项的 `pid 和 socket` 路径是不同的，这里我们建议保持在统一路径上。
+我们将所有涉及到的 pid 和 socket 文件存放于同一个路径下，具体如下表：
 
-1. 创建 `pid 和 socket` 路径
+| 服务    | 类型   | 路径                            |
+| ------- | ------ | ------------------------------- |
+| nginx   | pid    | /server/run/nginx/nginx.pid     |
+| MariaDB | pid    | /server/run/mariadb/mysqld.pid  |
+| MariaDB | socket | /server/run/mariadb/mysqld.sock |
+| php-fpm | pid    | /server/run/php/php-fpm.pid     |
+| php-fpm | socket | /server/run/php/php-fpm.sock    |
 
-   > `pid 和 socket` 统一存入 `service/run` 路径下
+## 三、关于 LNMP 相关进程的用户说明
 
-2. 修改 MariaDB 的 `pid 和 socket` 文件路径
+在 Linux 系统中，用户权限是非常重要，对于 LNMP 环境的用户权限，我们也应该做到完全理解所有涉及到的用户及其意义！
 
-   > 先关闭 mariadb 服务，否则遗留的 `pid 和 socket` 文件需要手动删除
+### LNMP 涉及到的用户列表
 
-   ```sh
-   $ service mariadb stop
-   $ cp /etc/mysql/my.cnf{,.bak}
-   $ vim /etc/mysql/my.cnf
-   ```
+| 用户    | 描述                  | 是否创建                |
+| ------- | --------------------- | ----------------------- |
+| nobody  | 权限最低的用户        | 系统默认创建            |
+| nogroup | 权限最低的用户组      | 系统默认创建            |
+| nginx   | Nginx 的用户/用户组   | 用户自行创建            |
+| mysql   | MariaDB 用户/用户组   | 安装 MariaDB 时默认创建 |
+| php-fpm | php-fpm 的用户/用户组 | 用户自行创建            |
+| www     | vsftpd 的用户/用户组  | 用户自行创建            |
 
-   > `my.cnf` 有多个 `pid、socket` ，都需要修改
+### MariaDB 用户
 
-   | 指令     | 路径                               |
-   | -------- | ---------------------------------- |
-   | `pid`    | `/server/run/mariadb/mariadb.pid`  |
-   | `socket` | `/server/run/mariadb/mariadb.sock` |
+MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，用它就行了，不需要特别注意的！
 
-   > 创建目录（`pid、socket` 由 MariaDB 用户（mysql）管理 ，所以必须更改用户权限，否则无法创建文件）：
+### Web 相关用户
 
-   ```sh
-   $ mkdir -p /server/run/mariadb
-   $ chown mysql /server/run/mariadb/
-   ```
+与 Web 相关的用户，我们通常需要考虑 `FTP 服务进程`、`web 服务进程`、`后端处理进程` 这 3 类守护进程。当前服务器具体如下：
 
-3. 修改 Nginx 的 `pid` 文件路径
+| 服务类型     | 守护进程 |
+| ------------ | -------- |
+| web 服务进程 | nginx    |
+| 后端处理进程 | php-fpm  |
+| FTP 服务进程 | vsftpd   |
 
-   ```sh
-   $ service nginx stop
-   $ cp /server/nginx/conf/nginx.conf{,.bak}
-   $ vim /server/nginx/conf/nginx.conf
-   ```
+1. Nginx 主进程用户
 
-   | 配置文件指令 | 路径                          |
-   | ------------ | ----------------------------- |
-   | `pid`        | `/server/run/nginx/nginx.pid` |
+   Nginx 主进程用户为登陆用户（一般都是 root 用户执行），这里不做过多讲解！
 
-   > 创建目录（由于 nginx 是 root 管理 pid，所以不必更改用户）：
+2. Nginx 工作进程用户
 
-   ```sh
-   $ mkdir /server/run/nginx
-   $ chown nginx /server/run/nginx/
-   ```
-
-4. 修改 php-fpm 的 `pid 和 socket` 文件路径
-
-   `pid` 在 `php-fpm.conf` 里修改：
+   nginx 工作进程的默认用户是 `nobody` 用户，修改成自行创建的 `nginx` 非特权用户和用户组
 
    ```sh
-   $ vim /server/php/etc/php-fpm.conf
+   $ useradd -c 'Users of the Nginx service' -u 2001 -s /usr/sbin/nologin -d /server/default -M -U nginx
    ```
 
-   `socket` 在 `php-fpm.d/www.conf` 里修改：
+3. php-fpm 主进程用户
+
+   php-fpm 主进程用户为登录用户（一般都是 root 用户执行），这里不做过多讲解！
+
+4. php-fpm 工作进程用户
+
+   php-fpm 工作进程的默认用户是 `nobody` 用户，修改成自行创建的 `php-fpm` 非特权用户和用户组
 
    ```sh
-   $ vim /server/php/etc/php-fpm.d/www.conf
+   $ useradd -c 'Users of the php-fpm service' -u 2002 -s /usr/sbin/nologin -d /server/default -M -U php-fpm
    ```
 
-   | 配置文件参数 | 参数值（路径）                   |
-   | ------------ | -------------------------------- |
-   | `pid`        | `/server/run/php/php73-fpm.pid`  |
-   | `socket`     | `/server/run/php/php73-fpm.sock` |
+5. vsftpd 用户
 
-   > 提示： `pid` 由 root 用户管理；`socket` 由工作进程用户（nginx）管理：
-
-5. 修改了 `pid` 路径后，两个启动文件里的 `pid` 值也需要修改，具体操作如下：
-
-   | 启动文件    | 路径                                      | 对应的参数名  |
-   | ----------- | ----------------------------------------- | ------------- |
-   | `init.d`    | `/etc/init.d/php-fpm`                     | `php_fpm_PID` |
-   | `systemctl` | `/usr/lib/systemd/system/php-fpm.service` | `PIDFile`     |
-
-   > 提示：如果 `systemctl` 启动文件做了修改，需要使用以下指令，重新加载：
+   vsftpd 的默认用户是系统默认创建 `www-data` 用户，为了是其权限更加单一，这里修改成自行创建的 `www` 非特权用户和用户组
 
    ```sh
-   $ systemctl daemon-reload
+   $ useradd -c 'Users of the vsftpd service' -u 2002 -s /usr/sbin/nologin -d /server/default -M -U www
    ```
 
-## 用户说明
+   > 提示：关于 vsfptd 的更多介绍，请参考 [搭建 vsfptd 服务](./../03-搭建vsftpd服务.md)
 
-lnmp 环境下我们需要关注下面几个用户：
+## 四、LNMP 各种用户关联说明
 
-| 用户    | 描述                             | 是否创建                |
-| ------- | -------------------------------- | ----------------------- |
-| nobody  | 权限最低的用户                   | 系统自动创建            |
-| nofroup | 权限最低的用户组                 | 系统自动创建            |
-| mysql   | MariaDB 用户/用户组              | 安装 MariaDB 时自动创建 |
-| nginx   | Nginx 和 php-fpm 监听用户/用户组 | 自己创建                |
-| www     | 站点、FTP/SFTP 用户/用户组       | 自己创建                |
+除了 MariaDB 用户没有特殊关联外，其他几个用户或多或少有关联关系
 
-1. php-fpm 工作池配置文件下的两种用户说明：
+1. nginx 工作进程用户与 php-fpm 工作进程的关系
 
-   | 配置文件指令   | 描述                                 |
-   | -------------- | ------------------------------------ |
-   | `user`         | 进程用户，`nobody` 即可              |
-   | `group`        | 进程用户组，`nogroup` 即可           |
-   | `listen.owner` | socket 监听用户，与 nginx 相同即可   |
-   | `listen.group` | socket 监听用户组，与 nginx 相同即可 |
+   php-fpm 工作进程是需要监听 web 服务进程才能正常工作的，通常设置为 web 服务进程的用户
 
-2. 创建 nginx 用户：
+   | php-fpm 子配置文件参数 | 具体描述                            |
+   | ---------------------- | ----------------------------------- |
+   | listen.owner = nginx   | 设置用于监听 web 服务进程的用户名   |
+   | listen.group = ningx   | 设置用于监听 web 服务进程的用户组名 |
+
+2. FTP 用户与 nginx、php-fpm 的关系
+
+   修改网页文件是使用 FTP 来传输的，但是 nginx 和 php-fpm 可能会因为对文件或目录的权限不足，导致网页访问失败
+
+## 五、设置用户权限
+
+1. FTP 上传文件权限设置
+
+   为了安全起见，FTP 上传用户的权限应设置为：
+
+   | 文件类型 | 权限 |
+   | -------- | ---- |
+   | 目录     | 750  |
+   | 文件     | 640  |
+
+   > 关于 vsftpd 用户权限的详细知识，请查阅 [搭建 vsfptd 服务](./../03-搭建vsftpd服务.md)
+
+2. 为 Nginx 和 php-fpm 用户设置权限
+
+   由于文件不对其它用户和用户组开放，所以 Nginx 和 php-fpm 都不能正常访问网页文件，为它们加入 FTP 用户组可以解决：
 
    ```sh
-   # 创建一个名为nginx，id号为2000的用户组
-   $ groupadd -g 2000 nginx
-   # 创建一个名为nginx，id号为2000的用户，所属用户组为nginx，并且不创建家目录（-M 不创建家目录）
-   $ useradd -c 'Users of the Nginx service and php-fpm service' -u 2000 -s /usr/sbin/nologin -M -g nginx nginx
+   $ usermod -G www nginx
+   $ usermod -G www php-fpm
    ```
 
-3. 创建 www 用户：
+3. 特殊文件权限
 
-   ```sh
-   $ groupadd -g 2001 www
-   $ useradd -c 'Users of the FTP and sites' -u 2001 -s /usr/sbin/nologin -d /server/www -m -g www www
-   ```
+   如果 nginx 或 php-fpm 用户需要对文件或目录具有写的权限，就应该修改权限为：
 
-## 附录一：为什么 PHP 无法使用 PDO 操作 MariaDB ？
+   | 文件类型 | 权限 | 指令                 |
+   | -------- | ---- | -------------------- |
+   | 目录     | 770  | `$ chmod 770 <dir>`  |
+   | 文件     | 660  | `$ chmod 770 <file>` |
 
-| 步骤 | 说明                                                                           |
-| ---- | ------------------------------------------------------------------------------ |
-| 01   | `pdo_mysql.default_socket` 默认值为 `/tmp/mysql.sock`                          |
-| 02   | `MariaDB` 的 `socket` 路径为 `/server/run/mariadb/mariadb.sock`                |
-| 03   | `php.ini` 下修改： `pdo_mysql.default_socket=/server/run/mariadb/mariadb.sock` |
-| 04   | 重启 `php-fpm` 即可                                                            |
+4. 遗留的安全问题
 
-> 提示：`php.ini` 跟 `php执行文件 和 php-fpm` 息息相关，`Nginx` 只接收 php-fpm 转发的数据，实际并未参与，所以不必重启 `Nginx`。
+   操作到这里确实比设置 nobody 安全多了，但是还有如下问题需要解决：
 
-## 附录二：`init.d` `systemctl` 启动操作混用，导致项目无法停止怎么办？
+   | 序号 | 安全隐患                                                                     |
+   | ---- | ---------------------------------------------------------------------------- |
+   | 01   | php-fpm 进程和 nginx 进程只要其中 1 个需要写的权限，另一个也需要给予写的权限 |
 
-| 步骤 | 描述                                                                                     |
-| ---- | ---------------------------------------------------------------------------------------- |
-| 01   | `init.d` `systemctl`由两个不同程序控制，所以不能混用                                     |
-| 02   | 通过 `/lib/systemd/systemd-sysv-install` 方式让 `systemctl` 代理执行 `init.d` 时支持混用 |
-| 03   | 使用 `pkill -9 <进程名>` 或 `kill -9 <pid>` 来强制停止                                   |
-| 04   | 混用非常糟糕，这里推荐使用 `service` 指令控制                                            |
+## 附录一：为什么 PHP 无法使用链接 MariaDB ？
+
+- 原因分析：
+
+  ```text
+  - pdo_mysql.default_socket 通常默认值为 /tmp/mysql.sock
+  - mysqli.default_socket 通常默认值为 /tmp/mysql.sock
+  - 而当前的 MariaDB 的 socket 路径为 /server/run/mariadb/mysqld.sock
+  ```
+
+- 解决方法：
+
+  ```text
+  - 修改php.ini ：pdo_mysql.default_socket=/server/run/mariadb/mariadb.sock
+  - 修改php.ini ：mysqli.default_socket=/server/run/mariadb/mariadb.sock
+  - 重启 php-fpm
+  ```
