@@ -224,7 +224,7 @@ $ cp php-fpm.conf{.default,}
 创建 unix 套接字监听文件的存放目录：
 
 ```sh
-$ mkdir /var/run/php/
+$ mkdir /server/run/php
 ```
 
 > 提示：具体配置信息请参考 [php-fpm.conf](./source/php/php-fpm.conf)
@@ -288,11 +288,11 @@ php-fpm 自带了一套比较完善的进程管理指令，编译完成后还会
 
 php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译完成后会自动生成两个启动脚本，具体参考如下：
 
-| 启动项      | 启动文件(与源码略有不同)                    |
-| ----------- | ------------------------------------------- |
-| Unit 文件   | [php-fpm.service](./source/php-fpm.service) |
-| init.d 文件 | init.d.php-fpm                              |
-| 脚本目录    | /package/php-7.4.1/php_bulid/sapi/fpm       |
+| 启动项      | 启动文件(与源码略有不同)                        |
+| ----------- | ----------------------------------------------- |
+| Unit 文件   | [php-fpm.service](./source/php/php-fpm.service) |
+| init.d 文件 | init.d.php-fpm                                  |
+| 脚本目录    | /package/php-7.4.1/php_bulid/sapi/fpm           |
 
 > 说明：这里只讨论 Systemd 操作，init.d 脚本已经不再推荐使用
 
