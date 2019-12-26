@@ -94,7 +94,7 @@ MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，
    $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2003 -s /usr/sbin/nologin -d /server/default -M -U www
    ```
 
-   > 提示：关于 vsfptd 的更多介绍，请参考 [搭建 vsfptd 服务](./../03-搭建vsftpd服务.md)
+   > 提示：关于 vsftpd 的更多介绍，请参考 [搭建 vsftpd 服务](./../03-搭建vsftpd服务.md)
 
 ## 四、LNMP 各种用户关联说明
 
@@ -124,7 +124,7 @@ MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，
    | 目录     | 750  |
    | 文件     | 640  |
 
-   > 关于 vsftpd 用户权限的详细知识，请查阅 [搭建 vsfptd 服务](./../03-搭建vsftpd服务.md)
+   > 关于 vsftpd 用户权限的详细知识，请查阅 [搭建 vsftpd 服务](./../03-搭建vsftpd服务.md)
 
 2. 为 Nginx 和 php-fpm 用户设置权限
 
