@@ -2,13 +2,13 @@
 
 vsftpd 可能是类 unix 系统中最安全、最快的 FTP 服务器。
 
-## 安装 vsftpd
+## 一、安装 vsftpd
 
 ```sh
 $ apt install vsftpd
 ```
 
-## 必要知识点
+## 二、必要知识点
 
 想要完全掌握 vsftpd，我们有必要深入了解以下内容：
 
@@ -17,7 +17,7 @@ $ apt install vsftpd
 | vsftpd 配置选项      | [vsftpd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md) |
 | 可插入式授权管理模块 | [Linux-PAM](./06-PAM.md)                                   |
 
-## 配置文件
+## 三、配置文件
 
 配置文件参考源码:
 
@@ -26,7 +26,7 @@ $ apt install vsftpd
 | 系统用户登陆 | [vsftpd.conf](./source/vsftpd/vsftpd.conf)             |
 | 虚拟用户登陆 | [vsftpd.guest.conf](./source/vsftpd/vsftpd.guest.conf) |
 
-### 配置参数
+## 三、配置参数
 
 涉及到的配置参数详情如下：
 
@@ -76,7 +76,7 @@ $ apt install vsftpd
 
 > 提示：关于 vsftpd 更多的配置参数，请参考 [vsftpd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md)
 
-## 系统用户登陆相关
+## 四、系统用户登陆相关
 
 1. 修改 vsftpd 的 PAM 配置文件
 
@@ -127,249 +127,6 @@ $ apt install vsftpd
    qyadmin
    ```
 
-## 虚拟用户登陆相关
+## 五、虚拟用户登陆相关
 
-这里使用 PAM + MariaDB 认证方式来登陆 vsftpd，涉及如下内容：
-
-| 依赖项       | 具体作用描述             |
-| ------------ | ------------------------ |
-| libpam-mysql | 让 PAM 支持 MariaDB 认证 |
-| MariaDB      | 用于创建用户数据库       |
-
-### 一、安装 libpam-mysql
-
-```sh
-$ apt install libpam-mysql
-```
-
-### 二、MariaDB 相关操作步骤
-
-| 步骤 | 指令                                                             |
-| ---- | ---------------------------------------------------------------- |
-| 01   | 创建数据库(db_pam)，用于存放 pam 相关的数据                      |
-| 02   | 创建数据表(db_pam.pam_vsftpd)，记录 vsftpd 登陆相关的数据        |
-| 03   | 创建 MariaDB 用户(pam_vsftpd)，用来管理 vsftpd 与 pam 相关的数据 |
-| 04   | 为用户(pam_vsftpd)授予表(db_pam.pam_vsftpd)的查询(SELECT)权限    |
-| 05   | 刷新 MariaDB 权限表                                              |
-| 06   | 数据表(db_pam.pam_vsftpd)增加两条数据，用于测试                  |
-
-- 表 `db_pam.pam_vsftpd` 的结构：
-
-  ```text
-  MariaDB [(none)]> DESCRIBE db_pam.pam_vsftpd;
-  +------------+--------------+------+-----+---------+----------------+
-  | Field      | Type         | Null | Key | Default | Extra          |
-  +------------+--------------+------+-----+---------+----------------+
-  | id         | int(11)      | NO   | PRI | NULL    | auto_increment |
-  | ftp_user   | varchar(255) | NO   |     | NULL    |                |
-  | ftp_passwd | char(41)     | NO   |     | NULL    |                |
-  | ftp_dir    | varchar(255) | YES  |     | NULL    |                |
-  +------------+--------------+------+-----+---------+----------------+
-  4 rows in set (0.001 sec)
-  ```
-
-### 三、MariaDB 相关操作指令
-
-```text
-MariaDB [(none)]> CREATE DATABASE db_pam;
-MariaDB [(none)]> CREATE TABLE db_pam.pam_vsftpd (
-   -> id    int AUTO_INCREMENT  NOT NULL    PRIMARY KEY,
-   -> ftp_user  varchar(255)    BINARY  NOT NULL,
-   -> ftp_passwd    char(41)    BINARY  NOT NULL,
-   -> ftp_dir   varchar(255)    BINARY
-   -> );
-MariaDB [(none)]> CREATE USER 'pam_vsftpd'@'localhost' IDENTIFIED BY '123456';
-MariaDB [(none)]> GRANT SELECT ON db_pam.pam_vsftpd TO 'pam_vsftpd'@'localhost';
-MariaDB [(none)]> FLUSH PRIVILEGES;
-MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
-   -> ( ftp_user, ftp_passwd )
-   -> VALUES
-   -> ( 'www', password('123456') );
-MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
-   -> ( ftp_user, ftp_passwd )
-   -> VALUES
-   -> ( 'qyadmin', password('123456') );
-```
-
-- 表 `db_pam.pam_vsftpd` 的数据：
-
-  ```text
-  MariaDB [(none)]> select * from db_pam.pam_vsftpd;
-  +----+----------+-------------------------------------------+---------+
-  | id | ftp_user | ftp_passwd                                | ftp_dir |
-  +----+----------+-------------------------------------------+---------+
-  |  1 | www      | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 | NULL    |
-  |  2 | qyadmin  | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 | NULL    |
-  +----+----------+-------------------------------------------+---------+
-  2 rows in set (0.001 sec)
-  ```
-
-### 四、pam-mysql 认证模块
-
-`pam-mysql.so` 是 PAM 安全认证的一个模块，通过该模块可实现用 MariaDB 来管理相关服务的登陆。
-
-1. pam-mysql 加密方式
-
-   pam-mysql 模块使用 crypt 参数来管理加密方式，加密方式必须与 MariaDB 表下密码字段的加密方式一致，否则认证无法成功！
-
-   | crypt 值 | 加密方式说明                                    |
-   | -------- | ----------------------------------------------- |
-   | crypt=0  | 不使用加密                                      |
-   | crypt=1  | 使用 crypt(3) 加密                              |
-   | crypt=2  | 直接通过当前 MariaDB 服务的函数 password() 认证 |
-   | crypt=3  | md5 加密                                        |
-   | crypt=4  | SHA1 加密                                       |
-
-2. 创建 pam 认证的配置文件
-
-   案例参考 [vsftpd_mysql](./source/vsftpd/vsftpd_mysql)
-
-   ```sh
-   $ vim /etc/pam.d/vsftpd_mysql
-   ```
-
-   > 警告：PAM 配置文件的 `host` 参数一律写成 ip(如：host=127.0.0.1)的形式，如果设置成字符串形式(如：host=localhost)就会出错！
-
-3. pam 认证参数说明
-
-   | 参数                  | 描述                      |
-   | --------------------- | ------------------------- |
-   | user=vsftpd           | 授权登陆 mariadb 时的用户 |
-   | passwd=123456         | mariadb 用户密码          |
-   | host=localhost        | 主机地址                  |
-   | db=vsftpd             | 存放虚拟用户的数据库名    |
-   | table=user_pam        | 存放虚拟用户的 table 名   |
-   | usercolumn=name       | table 中代表用户的字段    |
-   | passwdcolumn=password | table 中代表密码的字段    |
-   | crypt=2               | 密码加密方式代号          |
-
-   | crypt 值 | 描述                         |
-   | -------- | ---------------------------- |
-   | crypt=0  | 不加密                       |
-   | crypt=1  | 使用 crypt(3)加密            |
-   | crypt=2  | mariadb 函数加密 password(); |
-   | crypt=3  | md5 加密                     |
-   | crypt=4  | SHA1 加密                    |
-
-4. 创建映射用户
-
-   创建一个 `Linux用户`，所有 vsftpd 虚拟用户都映射到该用户上
-
-   ```sh
-   $ useradd -c 'This Linux user is used to map VSFTPD virtual users' -u 2003 -s /usr/sbin/nologin -d /server/default -M -U www
-   $ mkdir /server/default
-   ```
-
-   > 提示：映射的 Linux 用户的家目录必须是存在的，并且映射的 Linux 用户需要允许访问家目录（进入目录的权限，`chmod +x`）
-
-### 创建虚拟用户单独配置文件
-
-在 `/server/vsftpd` 目录下，创建与虚拟用户同名的配置文件，并自定义根目录地址，具体操作如下：
-
-1. 创建虚拟用户(www)的单独配置文件
-
-   ```sh
-   $ vim /server/vsftpd/www
-   ```
-
-   具体内容：
-
-   ```conf
-   local_root=/server/www
-   ```
-
-2. 创建虚拟用户(qyadmin)的单独配置文件
-
-   ```sh
-   $ vim /server/vsftpd/qyadmin
-   ```
-
-   具体内容：
-
-   ```conf
-   local_root=/server/www/qyadmin
-   ```
-
-3. 控制目录权限不可写
-
-   设置了 `virtual_use_local_privs=yes` 以后，虚拟用户的权限与本地用户完全相同，所以家目录不能有写的权限：
-
-   ```sh
-   $ chown www:www /server/www
-   $ chmod a-w /server/www
-   ```
-
-### 限制到家目录
-
-设置了 `virtual_use_local_privs=yes` 以后，虚拟用户的权限与本地用户完全相同，所以同样需要使用 `chroot_local_user` 来限制家目录：
-
-```conf
-chroot_local_user=YES
-chroot_list_enable=YES
-chroot_list_file=/etc/vsftpd/chroot_list
-```
-
-> 提示：虚拟用户登陆，最大的好处就是我们之后可以通过 web 后台来控制！
-
-## vsftpd 附录
-
-1. vsftpd 权限设置
-
-   ```sh
-   任何linux服务权限都需要考虑到Linux权限问题，即：
-       1. chmod chown 设置的权限
-       2. vsftpd 服务设置的权限
-            file_open_mode=0666
-            local_umask=026
-   ```
-
-2. vsftpd 站点根目录权限
-
-   根目录权限允许设置成对应用户有执行权限，其它用户不可见，即：
-
-   ```sh
-   $ chown www:www /server/www
-   $ chmod 100 /server/www
-   $ chown www:www /server/www/qyadmin
-   $ chmod 010 /server/www/qyadmin
-   ```
-
-3. vsftpd 站点文件权限设置
-
-   通常处理 web 的用户与 ftp 用户是不同的，所以我们一般保证：
-
-   | 文件分类 | web 和 php-fpm 用户权限 | ftp 用户权限      |
-   | -------- | ----------------------- | ----------------- |
-   | 目录     | 读+执行（5-rx）         | 执行+读+写(5-rwx) |
-   | 文件     | 可读（4-r）             | 读+写（6-rw）     |
-
-4. web 用户对目录权限说明
-
-   为了保证站点内容只允许 `ftp用户` 、`web用户` 和 `php-fpm用户` 操作，我们可以将 `web用户` 和 `php-fpm用户` 加入到 `ftp用户组` 中，即：
-
-   ```sh
-   $ usermod -G www nginx
-   ```
-
-   接着按如下表设置文件权限即可：
-
-   | 文件分类 | 用户权限          | 用户组权限    | 其他用户权限 |
-   | -------- | ----------------- | ------------- | ------------ |
-   | 目录     | 执行+读+写(5-rwx) | 读+执行(5-rx) | 空(0)        |
-   | 文件     | 读+写(4-rw)       | 读(4-r)       | 空(0)        |
-
-   `vsftpd.conf` 参数修改：
-
-   | 参数                | 描述                               |
-   | ------------------- | ---------------------------------- |
-   | file_open_mode=0640 | ftp 上传的文件权限为 `640`         |
-   | local_umask=027     | 修改了 linux 本地用户的权限为`750` |
-
-   `/server/php/etc/php-fpm.d/www.conf` 参数修改：
-
-   | 参数          | 描述                                    |
-   | ------------- | --------------------------------------- |
-   | user=nobody   | 必须修改为： `user=nginx` 或 `user=www` |
-   | group=nogroup | 不需要修改                              |
-
-> 提示：如果 web 用户需要更多的，权限就增加用户组权限即可！
+关于 vsftpd 虚拟用户登陆相关信息，请参考[vsftpd 虚拟用户登陆认证](./manual/07-vsftpd虚拟用户登陆认证.md)
