@@ -175,7 +175,7 @@ vsftpd 虚拟用户需要映射到 Linux 用户上，否则就没有任何 linux
    $ chmod a-w /server/www
    ```
 
-## 限制到家目录
+## 六、限制到家目录
 
 设置了 `virtual_use_local_privs=yes` 以后，虚拟用户的权限与本地用户完全相同，所以同样需要使用 `chroot_local_user` 来限制家目录：
 

@@ -56,24 +56,28 @@ $ apt install vsftpd
 | chroot_list_enable=YES                   | 将 ftp 登陆用户限制在家目录，chroot_list 列出的用户除外 |
 | chroot_list_file=/etc/vsftpd/chroot_list | 将 ftp 登陆用户限制在家目录，chroot_list 列出的用户除外 |
 
-| 系统用户登陆特定参数                | 参数描述                                    |
-| ----------------------------------- | ------------------------------------------- |
-| pam_service_name=vsftpd             | 设置 PAM 认证服务所使用的配置文件名         |
-| userlist_enable=YES                 | 仅允许 user_list 文件列出的用户名，登陆 ftp |
-| userlist_deny=NO                    | 仅允许 user_list 文件列出的用户名，登陆 ftp |
-| userlist_file=/etc/vsftpd/user_list | 仅允许 user_list 文件列出的用户名，登陆 ftp |
+1. 系统用户登陆特定参数：
 
-| 虚拟用户登陆特定参数                | 参数描述                                 |
-| ----------------------------------- | ---------------------------------------- |
-| pam_service_name=vsftpd-guest       | 设置 PAM 认证服务所使用的配置文件名      |
-| virtual_use_local_privs=yes         | 虚拟用户将使用与本地用户相同的权限       |
-| guest_enable=yes                    | 开启虚拟用户登陆                         |
-| guest_username=www                  | 虚拟用户映射的系统用户                   |
-| local_root=/server/default          | 设置用户登陆时的默认根目录               |
-| user_config_dir=/server/vsftpd      | 虚拟用户单独配置文件存放目录             |
-| userlist_enable=YES                 | user_list 文件列出的用户名，禁止登陆 ftp |
-| userlist_deny=YES                   | user_list 文件列出的用户名，禁止登陆 ftp |
-| userlist_file=/etc/vsftpd/user_list | user_list 文件列出的用户名，禁止登陆 ftp |
+   | 特定参数                            | 参数描述                                    |
+   | ----------------------------------- | ------------------------------------------- |
+   | pam_service_name=vsftpd             | 设置 PAM 认证服务所使用的配置文件名         |
+   | userlist_enable=YES                 | 仅允许 user_list 文件列出的用户名，登陆 ftp |
+   | userlist_deny=NO                    | 仅允许 user_list 文件列出的用户名，登陆 ftp |
+   | userlist_file=/etc/vsftpd/user_list | 仅允许 user_list 文件列出的用户名，登陆 ftp |
+
+2. 虚拟用户登陆特定参数：
+
+   | 特定参数                            | 参数描述                                 |
+   | ----------------------------------- | ---------------------------------------- |
+   | pam_service_name=vsftpd-guest       | 设置 PAM 认证服务所使用的配置文件名      |
+   | virtual_use_local_privs=yes         | 虚拟用户将使用与本地用户相同的权限       |
+   | guest_enable=yes                    | 开启虚拟用户登陆                         |
+   | guest_username=www                  | 虚拟用户映射的系统用户                   |
+   | local_root=/server/default          | 设置用户登陆时的默认根目录               |
+   | user_config_dir=/server/vsftpd      | 虚拟用户单独配置文件存放目录             |
+   | userlist_enable=YES                 | user_list 文件列出的用户名，禁止登陆 ftp |
+   | userlist_deny=YES                   | user_list 文件列出的用户名，禁止登陆 ftp |
+   | userlist_file=/etc/vsftpd/user_list | user_list 文件列出的用户名，禁止登陆 ftp |
 
 > 提示：关于 vsftpd 更多的配置参数，请参考 [vsftpd.conf 选项说明](./manual/03-vsftpd.conf选项说明.md)
 
@@ -126,7 +130,7 @@ $ apt install vsftpd
 
 ## 六、虚拟用户登陆相关
 
-关于 vsftpd 虚拟用户登陆相关信息，请参考[vsftpd 虚拟用户登陆认证](./manual/07-vsftpd虚拟用户登陆认证.md)
+关于 vsftpd 虚拟用户登陆相关信息，请参考：[vsftpd 虚拟用户登陆认证](./manual/07-vsftpd虚拟用户登陆认证.md)
 
 ## 七、附录：vsftpd 问题汇总
 
@@ -137,26 +141,11 @@ $ apt install vsftpd
    ```text
    - vsftpd 的初衷就是为了方便；
    - 如果使用匿名用户权限就改变了这个初衷；
-   - 而使用本地用户映射，不仅安全性没有太大降低，而且也大大的提升了方便性；
+   - 而使用本地用户权限，只要映射用户不设置特别权限，不仅安全性没有降低，而且也大大的提升了方便性；
    ```
 
 2. 问：虚拟用户登陆 ftp 总是不能操作根目录，有没有解决办法？
 
-   答：这是硬伤，只要满足了以下两个要求，根目录就不能有写的权限：
+   答：这是硬伤，只要将 ftp 登陆用户限制在家目录，登陆用户对家目录就不能有写权限！
 
-   | 序号 | 权限要求                     |
-   | ---- | ---------------------------- |
-   | 01   | ftp 登陆用户具有本地用户权限 |
-   | 02   | ftp 登陆用户限制在家目录     |
-
-   ```text
-   - 这也是网上很多教程都将虚拟用户权限设置为匿名用户的原因之一！
-
-   变向解决方法：
-   - 如果自己使用的话，家目录上的内容通过shell执行，要修改文件，尽量放到子目录内；
-   - 如果要服务于客户的话，就采用匿名用户权限，客户的数据让必须他们自己负责。
-
-   后台操作方法：
-   - 让后台程序具有root权限，这样就能解决任何权限问题；
-   - 如果后台设置的root权限，就需要注意安全性。
-   ```
+   - 处理方式：让需要修改的文件都放在子目录下，或者使用其它工具操作！
