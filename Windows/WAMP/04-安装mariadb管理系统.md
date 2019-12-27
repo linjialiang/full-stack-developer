@@ -13,6 +13,8 @@ WAMP 将自带以下两款 web 端数据库管理系统：
 
 > 附录：[phpmyadmin 中文手册](https://docs.phpmyadmin.net/zh_CN/latest/)
 
+- 申明：本人已经放弃 phpmyadmin，因为它越来越卡了
+
 ## 安装 phpMyAdmin
 
 phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写。

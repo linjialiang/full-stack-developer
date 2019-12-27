@@ -114,9 +114,16 @@
    $ chown www:www -R /server/default/adminer
    ```
 
+5. 如果要更新又需要切换成普通用户
+
+   ```sh
+   $ chown emad:emad -R /server/default/adminer
+   $ composer update
+   ```
+
 ## 四、安装 MariaDB 的管理系统 —— phpMyAdmin
 
-安装方式基本与 adminer 一样，具体如下：
+本人已经放弃 phpmyadmin，因为它越来越卡了，它安装方式基本与 adminer 一样，具体如下：
 
 ```sh
 $ composer create-project phpmyadmin/phpmyadmin pma
