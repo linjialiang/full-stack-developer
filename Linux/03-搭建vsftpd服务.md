@@ -204,11 +204,23 @@ MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
   2 rows in set (0.001 sec)
   ```
 
-### 四、php-mysql
+### 四、pam-mysql 认证模块
 
-> `pam-mysql.so` 模块支持的加密方式，与 mariadb 加密方式 `不兼容` 时，需要更换其它加密方式，或者不使用加密
+`pam-mysql.so` 是 PAM 安全认证的一个模块，通过该模块可实现用 MariaDB 来管理相关服务的登陆。
 
-4. 创建 pam 认证的配置文件
+1. pam-mysql 加密方式
+
+   pam-mysql 模块使用 crypt 参数来管理加密方式，加密方式必须与 MariaDB 表下密码字段的加密方式一致，否则认证无法成功！
+
+   | crypt 值 | 加密方式说明                                    |
+   | -------- | ----------------------------------------------- |
+   | crypt=0  | 不使用加密                                      |
+   | crypt=1  | 使用 crypt(3) 加密                              |
+   | crypt=2  | 直接通过当前 MariaDB 服务的函数 password() 认证 |
+   | crypt=3  | md5 加密                                        |
+   | crypt=4  | SHA1 加密                                       |
+
+2. 创建 pam 认证的配置文件
 
    案例参考 [vsftpd_mysql](./source/vsftpd/vsftpd_mysql)
 
@@ -216,14 +228,14 @@ MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
    $ vim /etc/pam.d/vsftpd_mysql
    ```
 
-   > 提示：`pam-mysql.so` 模块不支持 `host=localhost` 的写法，需要一律写成 IP 地址,如： `host=127.0.0.1`
+   > 警告：PAM 配置文件的 `host` 参数一律写成 ip(如：host=127.0.0.1)的形式，如果设置成字符串形式(如：host=localhost)就会出错！
 
-5. pam 认证参数说明
+3. pam 认证参数说明
 
    | 参数                  | 描述                      |
    | --------------------- | ------------------------- |
    | user=vsftpd           | 授权登陆 mariadb 时的用户 |
-   | passwd=123456         | mariadb 用户免密          |
+   | passwd=123456         | mariadb 用户密码          |
    | host=localhost        | 主机地址                  |
    | db=vsftpd             | 存放虚拟用户的数据库名    |
    | table=user_pam        | 存放虚拟用户的 table 名   |
@@ -239,7 +251,7 @@ MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
    | crypt=3  | md5 加密                     |
    | crypt=4  | SHA1 加密                    |
 
-6. 创建映射用户
+4. 创建映射用户
 
    创建一个 `Linux用户`，所有 vsftpd 虚拟用户都映射到该用户上
 
