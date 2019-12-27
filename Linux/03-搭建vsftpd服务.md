@@ -136,47 +136,80 @@ $ apt install vsftpd
 | libpam-mysql | 让 PAM 支持 MariaDB 认证 |
 | MariaDB      | 用于创建用户数据库       |
 
-1. 安装 libpam-mysql
+### 一、安装 libpam-mysql
 
-   ```sh
-   $ apt install libpam-mysql
-   ```
+```sh
+$ apt install libpam-mysql
+```
 
-2. MariaDB 相关操作步骤
+### 二、MariaDB 相关操作步骤
 
-   | 步骤 | 指令                                                             |
-   | ---- | ---------------------------------------------------------------- |
-   | 01   | 创建数据库(db_pam)，用于存放 pam 相关的数据                      |
-   | 02   | 创建数据表(db_pam.pam_vsftpd)，记录 vsftpd 登陆相关的数据        |
-   | 03   | 创建 MariaDB 用户(pam_vsftpd)，用来管理 vsftpd 与 pam 相关的数据 |
-   | 04   | 为用户(pam_vsftpd)授予表(db_pam.pam_vsftpd)的查询(SELECT)权限    |
-   | 05   | 刷新 MariaDB 权限表                                              |
-   | 06   | 数据表(db_pam.pam_vsftpd)增加两条数据，用于测试                  |
+| 步骤 | 指令                                                             |
+| ---- | ---------------------------------------------------------------- |
+| 01   | 创建数据库(db_pam)，用于存放 pam 相关的数据                      |
+| 02   | 创建数据表(db_pam.pam_vsftpd)，记录 vsftpd 登陆相关的数据        |
+| 03   | 创建 MariaDB 用户(pam_vsftpd)，用来管理 vsftpd 与 pam 相关的数据 |
+| 04   | 为用户(pam_vsftpd)授予表(db_pam.pam_vsftpd)的查询(SELECT)权限    |
+| 05   | 刷新 MariaDB 权限表                                              |
+| 06   | 数据表(db_pam.pam_vsftpd)增加两条数据，用于测试                  |
 
-   > `db_pam.pam_vsftpd` 的表结构说明：
+- 表 `db_pam.pam_vsftpd` 的结构：
 
-   | 表字段     | 字段类型     | 字段设定                   |
-   | ---------- | ------------ | -------------------------- |
-   | id         | int          | AUTO_INCREMENT PRIMARY KEY |
-   | ftp_user   | varchar(255) | BINARY NOT NULL            |
-   | ftp_passwd | char(41)     | BINARY NOT NULL            |
-   | ftp_dir    | varchar(255) | BINARY                     |
+  ```text
+  $ mysql
+  MariaDB [(none)]> DESCRIBE db_pam.pam_vsftpd;
+  +------------+--------------+------+-----+---------+----------------+
+  | Field      | Type         | Null | Key | Default | Extra          |
+  +------------+--------------+------+-----+---------+----------------+
+  | id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+  | ftp_user   | varchar(255) | NO   |     | NULL    |                |
+  | ftp_passwd | char(41)     | NO   |     | NULL    |                |
+  | ftp_dir    | varchar(255) | YES  |     | NULL    |                |
+  +------------+--------------+------+-----+---------+----------------+
+  4 rows in set (0.001 sec)
+  ```
 
-3) MariaDB 相关操作指令
+### 三、MariaDB 相关操作指令
 
-   ```sh
-   $ mysql
-   MariaDB [(none)]> CREATE DATABASE db_pam;
-   MariaDB [(none)]> CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';
-   MariaDB [(none)]> GRANT ALL PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost' WITH GRANT OPTION;
-   MariaDB [(none)]> FLUSH PRIVILEGES;
-   MariaDB [(none)]> use vsftpd;
-   MariaDB [(none)]> CREATE TABLE user_pam (id int AUTO_INCREMENT NOT NULL PRIMARY KEY, name varchar(30) NOT NULL, password char(41) binary NOT NULL);
-   MariaDB [(none)]> INSERT INTO user_pam(name,password) VALUES ('www',password('123456'));
-   MariaDB [(none)]> INSERT INTO user_pam(name,password) VALUES ('qyadmin',password('123456'));
-   ```
+```sh
+$ mysql
+MariaDB [(none)]> CREATE DATABASE db_pam;
+MariaDB [(none)]> CREATE TABLE db_pam.pam_vsftpd (
+   -> id int AUTO_INCREMENT   PRIMARY KEY,
+   -> ftp_user    varchar(255)    BINARY  NOT NULL,
+   -> ftp_passwd  char(41)    BINARY  NOT NULL,
+   -> ftp_dir  varchar(255)   BINARY
+   -> );
+MariaDB [(none)]> CREATE USER 'pam_vsftpd'@'localhost' IDENTIFIED BY '123456';
+MariaDB [(none)]> GRANT SELECT ON db_pam.pam_vsftpd TO 'pam_vsftpd'@'localhost';
+MariaDB [(none)]> FLUSH PRIVILEGES;
+MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
+   -> ( ftp_user, ftp_passwd )
+   -> VALUES
+   -> ( 'www', password('123456') );
+MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
+   -> ( ftp_user, ftp_passwd )
+   -> VALUES
+   -> ( 'qyadmin', password('123456') );
+```
 
-   > `pam-mysql.so` 模块支持的加密方式，与 mariadb 加密方式 `不兼容` 时，需要更换其它加密方式，或者不使用加密
+- 表 `db_pam.pam_vsftpd` 的数据：
+
+  ```text
+  $ mysql
+  MariaDB [(none)]> select * from db_pam.pam_vsftpd;
+  +----+----------+-------------------------------------------+---------+
+  | id | ftp_user | ftp_passwd                                | ftp_dir |
+  +----+----------+-------------------------------------------+---------+
+  |  1 | www      | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 | NULL    |
+  |  2 | qyadmin  | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 | NULL    |
+  +----+----------+-------------------------------------------+---------+
+  2 rows in set (0.001 sec)
+  ```
+
+### 四、php-mysql
+
+> `pam-mysql.so` 模块支持的加密方式，与 mariadb 加密方式 `不兼容` 时，需要更换其它加密方式，或者不使用加密
 
 4. 创建 pam 认证的配置文件
 
