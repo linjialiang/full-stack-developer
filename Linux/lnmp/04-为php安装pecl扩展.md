@@ -216,3 +216,18 @@
    | `Imagick using ImageMagick library version` | 服务器上 ImageMagick 作为依赖库的版本号         |
 
    > 提示：如果两者的版本号不一致，imagick 扩展就不能正常运行！
+
+### 四、## 三、安装 PRCL 扩展 —— `zip`
+
+php_zip 是 composer 安装 phpmyamdin 时必备插件，具体操作如下：
+
+```sh
+$ apt install libzip-dev
+$ cd /package/php-7.4.1/ext/zip/
+$ phpize
+$ mkdir zip_bulid
+$ cd zip_bulid
+$ ../configure
+$ make -j4
+$ make install
+```

@@ -24,24 +24,24 @@ $ composer create-project phpmyadmin/phpmyadmin pma
 $ composer update
 ```
 
-> httpd 配置：
+- httpd 配置：
 
-```conf
-Alias /phpmyadmin ${WAMP_ROOT}/pma
-<Directory ${WAMP_ROOT}/pma>
-    Options FollowSymLinks
-    DirectoryIndex index.php
-    <RequireAll>
-        Require local
-    </RequireAll>
-</Directory>
-<Directory ${WAMP_ROOT}/pma/libraries>
-    Require all denied
-</Directory>
-<Directory ${WAMP_ROOT}/pma/setup/lib>
-    Require all denied
-</Directory>
-```
+  ```conf
+  Alias /phpmyadmin ${WAMP_ROOT}/pma
+  <Directory ${WAMP_ROOT}/pma>
+      Options FollowSymLinks
+      DirectoryIndex index.php
+      <RequireAll>
+          Require local
+      </RequireAll>
+  </Directory>
+  <Directory ${WAMP_ROOT}/pma/libraries>
+      Require all denied
+  </Directory>
+  <Directory ${WAMP_ROOT}/pma/setup/lib>
+      Require all denied
+  </Directory>
+  ```
 
 ### 配置 phpmyadmin
 
