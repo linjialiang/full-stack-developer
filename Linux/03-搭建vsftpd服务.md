@@ -173,10 +173,10 @@ $ apt install libpam-mysql
 ```text
 MariaDB [(none)]> CREATE DATABASE db_pam;
 MariaDB [(none)]> CREATE TABLE db_pam.pam_vsftpd (
-   -> id int AUTO_INCREMENT   PRIMARY KEY,
-   -> ftp_user    varchar(255)    BINARY  NOT NULL,
-   -> ftp_passwd  char(41)    BINARY  NOT NULL,
-   -> ftp_dir  varchar(255)   BINARY
+   -> id    int AUTO_INCREMENT  NOT NULL    PRIMARY KEY,
+   -> ftp_user  varchar(255)    BINARY  NOT NULL,
+   -> ftp_passwd    char(41)    BINARY  NOT NULL,
+   -> ftp_dir   varchar(255)    BINARY
    -> );
 MariaDB [(none)]> CREATE USER 'pam_vsftpd'@'localhost' IDENTIFIED BY '123456';
 MariaDB [(none)]> GRANT SELECT ON db_pam.pam_vsftpd TO 'pam_vsftpd'@'localhost';
