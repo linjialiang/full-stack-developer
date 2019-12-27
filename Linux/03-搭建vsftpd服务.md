@@ -156,7 +156,6 @@ $ apt install libpam-mysql
 - 表 `db_pam.pam_vsftpd` 的结构：
 
   ```text
-  $ mysql
   MariaDB [(none)]> DESCRIBE db_pam.pam_vsftpd;
   +------------+--------------+------+-----+---------+----------------+
   | Field      | Type         | Null | Key | Default | Extra          |
@@ -171,8 +170,7 @@ $ apt install libpam-mysql
 
 ### 三、MariaDB 相关操作指令
 
-```sh
-$ mysql
+```text
 MariaDB [(none)]> CREATE DATABASE db_pam;
 MariaDB [(none)]> CREATE TABLE db_pam.pam_vsftpd (
    -> id int AUTO_INCREMENT   PRIMARY KEY,
@@ -196,7 +194,6 @@ MariaDB [(none)]> INSERT INTO db_pam.pam_vsftpd
 - 表 `db_pam.pam_vsftpd` 的数据：
 
   ```text
-  $ mysql
   MariaDB [(none)]> select * from db_pam.pam_vsftpd;
   +----+----------+-------------------------------------------+---------+
   | id | ftp_user | ftp_passwd                                | ftp_dir |
