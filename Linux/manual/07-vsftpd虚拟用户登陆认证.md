@@ -34,6 +34,8 @@
    | 05   | 刷新 MariaDB 权限表                                              |
    | 06   | 数据表(db_pam.pam_vsftpd)增加两条数据，用于测试                  |
 
+   > 警告：由于数据库用户 pam_vsftpd 的密码会直接暴露在 pam 认证文件上，为了安全起见，最好只提供数据表的查询(SELECT)权限！
+
 2. MariaDB 操作指令：
 
    ```text
