@@ -67,7 +67,7 @@ $ apt install vsftpd
 
 | 虚拟用户登陆参数               | 参数描述                            |
 | ------------------------------ | ----------------------------------- |
-| pam_service_name=vsftpd_guest  | 设置 PAM 认证服务所使用的配置文件名 |
+| pam_service_name=vsftpd_mysql  | 设置 PAM 认证服务所使用的配置文件名 |
 | guest_enable=yes               | 开启虚拟用户登陆                    |
 | guest_username=www             | 虚拟用户映射的系统用户              |
 | local_root=/server/default     | 设置用户登陆时的默认根目录          |
@@ -142,22 +142,31 @@ $ apt install vsftpd
    $ apt install libpam-mysql
    ```
 
-2. MariaDB 相关操作
+2. MariaDB 相关操作步骤
 
-   | 步骤 | 指令                                                                          | 描述                             |
-   | ---- | ----------------------------------------------------------------------------- | -------------------------------- |
-   | 01   | `CREATE DATABASE vsftpd;`                                                     | 创建数据库                       |
-   | 02   | `CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';`                    | 创建数据库管理用户               |
-   | 02   | `GRANT ALL PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost' WITH GRANT OPTION;` | 授予用户操作 vsftpd 数据库的权限 |
-   | 03   | `FLUSH PRIVILEGES;`                                                           | 刷新 MariaDB 权限表              |
-   | 04   | 见 `指令详情`                                                                 | 创建 user_pam 表                 |
-   | 05   | 见 `指令详情`                                                                 | 创建用户                         |
+   | 步骤 | 指令                                                             |
+   | ---- | ---------------------------------------------------------------- |
+   | 01   | 创建数据库(db_pam)，用于存放 pam 相关的数据                      |
+   | 02   | 创建数据表(db_pam.pam_vsftpd)，记录 vsftpd 登陆相关的数据        |
+   | 03   | 创建 MariaDB 用户(pam_vsftpd)，用来管理 vsftpd 与 pam 相关的数据 |
+   | 04   | 为用户(pam_vsftpd)授予表(db_pam.pam_vsftpd)的查询(SELECT)权限    |
+   | 05   | 刷新 MariaDB 权限表                                              |
+   | 06   | 数据表(db_pam.pam_vsftpd)增加两条数据，用于测试                  |
 
-3. MariaDB 指令详情
+   > `db_pam.pam_vsftpd` 的表结构说明：
+
+   | 表字段     | 字段类型     | 字段设定                   |
+   | ---------- | ------------ | -------------------------- |
+   | id         | int          | AUTO_INCREMENT PRIMARY KEY |
+   | ftp_user   | varchar(255) | BINARY NOT NULL            |
+   | ftp_passwd | char(41)     | BINARY NOT NULL            |
+   | ftp_dir    | varchar(255) | BINARY                     |
+
+3) MariaDB 相关操作指令
 
    ```sh
    $ mysql
-   MariaDB [(none)]> CREATE DATABASE vsftpd;
+   MariaDB [(none)]> CREATE DATABASE db_pam;
    MariaDB [(none)]> CREATE USER 'vsftpd'@'localhost' IDENTIFIED BY '123456';
    MariaDB [(none)]> GRANT ALL PRIVILEGES ON vsftpd.* TO 'vsftpd'@'localhost' WITH GRANT OPTION;
    MariaDB [(none)]> FLUSH PRIVILEGES;
@@ -171,10 +180,10 @@ $ apt install vsftpd
 
 4. 创建 pam 认证的配置文件
 
-   案例参考 [vsftpd_guest](./source/vsftpd/vsftpd_guest)
+   案例参考 [vsftpd_mysql](./source/vsftpd/vsftpd_mysql)
 
    ```sh
-   $ vim /etc/pam.d/vsftpd_guest
+   $ vim /etc/pam.d/vsftpd_mysql
    ```
 
    > 提示：`pam-mysql.so` 模块不支持 `host=localhost` 的写法，需要一律写成 IP 地址,如： `host=127.0.0.1`
