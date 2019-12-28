@@ -38,7 +38,7 @@
 
 ### 默认站点 —— adminer
 
-adminer 是 MariaDB 的管理系统，官方将其封装成了一个单独的文件，并且操作效率完爆 phpMyAdmin
+adminer 是 MariaDB 的管理系统，官方将其封装成了一个单独的文件
 
 1. 下载 adminer
 
@@ -52,7 +52,7 @@ adminer 是 MariaDB 的管理系统，官方将其封装成了一个单独的文
 
 ### 默认站点 —— phpMyAdmin
 
-adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统，不过现在操作效率低下，期待改善
+adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统
 
 1. 下载 phpMyAdmin
 
