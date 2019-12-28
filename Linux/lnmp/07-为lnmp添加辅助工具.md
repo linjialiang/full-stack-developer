@@ -26,7 +26,7 @@
 1. 新建 phpinfo 脚本文件
 
    ```sh
-   $ vim /server/default/phpinfo.php
+   $ vim /server/default/index.php
    ```
 
 2. phpinfo 文件添加内容：
