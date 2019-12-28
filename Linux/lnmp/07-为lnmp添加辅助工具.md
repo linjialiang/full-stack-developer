@@ -75,40 +75,14 @@ adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统，不
 
    pma 自定义配置文件内容请查看 [config.inc.php](./source/config.inc.php)
 
-4. phpmyadmin 设置目录的变量说明：
+4. 缓存目录及权限说明
 
-   | pma 变量            | 变量说明                               |
-   | ------------------- | -------------------------------------- |
-   | `$cfg['UploadDir']` | 上传文件的目录，web 用户需要查看权限   |
-   | `$cfg['SaveDir']`   | 保存文件的目录，php-fpm 用户需要写权限 |
-   | `$cfg['TempDir']`   | 缓存目录，php-fpm 用户需要有写权限     |
+   pma 配置文件中 `$cfg['UploadDir']` 变量用于指定缓存目录的路径，缓存目录详情如下：
 
-   说明：这 3 个目录我们重新指定了，其中部分需要我们自己创建并指明权限
-
-5. 创建 phpmyadmin 的上传/保存目录
-
-   ```sh
-   $ mkdir -p /server/www/pma/upload
-   $ mkdir /server/www/pma/save
-   ```
-
-6. phpmyadmin 目录权限说明
-
-   | 目录                   | 所属用户 | 权限 | 是否自己创建 |
-   | ---------------------- | -------- | ---- | ------------ |
-   | /tmp/                  | root     | 777  | 系统自带     |
-   | /server/www/pma        | root     | 550  | 自己创建     |
-   | /server/www/pma/upload | www      | 750  | 自己创建     |
-   | /server/www/pma/save   | www      | 770  | 自己创建     |
-
-   ```sh
-   $ chown root:root /server/www/pma/
-   $ chown www:www /server/www/pma/save/
-   $ chown www:www /server/www/pma/upload/
-   $ chown chmod 550 /server/www/pma/
-   $ chown chmod 750 /server/www/upload/
-   $ chown chmod 770 /server/www/save/
-   ```
+   | pma 缓存变量 | `$cfg['UploadDir']=/tmp`                           |
+   | ------------ | -------------------------------------------------- |
+   | 优化速度     | 缓存目录主要用户缓存页面模版，大大提升网页浏览速度 |
+   | 指定目录     | 将路径指定为 linux 系统自带的 `/tmp/` 缓存目录     |
 
 ### 默认站点 —— nginx 配置
 

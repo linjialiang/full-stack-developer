@@ -15,10 +15,8 @@ $cfg['Servers'][$i]['compress'] = false;
 # 是否允许空密码登陆
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
-# 上传文件目录，注意目录权限
-$cfg['UploadDir'] = '/server/www/pma/upload';
-# 保存的文件目录，注意目录权限
-$cfg['SaveDir'] = '/server/www/pma/save';
+$cfg['UploadDir'] = '';
+$cfg['SaveDir'] = '';
 # 默认语言
 $cfg['DefaultLang'] = 'zh';
 # 设置主题
