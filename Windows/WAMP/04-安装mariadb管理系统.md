@@ -20,18 +20,18 @@ phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写�
 - httpd 配置：
 
   ```conf
-  Alias /phpmyadmin ${WAMP_ROOT}/pma
-  <Directory ${WAMP_ROOT}/pma>
+  Alias /phpmyadmin ${WAMP_ROOT}/base/default/pma
+  <Directory ${WAMP_ROOT}/base/default/pma>
       Options FollowSymLinks
       DirectoryIndex index.php
       <RequireAll>
           Require local
       </RequireAll>
   </Directory>
-  <Directory ${WAMP_ROOT}/pma/libraries>
+  <Directory ${WAMP_ROOT}/base/default/pma/libraries>
       Require all denied
   </Directory>
-  <Directory ${WAMP_ROOT}/pma/setup/lib>
+  <Directory ${WAMP_ROOT}/base/default/pma/setup/lib>
       Require all denied
   </Directory>
   ```
@@ -104,8 +104,8 @@ adminer 是 PHP 语言编写，支持多种数据库系统，由于其出色的�
 - httpd 配置：
 
   ```conf
-  Alias /adminer ${WAMP_ROOT}
-  <Directory ${WAMP_ROOT}>
+  Alias /adminer ${WAMP_ROOT}/base/default}
+  <Directory ${WAMP_ROOT}/base/default>
       Options FollowSymLinks
       DirectoryIndex adminer.php
       <RequireAll>
