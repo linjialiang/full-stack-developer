@@ -75,7 +75,7 @@ adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统，不
 
    pma 自定义配置文件内容请查看 [config.inc.php](./source/config.inc.php)
 
-4. 缓存目录及权限说明
+4. 缓存目录说明
 
    pma 配置文件中 `$cfg['UploadDir']` 变量用于指定缓存目录的路径，缓存目录详情如下：
 
@@ -95,6 +95,28 @@ Nginx 的默认站点的配置信息，请参考 [nginx.conf](./source/nginx/ngi
   | phpinfo    | http://192.168.10.251/            |
   | adminer    | http://192.168.10.251/adminer.php |
   | phpMyAdmin | http://192.168.10.251/pma/        |
+
+### 默认站点 —— 权限说明
+
+1. 默认站点根目录权限设置
+
+   根目录下仅有 3 个文件/目录，由于不需要其它操作权限，所以直接以最安全的方式设置：
+
+   | 文件/目录 | 所属用户  | 权限 |
+   | --------- | --------- | ---- |
+   | index.php | root:root | 004  |
+   | adminer   | root:root | 004  |
+   | pma       | root:root | 001  |
+
+   > 提示：最安全的所属用户永远是 root，权限设为 004 或 644 安全性其实一样。
+
+2. pma 目录下的文件/目录权限设置
+
+   将所属用户改成 root，安全性立马提示一大截：
+
+   ```sh
+   $ chown root:root -R /server/default/pma
+   ```
 
 ## 二、辅助工具之 composer
 
