@@ -31,10 +31,10 @@
 
 2. phpinfo 文件添加内容：
 
-    ```text
-    <?php
-    phpinfo();
-    ```
+   ```text
+   <?php
+   phpinfo();
+   ```
 
 ### 默认站点 —— adminer
 
@@ -71,6 +71,14 @@ adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统，不
 ### 默认站点 —— nginx 配置
 
 Nginx 的默认站点的配置信息，请参考 [nginx.conf](./source/nginx/nginx.conf)
+
+- 登陆地址列表：
+
+  | 实用工具   | 登陆列表                          |
+  | ---------- | --------------------------------- |
+  | phpinfo    | http://192.168.10.251/            |
+  | adminer    | http://192.168.10.251/adminer.php |
+  | phpMyAdmin | http://192.168.10.251/pma/        |
 
 ## 二、辅助工具之 composer
 
