@@ -122,3 +122,4 @@ LNMP 开发环境目录
 | 04   | [为 PHP 安装 PECL 扩展](./lnmp/04-为php安装pecl扩展.md)    |
 | 05   | [LNMP 维护篇](./lnmp/05-lnmp维护篇.md)                     |
 | 06   | [LNMP 记录一次升级过程](./lnmp/06-lnmp记录一次升级过程.md) |
+| 07   | [为 LNMP 添加辅助工具](./lnmp/07-为lnmp添加辅助工具.md)    |

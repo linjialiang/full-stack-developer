@@ -186,7 +186,7 @@
    --with-imagick=/server/ImageMagick
    ```
 
-3. php.ini 文件添加扩展信息
+3. <span id="imagick-config">php.ini 文件添加扩展信息</span>
 
    ```sh
    $ vim /server/php/lib/php.ini
@@ -216,3 +216,42 @@
    | `Imagick using ImageMagick library version` | 服务器上 ImageMagick 作为依赖库的版本号         |
 
    > 提示：如果两者的版本号不一致，imagick 扩展就不能正常运行！
+
+## 四、安装 PRCL 扩展 —— `zip`
+
+php_zip 是 composer 安装 phpmyamdin 时必备插件，具体操作如下：
+
+```sh
+$ apt install libzip-dev
+$ cd /package/php-7.4.1/ext/zip/
+$ phpize
+$ mkdir zip_bulid
+$ cd zip_bulid/
+$ ../configure
+$ make -j4
+$ make install
+```
+
+> 提示：phpmyadmin 已被移除，所以该扩展不需要安装
+
+## 五、安装 PRCL 扩展 —— `zlib`
+
+在安装 composer 时提示需要启用此扩展，否则 composer 速度大大降低
+
+1. 安装过程：
+
+   ```sh
+   $ cd /package/php-7.4.1/ext/zlib/
+   $ cp config0.m4 config.m4
+   $ phpize
+   $ mkdir zlib_bulid
+   $ cd zlib_bulid/
+   $ ../configure
+   $ make -j4
+   $ make test
+   $ make install
+   ```
+
+2. 加入 php.ini 文件：
+
+   具体操作请参考前面的 [imagick 扩展](#imagick-config)

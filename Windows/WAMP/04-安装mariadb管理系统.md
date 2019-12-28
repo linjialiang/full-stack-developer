@@ -13,6 +13,8 @@ WAMP 将自带以下两款 web 端数据库管理系统：
 
 > 附录：[phpmyadmin 中文手册](https://docs.phpmyadmin.net/zh_CN/latest/)
 
+- 申明：本人已经放弃 phpmyadmin，因为它越来越卡了
+
 ## 安装 phpMyAdmin
 
 phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写。
@@ -24,24 +26,24 @@ $ composer create-project phpmyadmin/phpmyadmin pma
 $ composer update
 ```
 
-> httpd 配置：
+- httpd 配置：
 
-```conf
-Alias /phpmyadmin ${WAMP_ROOT}/pma
-<Directory ${WAMP_ROOT}/pma>
-    Options FollowSymLinks
-    DirectoryIndex index.php
-    <RequireAll>
-        Require local
-    </RequireAll>
-</Directory>
-<Directory ${WAMP_ROOT}/pma/libraries>
-    Require all denied
-</Directory>
-<Directory ${WAMP_ROOT}/pma/setup/lib>
-    Require all denied
-</Directory>
-```
+  ```conf
+  Alias /phpmyadmin ${WAMP_ROOT}/pma
+  <Directory ${WAMP_ROOT}/pma>
+      Options FollowSymLinks
+      DirectoryIndex index.php
+      <RequireAll>
+          Require local
+      </RequireAll>
+  </Directory>
+  <Directory ${WAMP_ROOT}/pma/libraries>
+      Require all denied
+  </Directory>
+  <Directory ${WAMP_ROOT}/pma/setup/lib>
+      Require all denied
+  </Directory>
+  ```
 
 ### 配置 phpmyadmin
 
