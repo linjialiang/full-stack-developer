@@ -64,9 +64,51 @@ adminer 是 MariaDB 的管理系统，是最经典的网页版管理系统，不
    $ mv pma/ /server/default/
    ```
 
-3. 修改 phpmyadmin 配置
+3. 修改 phpmyadmin 配置文件
 
-   具体操作请查看 WAMP 下的 [安装 mariadb 管理系统](./../../Windows/WAMP/04-安装mariadb管理系统.md)
+   pma 有一个默认配置文件，自定义配置文件需要自己创建，具体如下：
+
+   ```sh
+   $ cd /server/default/pma
+   $ touch config.inc.php
+   ```
+
+   pma 自定义配置文件内容请查看 [config.inc.php](./source/config.inc.php)
+
+4. phpmyadmin 设置目录的变量说明：
+
+   | pma 变量            | 变量说明                               |
+   | ------------------- | -------------------------------------- |
+   | `$cfg['UploadDir']` | 上传文件的目录，web 用户需要查看权限   |
+   | `$cfg['SaveDir']`   | 保存文件的目录，php-fpm 用户需要写权限 |
+   | `$cfg['TempDir']`   | 缓存目录，php-fpm 用户需要有写权限     |
+
+   说明：这 3 个目录我们重新指定了，其中部分需要我们自己创建并指明权限
+
+5. 创建 phpmyadmin 的上传/保存目录
+
+   ```sh
+   $ mkdir -p /server/www/pma/upload
+   $ mkdir /server/www/pma/save
+   ```
+
+6. phpmyadmin 目录权限说明
+
+   | 目录                   | 所属用户 | 权限 | 是否自己创建 |
+   | ---------------------- | -------- | ---- | ------------ |
+   | /tmp/                  | root     | 777  | 系统自带     |
+   | /server/www/pma        | root     | 550  | 自己创建     |
+   | /server/www/pma/upload | www      | 750  | 自己创建     |
+   | /server/www/pma/save   | www      | 770  | 自己创建     |
+
+   ```sh
+   $ chown root:root /server/www/pma/
+   $ chown www:www /server/www/pma/save/
+   $ chown www:www /server/www/pma/upload/
+   $ chown chmod 550 /server/www/pma/
+   $ chown chmod 750 /server/www/upload/
+   $ chown chmod 770 /server/www/save/
+   ```
 
 ### 默认站点 —— nginx 配置
 

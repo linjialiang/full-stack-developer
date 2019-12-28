@@ -63,7 +63,7 @@ $ composer update
 
     > 简洁的 config.inc.php 案例：
 
-    ```php
+    ```text
     <?php
     # 短语密码,cookie认证时不能为空，大于32为佳
     $cfg['blowfish_secret'] = 'fvNqC4^HR8WELJ7$C5UD2a&xk6w@Rfr4M(MBU';
@@ -78,7 +78,8 @@ $ composer update
     $cfg['SaveDir'] = '';
     # 设置主题
     $cfg['ThemeDefault'] = 'original';
-    ?>
+    # phpMyAdmin缓存目录，用于模板文件
+    # $cfg['TempDir'] = '/tmp'
     ```
 
 4.  提示部分功能未启用的解决方法
