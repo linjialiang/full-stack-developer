@@ -94,7 +94,7 @@ expire_logs_days            = 30
 
    ```cmd
    > cd c:\wamp\base\mariadb\bin
-   > mysql_install_db.exe --datadir=c:/wamp/web/data --password=123456
+   > mysql_install_db.exe --service=mysqld --datadir=c:/wamp/web/data --password=123456 --skip-networking --socket=mysqld.sock
    ```
 
    > 便捷操作：
