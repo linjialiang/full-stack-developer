@@ -217,9 +217,9 @@
 
    > 提示：如果两者的版本号不一致，imagick 扩展就不能正常运行！
 
-## 四、安装 PRCL 扩展 —— `zlib`
+## 四、安装内置扩展 —— `zlib`
 
-在安装 composer 时提示需要启用此扩展，否则 composer 速度大大降低
+在安装 composer 时提示需要启用此扩展，否则 composer 速度降低
 
 1. 安装过程：
 
@@ -236,5 +236,80 @@
    ```
 
 2. 加入 php.ini 文件：
+
+   具体操作请参考前面的 [imagick 扩展](#imagick-config)
+
+## 五、安装内置扩展 —— `ftp`
+
+composer 安装 thinkphp 6.0.1 时，提示需要此扩展（其实不用管它，用到再安装即可）
+
+1. 安装过程
+
+   ```sh
+   $ cd /package/php-7.4.1/ext/ftp/
+   $ phpize
+   $ mkdir ftp_bulid
+   $ cd ftp_bulid/
+   $ ../configure
+   $ make -j4
+   $ make test
+   $ make install
+   ```
+
+2. 加入 php.ini 文件：
+
+   具体操作请参考前面的 [imagick 扩展](#imagick-config)
+
+## 六、安装内置扩展 —— `intl`
+
+composer 安装 thinkphp 6.0.1 时，提示需要此扩展
+
+1. 安装过程
+
+   ```sh
+   $ cd /package/php-7.4.1/ext/intl/
+   $ phpize
+   $ mkdir intl_bulid
+   $ cd intl_bulid/
+   $ ../configure
+   $ make -j4
+   $ make test
+   $ make install
+   ```
+
+2. 加入 php.ini 文件：
+
+   具体操作请参考前面的 [imagick 扩展](#imagick-config)
+
+## 七、安装 PRCL 扩展 —— `redis`
+
+composer 安装 thinkphp 6.0.1 时，提示需要此扩展
+
+1. 下载 php_redis
+
+   | 步骤     | 具体操作                           |
+   | -------- | ---------------------------------- |
+   | 下载地址 | https://pecl.php.net/package/redis |
+
+   ```sh
+   $ cd /package/ext/
+   $ wget https://pecl.php.net/get/redis-5.1.1.tgz
+   $ tar -xzvf redis-5.1.1.tgz
+   ```
+
+2. 安装过程
+
+   ```sh
+   $ cd /package/ext/redis-5.1.1
+   $ phpize
+   $ mkdir redis_bulid
+   $ cd redis_bulid/
+   $ ../configure
+   $ make -j4
+   $ make test
+   $ make install
+   ```
+
+3. 加入 php.ini 文件：
 
    具体操作请参考前面的 [imagick 扩展](#imagick-config)
