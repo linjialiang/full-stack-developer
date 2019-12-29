@@ -8,12 +8,26 @@ my.ini 是 mariadb 配置文件，我们在 mariadb 根目录上创建 my.ini，
 
 ```ini
 [client]
-port = 3306
-plugin-dir=c:/wamp/base/mariadb/lib/plugin
+port                        = 3306
+plugin-dir                  = c:/wamp/base/mariadb/lib/plugin
 
 [mysqld]
-port = 3306
-datadir = "c:/wamp/web/data"
+port                        = 3306
+datadir                     = c:/wamp/web/data
+pid-file                    = c:/wamp/base/conf/mariadb.pid
+
+skip-external-locking
+bind-address                = 127.0.0.1
+
+general_log                 = 0
+log_error                   = c:/wamp/web/logs/mariadb/err.log
+log_warnings                = 0
+slow_query_log              = 0
+
+log_bin                     = c:/wamp/web/data/bin-log
+log_bin_index               = c:/wamp/web/data/bin-log.index
+binlog_format               = mixed
+expire_logs_days            = 30
 ```
 
 > 注意：my.ini 文件除了这些最基本配置以外，还需要开启一些日志功能，具体请查阅[MariaDB 日志篇](./../../MariaDB/01-MariaDB日志篇.md)

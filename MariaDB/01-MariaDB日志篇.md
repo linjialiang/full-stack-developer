@@ -61,7 +61,7 @@ log_error=c:/wamp/web/logs/mariadb/err.log
 
 ```ini
 [mysqld]
-log_warnings=9
+log_warnings=0
 ```
 
 ## 二进制日志
