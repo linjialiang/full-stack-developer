@@ -6,7 +6,7 @@
 
 | 最新版本 | 百度网盘地址                                    | 密码   |
 | -------- | ----------------------------------------------- | ------ |
-| `v6.0.0` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
+| `v6.3.9` | https://pan.baidu.com/s/1Tk0Aa4BVdjc5YkP-FEDTeA | `r1yd` |
 
 ## 软件列表
 
@@ -99,14 +99,13 @@ WAMP 开发环境目录
 
 如果大家想要偷懒，可以直接拷贝我的配置文件
 
-| 序号 | 源码参考                                                       |
-| ---- | -------------------------------------------------------------- |
-| 01   | [httpd 主配置文件](./WAMP/httpd/01-httpd主配置文件.md)         |
-| 02   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| 03   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| 04   | [httpd 自定义配置文件](./WAMP/httpd/02-httpd自定义配置文件.md) |
-| 05   | [mariadb 配置文件](./WAMP/mariadb/01-mariadb配置文件.md)       |
-| 06   | [php 配置文件](./WAMP/php/01-php配置文件.md)                   |
+| 序号 | 源码参考                                  |
+| ---- | ----------------------------------------- |
+| 01   | [主配置文件](./httpd/httpd.conf)          |
+| 02   | [自定义配置文件](./httpd/conf/httpd.conf) |
+| 03   | [httpd 站点配置](./httpd/sites.conf)      |
+| 04   | [mariadb 配置文件](./WAMP/mariadb/my.ini) |
+| 05   | [php 配置文件](./WAMP/php/php.ini)        |
 
 ## 版本说明
 
