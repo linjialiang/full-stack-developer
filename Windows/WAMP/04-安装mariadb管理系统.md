@@ -69,7 +69,7 @@ phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写�
     $cfg['UploadDir'] = '';
     $cfg['SaveDir'] = '';
     # 默认语言
-    $cfg['DefaultLang'] = 'zh';
+    $cfg['DefaultLang'] = 'zh_CN';
     # 设置主题
     $cfg['ThemeDefault'] = 'original';
     ```
@@ -96,6 +96,8 @@ phpMyAdmin 是 `MySQL/MariaDB` 最著名的管理系统，由 PHP 语言编写�
     - phpMyAdmin 需要 php 开启 mysqli 扩展
     - cookie 登陆方式默认需要用户的密码不为空（空密码登陆需要另外配置）
     ```
+
+> 提示：WAMP 上 php 扩展 xdebug 会影响 phpMyAdmin 的速度，禁用掉以后速度大大提升，但是 LNMP 下不受此影响！
 
 ## 安装 adminer
 
