@@ -89,7 +89,7 @@ $ cd /package/nginx-1.16.1
    --with-stream_ssl_preread_module \
    ```
 
-2. 用于部署环境则不需要如下构建选项：
+2. 部署环境不建议添加的构建选项：
 
    ```sh
    --with-debug
