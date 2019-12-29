@@ -4,40 +4,16 @@ mariadb 这里只做最简单的配置，帮助新手快速搭建，更加高级
 
 ## 创建 my.ini 文件
 
-my.ini 是 mariadb 配置文件，我们在 mariadb 根目录上创建 my.ini，并输入以下内容
+我们可以在 MariaDB 根目录上创建 my.ini，具体内容请参考 [my.ini](./MariaDB/my.ini)
 
-```ini
-[client]
-port                        = 3306
-plugin-dir                  = c:/wamp/base/mariadb/lib/plugin
+- 其他说明
 
-[mysqld]
-port                        = 3306
-datadir                     = c:/wamp/web/data
-pid-file                    = c:/wamp/base/conf/mariadb.pid
+  | 序号 | 描述                                                       |
+  | ---- | ---------------------------------------------------------- |
+  | 01   | `innodb` 索引扩展默认会跟 `datadir` 同级，如无必要不用配置 |
+  | 02   | data 目录复制到`datadir`参数指定的路径下                   |
 
-skip-external-locking
-bind-address                = 127.0.0.1
-
-general_log                 = 0
-log_error                   = c:/wamp/web/logs/mariadb/err.log
-log_warnings                = 0
-slow_query_log              = 0
-
-log_bin                     = c:/wamp/web/data/bin-log
-log_bin_index               = c:/wamp/web/data/bin-log.index
-binlog_format               = mixed
-expire_logs_days            = 30
-```
-
-> 注意：my.ini 文件除了这些最基本配置以外，还需要开启一些日志功能，具体请查阅[MariaDB 日志篇](./../../MariaDB/01-MariaDB日志篇.md)
-
-### 其他说明
-
-| 序号 | 描述                                                       |
-| ---- | ---------------------------------------------------------- |
-| 01   | `innodb` 索引扩展默认会跟 `datadir` 同级，如无必要不用配置 |
-| 02   | data 目录复制到`datadir`参数指定的路径下                   |
+> 注意：管理 my.ini 下的日志配置，请查阅[MariaDB 日志篇](./../../MariaDB/01-MariaDB日志篇.md)
 
 ## 配置文件路径
 
@@ -62,42 +38,44 @@ expire_logs_days            = 30
 
 ## 初始化 mariadb 数据
 
-> 初始化 `mariadb数据库存放目录的数据` 需要如下几个步骤：
+1. 初始化 `mariadb数据库存放目录的数据` 需要如下几个步骤：
 
-| 序号 | 初始化步骤内容                                                         |
-| ---- | ---------------------------------------------------------------------- |
-| 01   | 将 data 目录内容复制到指定的 mariadb 数据库存放目录                    |
-| 02   | 打开 cmd（需管理员权限）                                               |
-| 03   | cmd 进入 mariadb 的 bin 目录                                           |
-| 04   | 查找 mariadb 配置文件 my.ini                                           |
-| 05   | 获取 mariadb 数据存放目录（一般都是命名 data）所在位置                 |
-| 06   | 开始执行初始化操作                                                     |
-| 07   | 数据存放目录的数据会被初始化                                           |
-| 08   | 使用`mysqld --initialize`指令，root 用户会生成随机密码，日志中查看密码 |
-| 09   | 使用`mysqld --initialize-insecure`指令，root 用户空密码                |
+   | 序号 | 初始化步骤内容                                                         |
+   | ---- | ---------------------------------------------------------------------- |
+   | 01   | 将 data 目录内容复制到指定的 mariadb 数据库存放目录                    |
+   | 02   | 打开 cmd（需管理员权限）                                               |
+   | 03   | cmd 进入 mariadb 的 bin 目录                                           |
+   | 04   | 查找 mariadb 配置文件 my.ini                                           |
+   | 05   | 获取 mariadb 数据存放目录（一般都是命名 data）所在位置                 |
+   | 06   | 开始执行初始化操作                                                     |
+   | 07   | 数据存放目录的数据会被初始化                                           |
+   | 08   | 使用`mysqld --initialize`指令，root 用户会生成随机密码，日志中查看密码 |
+   | 09   | 使用`mysqld --initialize-insecure`指令，root 用户空密码                |
 
-> 初始化 `mariadb数据库存放目录的数据` 相关说明
+   > 说明：新版 MariaDB 没有 --initialize 这类指令，请使用 mysql_install_db.exe
 
-| 序号 | 初始化相关问题                                    | 描述                                             |
-| ---- | ------------------------------------------------- | ------------------------------------------------ |
-| 1    | my.ini 中的数据库存放目录不是默认目录，会怎么办？ | my.ini 下自定的数据库存放目录优先                |
-| 2    | my.ini 中指定的数据库存放目录没有找到，会怎么办？ | mariadb 根目录下的数据库存放目录`data`会被初始化 |
-| 3    | 没有找到 my.ini，会怎么办？                       | mariadb 根目录下的数据库存放目录`data`会被初始化 |
+2. 初始化 `mariadb数据库存放目录的数据` 相关说明
+
+   | 序号 | 初始化相关问题                                    | 描述                                             |
+   | ---- | ------------------------------------------------- | ------------------------------------------------ |
+   | 1    | my.ini 中的数据库存放目录不是默认目录，会怎么办？ | my.ini 下自定的数据库存放目录优先                |
+   | 2    | my.ini 中指定的数据库存放目录没有找到，会怎么办？ | mariadb 根目录下的数据库存放目录`data`会被初始化 |
+   | 3    | 没有找到 my.ini，会怎么办？                       | mariadb 根目录下的数据库存放目录`data`会被初始化 |
 
 ### 创建 `datadir` 目录数据
 
 从 MariaDB 10.4 开始 datadir 目录需要开发人员自己生成。
 
-1. 生成 `datadir` 目录
+1. 生成 datadir 目录
 
-   > 可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 目录，并初始化基础数据
+   可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 目录，并初始化基础数据
 
    ```cmd
    > cd c:\wamp\base\mariadb\bin
    > mysql_install_db.exe --service=mysqld --datadir=c:/wamp/web/data --password=123456 --skip-networking --socket=mysqld.sock
    ```
 
-   > 便捷操作：
+   便捷操作：
 
    | 步骤 | 具体操作                                        |
    | ---- | ----------------------------------------------- |
@@ -172,11 +150,14 @@ expire_logs_days            = 30
 > pid 文件默认会在`datadir`目录自动生成，为了便于管理，我们可以单独指定：
 
 ```ini
+[client]
+pid-file    = c:/wamp/base/conf/mariadb.pid
+
 [mysqld]
-pid-file="c:/wamp/base/conf/mariadb.pid"
+pid-file    = c:/wamp/base/conf/mariadb.pid
 ```
 
-> 提示：需要保证目录存在，并且 `mariadb.pid` 文件不能创建！
+> 提示：需要保证目录存在，并且 `mariadb.pid` 文件不需要创建！
 
 ## 附录一：
 

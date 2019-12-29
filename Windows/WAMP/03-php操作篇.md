@@ -31,42 +31,48 @@ Windows 系统默认情况下 php 扩展的默认存放目录是 `c:\php\etc`，
 
 ### 常用扩展及其说明：
 
-| 常用扩展            | 说明                                                                           |
-| ------------------- | ------------------------------------------------------------------------------ |
-| `php_curl.dll`      | 让 php 能够连接通讯各种服务器、使用各种协议（需要开启 `php_openssl.dll` 扩展） |
-| `php_mbstring.dll`  | php 对多字节的支持（多国语言并存就意味着多字节）                               |
-| `php_mysqli.dll`    | php 对 mysql 的 mysqli 语法支持                                                |
-| `php_openssl.dll`   | php 开启对 openssl 支持                                                        |
-| `php_pdo_mysql.dll` | php 对 mysql 支持 pdo 语法支持                                                 |
-| `php_xdebug.dll`    | php 开发环境下的错误分析扩展                                                   |
-| `php_imagick.dll`   | php 下完美的图形操作扩展，需要手动添加                                         |
-| `~~php_gd2.dll~~`   | php 对图像处理的扩展                                                           |
-| `~~php_exif.dll~~`  | 让 php 可以操作图像元数据                                                      |
-| `~~php_tidy.dll~~`  | php 内置的 html 格式化/美化 tidy 函数                                          |
+| 常用扩展           | 说明                                                                           |
+| ------------------ | ------------------------------------------------------------------------------ |
+| php_curl.dll       | 让 php 能够连接通讯各种服务器、使用各种协议（需要开启 `php_openssl.dll` 扩展） |
+| php_mbstring.dll   | php 对多字节的支持（多国语言并存就意味着多字节）                               |
+| php_mysqli.dll     | php 对 mysql 的 mysqli 语法支持                                                |
+| php_openssl.dll    | php 开启对 openssl 支持                                                        |
+| php_pdo_mysql.dll  | php 对 mysql 支持 pdo 语法支持                                                 |
+| php_imagick.dll    | php 下完美的图形操作扩展，需要手动添加                                         |
+| ~~php_xdebug.dll~~ | php 开发环境下的错误分析扩展，对性能影响较大                                   |
+| ~~php_gd2.dll~~    | php 对图像处理的扩展                                                           |
+| ~~php_exif.dll~~   | 让 php 可以操作图像元数据                                                      |
+| ~~php_tidy.dll~~   | php 内置的 html 格式化/美化 tidy 函数                                          |
 
-> php 扩展写入 php.ini 格式：
+1. php 扩展写入 php.ini 格式：
 
-| 扩展文件名     | 格式 1                   | 格式 2           |
-| -------------- | ------------------------ | ---------------- |
-| `php_别名.dll` | `extension=php_别名.dll` | `extension=别名` |
+   | 扩展文件名     | 格式 1                   | 格式 2           |
+   | -------------- | ------------------------ | ---------------- |
+   | `php_别名.dll` | `extension=php_别名.dll` | `extension=别名` |
 
-> 由于 xdebug 的驱动程序与其它官方自带扩展不同，我们建议将其写在 php.ini 最下方，写法如下：
+2. xdebug 扩展说明
 
-```ini
-[Xdebug]
-zend_extension=xdebug
-xdebug.profiler_append = 0
-xdebug.profiler_enable = 1
-xdebug.profiler_enable_trigger = 0
-xdebug.profiler_output_dir ="C:\wamp\web\logs\xdebug"
-xdebug.trace_output_dir ="C:\wamp\web\logs\xdebug"
-xdebug.profiler_output_name = "cache.out.%t-%s"
-xdebug.remote_enable = 1
-xdebug.remote_autostart = 1
-xdebug.remote_handler = "dbgp"
-xdebug.remote_host = "127.0.0.1"
-xdebug.idekey= PHPSTROM
-```
+   由于 xdebug 的驱动程序与其它官方自带扩展不同，我们应写在 php.ini 最下方，写法如下：
+
+   ```ini
+   [Xdebug]
+   zend_extension=xdebug
+
+   xdebug.collect_params = 4
+   xdebug.dump_globals = 1
+   xdebug.dump_undefined = 1
+   xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
+   xdebug.gc_stats_enable = 1
+   xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
+   xdebug.profiler_enable = 1
+   xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
+
+   xdebug.remote_enable = 1
+   xdebug.remote_autostart = 1
+   xdebug.idekey = WAMP
+   xdebug.remote_host = localhost
+   xdebug.remote_port = 9000
+   ```
 
 ### php 错误提示
 
