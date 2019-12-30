@@ -165,8 +165,10 @@ php 开发必须完全掌握 composer，安装 composer 可以直接参考 [参�
 
 6. 切换全局 composer 镜像
 
+   国外的镜像总是很慢的，这里推荐大家使用 [阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
+
    ```sh
    $ composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
    ```
 
-   > 说明：国外的镜像总是很慢的，这里推荐大家使用 [阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
+   > 说明：该指令是针对 linux 当前用户的，所以每个应该都应该执行一遍该指令！
