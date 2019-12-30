@@ -243,5 +243,5 @@ $ usermod -s /bin/bash www
 $ chown www:www /server/www
 $ chmod 750 /server/www
 $ chown www:www /server/default
-$ chmod 755 /server/www
+$ chmod 755 /server/default
 ```
