@@ -243,7 +243,7 @@
 
 ## 五、安装内置扩展 —— `ftp`
 
-composer 安装 thinkphp 6.0.1 时，提示需要此扩展（其实不用管它，用到再安装即可）
+composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
 
 1. 安装过程
 
@@ -264,7 +264,7 @@ composer 安装 thinkphp 6.0.1 时，提示需要此扩展（其实不用管它�
 
 ## 六、安装内置扩展 —— `intl`
 
-composer 安装 thinkphp 6.0.1 时，提示需要此扩展
+composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
 
 1. 安装过程
 
@@ -285,7 +285,7 @@ composer 安装 thinkphp 6.0.1 时，提示需要此扩展
 
 ## 七、安装 PRCL 扩展 —— `redis`
 
-composer 安装 thinkphp 6.0.1 时，提示需要此扩展
+composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
 
 1. 下载 php_redis
 
