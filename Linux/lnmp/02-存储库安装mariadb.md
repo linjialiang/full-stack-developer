@@ -215,7 +215,19 @@ MariaDB 自带了守护进程启动方式，但是使用 Systemd 控制更加优
 
    > 注意：bind-address 无论怎么设置，shell 终端都可以登陆 MariaDB，两者无关！
 
-2. 创建远程客户端的超级管理员用户
+2. 创建允许本地客户端登陆的超级管理员用户
+
+   ```sh
+   $ service mariadb start
+   $ mysql
+   MariaDB [(none)]> create user 'admin'@'localhost' identified by '123456';
+   MariaDB [(none)]> grant all privileges on *.* to 'admin'@'localhost' WITH GRANT OPTION;
+   MariaDB [(none)]> flush privileges;
+   ```
+
+   > 说明：默认 root@localhost 只允许 linux 的 root 用户登陆
+
+3. 创建允许远程客户端登陆的超级管理员用户
 
    ```sh
    $ service mariadb start
