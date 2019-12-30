@@ -15,6 +15,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 | PHP 源码包      | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)    |
 | openssl 依赖库  | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/) |
 | curl 依赖库     | [curl-7.67.0.tar.gz](https://curl.haxx.se/download.html) |
+| zlib 依赖库     | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz) |
 
 1. 安装 Nginx 必备开发库
 
@@ -51,26 +52,28 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    --with-pdo-mysql \
    --with-mysql-sock=/server/run/mariadb/mysqld.sock \
    --with-curl=/package/pkg/curl-7.67.0 \
+   --with-zlib=/package/pkg/zlib-1.2.11 \
    --without-sqlite3 \
    --without-pdo-sqlite
    ```
 
 3. 构建选项说明
 
-   | 构建选项             | 描述                                         |
-   | -------------------- | -------------------------------------------- |
-   | --prefix=            | 指定 php 安装路径                            |
-   | --enable-fpm         | 构建 php-fpm 服务                            |
-   | --enable-mbstring    | 构建 mbstring 扩展                           |
-   | --with-openssl=      | 构建 openssl 扩展                            |
-   | --with-pcre-jit      | 正则支持 jit 编译器                          |
-   | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动） |
-   | --with-mysqli        | 构建 mysqli 扩展（默认使用 mysqlnd 驱动）    |
-   | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动） |
-   | --with-mysql-sock=   | 指定 MariaDB 的 socket 文件路径              |
-   | --with-curl=         | 构建 curl 扩展                               |
-   | --without-sqlite3    | 禁止构建 sqlite3 数据库系统扩展              |
-   | --without-pdo-sqlite | 禁止构建 pdo-sqlite 数据库系统扩展           |
+   | 构建选项             | 描述                                            |
+   | -------------------- | ----------------------------------------------- |
+   | --prefix=            | 指定 php 安装路径                               |
+   | --enable-fpm         | 构建 php-fpm 服务                               |
+   | --enable-mbstring    | 构建 mbstring 扩展                              |
+   | --with-openssl=      | 构建 openssl 扩展                               |
+   | --with-pcre-jit      | 正则支持 jit 编译器                             |
+   | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）    |
+   | --with-mysqli        | 构建 mysqli 扩展（默认使用 mysqlnd 驱动）       |
+   | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）    |
+   | --with-mysql-sock=   | 指定 MariaDB 的 socket 文件路径                 |
+   | --with-curl=         | 构建 curl 扩展                                  |
+   | --with-zlib=         | 构建 zlib 扩展(允许 php 透明读写 gzip 压缩文件) |
+   | --without-sqlite3    | 禁止构建 sqlite3 数据库系统扩展                 |
+   | --without-pdo-sqlite | 禁止构建 pdo-sqlite 数据库系统扩展              |
 
 4. 编译并安装
 
