@@ -159,7 +159,7 @@ Nginx 三个比较常用的配置文件示例：
 
 | 配置文件        | 路径                               |
 | --------------- | ---------------------------------- |
-| nginx.conf      | /server/nginx/con/nginx.conf       |
+| nginx.conf      | /server/nginx/conf/nginx.conf      |
 | fastcgi-tp.conf | /server/nginx/conf/fastcgi-tp.conf |
 | sites.conf      | `/server/sites/*.conf`             |
 
