@@ -181,10 +181,10 @@ MariaDB 自带了守护进程启动方式，但是使用 Systemd 控制更加优
 
    经过修改的 MariaDB 已经无法通过之前 Unit 文件来管理，需要如下修改：
 
-   | Unit 文件        | 路径                                                         |
-   | ---------------- | ------------------------------------------------------------ |
-   | 自带的 Unit 文件 | /usr/lib/systemd/system/mariadb.service                      |
-   | 可用的 Unit 文件 | 源码请查看 [mariadb.server](./source/mariadb/mariadb.server) |
+   | Unit 文件        | 路径                                                          |
+   | ---------------- | ------------------------------------------------------------- |
+   | 自带的 Unit 文件 | /usr/lib/systemd/system/mariadb.service                       |
+   | 可用的 Unit 文件 | 源码请查看 [mariadb.server](./source/mariadb/mariadb.service) |
 
    修改 MariaDB 自带的 Unit 文件，然后使用重新加载 systemd 配置：
 
