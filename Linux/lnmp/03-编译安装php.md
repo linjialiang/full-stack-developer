@@ -238,14 +238,14 @@ php-fpm 的工作进程配置文件必须创建，允许多个：
 
 ```sh
 $ cd /server/php/etc/php-fpm.d
-$ cp www.conf.default www.conf
+$ cp www.conf.default default.conf
 ```
 
 修改几个选项的值：
 
 | 选项                                  | 说明                                            |
 | ------------------------------------- | ----------------------------------------------- |
-| [www]                                 | 子进程名，通常与子进程配置文件命名相同          |
+| [default]                             | 子进程名，通常与子进程配置文件命名相同          |
 | listen = /server/run/php/php-fpm.sock | php-fpm 进程的 socket 文件                      |
 | group = nogroup                       | 默认为 nobody，但 debian 默认并没有这个用户组名 |
 | listen.owner = nobody                 | 监听用户，必须与 nginx 用户一致                 |
@@ -268,10 +268,10 @@ $ cp www.conf.default www.conf
 3. 创建 php-pfm 工作进程配置文件：
 
    ```sh
-   $ vim /server/php/etc/php-fpm.d/www.conf
+   $ vim /server/php/etc/php-fpm.d/default.conf
    ```
 
-   > 提示：具体配置信息请参考 [www.conf](./source/php/www.conf)
+   > 提示：具体配置信息请参考 [default.conf](./source/php/default.conf)
 
 ## 六、管理 php-fpm 进程
 
@@ -341,3 +341,36 @@ php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译�
    | [MySQLi]区块    | mysqli.default_socket=/server/run/mariadb/mysqld.sock    |
 
    > 提示：当然你如果不嫌麻烦，完全可以重新安装，这或许是最佳的方式！
+
+### 为单独的站点配置 php-fpm 工作进程
+
+操作跟上述创建工作进程一致，配置文件修改为： [qyadmin.conf](./source/php/qyamdin.conf)
+
+```text
+- 单独站点的 php-fpm 工作进程，可以设置单独的用户，如：www
+- 单独站点的 php-fpm 工作进程，可以设置单独的socket，如：php-fpm-qyadmin.sock
+- php-fpm 工作进程默认情况下不支持root用户
+```
+
+### 允许 php-fpm 工作进程以 root 用户运行
+
+如果某些站点需要更多的权限，比如：控制面板，就需要用到 root 权限
+
+1. 启动 php-fpm 指令
+
+   ```sh
+   $ /server/php/sbin/php-fpm --allow-to-run-as-root
+   ```
+
+2. systemd 单元文件的 `ExecStart` 参数修改为：
+
+   ```sh
+   ExecStart=/server/php/sbin/php-fpm --allow-to-run-as-root --nodaemonize --fpm-config /server/php/etc/php-fpm.conf
+   ```
+
+3. 警告：
+
+   ```text
+   - 服务器在任何时候都不应该存在允许root用户运行的web服务；
+   - 大家一定要清楚，所有使用控制面板来操作的服务器，随时都可能被别人恶意操作！
+   ```
