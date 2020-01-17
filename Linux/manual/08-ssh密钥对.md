@@ -15,31 +15,35 @@
 
 首先在服务器上制作一个密钥对。首先用密码登录到你打算使用密钥登录的账户，然后执行以下命令：
 
-1. 默认安装
+```text
+$ su tmproot
+$ cd ~
+$ ssh-keygen    <- 建立密钥对指令
+Generating public/private rsa key pair. <- 生成公钥/私钥对
+Enter file in which to save the key (/home/tmproot/.ssh/id_rsa): rsa   <- 输入保存密钥的文件名(包含路径)
+Created directory '/home/tmproot/.ssh'. <- 创建了一个目录
+Enter passphrase (empty for no passphrase): <-输入密钥锁码（空为不设置密码）
+Enter same passphrase again:    <- 再次输入密钥锁码
+Your identification has been saved in rsa.  <- 私钥文件
+Your public key has been saved in rsa.pub.  <- 公钥文件
+The key fingerprint is: <- 关键指纹
+SHA256:WxJFl5ZZLHEeBXzwNkGVcBvS5sQ1LLjY6iLhoSkjang tmproot@主机名
+The key's randomart image is:   <- 密钥随机图形
++---[RSA 2048]----+
+|         .o +@%XB|
+|         . o*+=X*|
+|        . o...*+o|
+|         o o   o.|
+|        S o      |
+|     o   =       |
+|.   + o o        |
+|o+Eo o . .       |
+|=.o   . .        |
++----[SHA256]-----+
+```
 
-    ```text
-    $ su tmproot
-    $ cd ~
-    $ ssh-keygen    <- 建立密钥对指令
-    Generating public/private rsa key pair. <- 生成公钥/私钥对
-    Enter file in which to save the key (/home/tmproot/.ssh/id_rsa):    <- 输入保存密钥的文件名(包含路径)
-    Created directory '/home/tmproot/.ssh'. <- 创建了一个目录
-    Enter passphrase (empty for no passphrase): <-输入密钥锁码（空为不设置密码）
-    Enter same passphrase again:    <- 再次输入密钥锁码
-    The key fingerprint is: <- 关键指纹
-    SHA256:qCP+6RMaxpbQdtJP2zRQh7eSU0a7OHxBPu+STvlnK1I tmproot@主机名
-    The key's randomart image is:   <- 密钥随机图形
-    +---[RSA 2048]----+
-    |       ..o+      |
-    |      . .++.     |
-    | . .   . ==.     |
-    |. + o .o*..=     |
-    | + + o.+S+o .    |
-    |  * ..o .o +E    |
-    | o.oo.    =..    |
-    | ....o   o.o. o  |
-    |  .o+.    ...+.. |
-    +----[SHA256]-----+
-    ```
+> 说明：
 
-2.
+```text
+- 密钥锁码在使用私钥时必须输入，这样就可以保护私钥不被盗用。当然，也可以留空，实现无密码登录。
+- 如果我们自己设置现在，在 root 用户的家目录中生成了一个 .ssh 的隐藏目录，内含两个密钥文件。id_rsa 为私钥，id_rsa.pub 为公钥。 
