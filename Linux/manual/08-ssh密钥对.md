@@ -243,3 +243,15 @@ SyslogFacility AUTHPRIV
 PermitRootLogin yes
 PasswordAuthentication no
 ```
+
+## 附录二：加强密钥对登陆的安全性
+
+1. 删除私钥文件
+
+   服务器上不要保留私钥文件，自己保存好私钥文件后，应该将服务器上的私钥文件删除掉。
+
+2. 限制 ip 登陆
+
+   通过防火墙等措施限制 22 端口的访问 ip
+
+关于服务器安全的更多信息，请查考[Linux 服务器安全指南](./09-Linux服务器安全指南.md)
