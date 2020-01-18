@@ -222,6 +222,12 @@ PubkeyAuthentication yes
    PasswordAuthentication no
    ```
 
+3. 重新载入 ssh 服务进程的配置
+
+   ```sh
+   service ssh reload
+   ```
+
 ## 附录一：支持密钥登录的 SSH 服务器端配置文件参考：
 
 ```text
