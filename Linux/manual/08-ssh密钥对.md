@@ -223,5 +223,15 @@ PubkeyAuthentication yes
 ## 附录一：支持密钥登录的 SSH 服务器端配置文件参考：
 
 ```text
-
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem	sftp	/usr/lib/openssh/sftp-server
+UseDNS no
+AddressFamily inet
+SyslogFacility AUTHPRIV
+PermitRootLogin yes
+PasswordAuthentication no
 ```
