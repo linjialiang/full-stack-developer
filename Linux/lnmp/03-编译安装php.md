@@ -14,7 +14,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 | libcurl4 依赖库 | libcurl4-openssl-dev                                     |
 | PHP 源码包      | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)    |
 | openssl 依赖库  | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/) |
-| curl 依赖库     | [curl-7.67.0.tar.gz](https://curl.haxx.se/download.html) |
+| curl 依赖库     | [curl-7.68.0.tar.gz](https://curl.haxx.se/download.html) |
 | zlib 依赖库     | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz) |
 
 1. 安装 Nginx 必备开发库
@@ -51,7 +51,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    --with-mysqli \
    --with-pdo-mysql \
    --with-mysql-sock=/server/run/mariadb/mysqld.sock \
-   --with-curl=/package/pkg/curl-7.67.0 \
+   --with-curl=/package/pkg/curl-7.68.0 \
    --with-zlib=/package/pkg/zlib-1.2.11 \
    --without-sqlite3 \
    --without-pdo-sqlite

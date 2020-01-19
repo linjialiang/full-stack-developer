@@ -133,7 +133,7 @@
    | imagick 必备包                                                   | 必备包说明           |
    | ---------------------------------------------------------------- | -------------------- |
    | [imagick](https://pecl.php.net/get/imagick-3.4.4.tgz)            | PHP 图片处理扩展     |
-   | [ImageMagick-7.0.9-10.tar.gz](https://imagemagick.org/download/) | php_imagick 的运行库 |
+   | [ImageMagick-7.0.9-16.tar.gz](https://imagemagick.org/download/) | php_imagick 的运行库 |
 
 ### 编译安装 ImageMagick
 
@@ -142,7 +142,7 @@
 1. 创建构建目录
 
    ```sh
-   $ cd /package/pkg/ImageMagick-7.0.9-10/
+   $ cd /package/pkg/ImageMagick-7.0.9-16/
    $ mkdir ImageMagick_bulid
    $ cd ImageMagick_bulid/
    ```
