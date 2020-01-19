@@ -30,7 +30,7 @@ LNMP 第二个要安装的是 MariaDB， 由于 MariaDB 官方对编译安装的
 2. 导入 MariaDB 源的公钥：
 
    ```sh
-   $ apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+   $ apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
    ```
 
 3. 为 MariaDB 创建专属 apt 源文件：
