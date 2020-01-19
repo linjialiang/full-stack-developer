@@ -43,9 +43,9 @@ LNMP 第二个要安装的是 MariaDB， 由于 MariaDB 官方对编译安装的
 4. `mariadb.list` 源码：
 
    ```text
-   # MariaDB 10.4 repository list - created 2019-12-23 05:59 UTC
+   # MariaDB 10.4 repository list - created 2020-01-19 05:52 UTC
    # http://downloads.mariadb.org/mariadb/repositories/
-   deb http://mirrors.tuna.tsinghua.edu.cn/mariadb/repo/10.4/debian buster main
+   deb [arch=amd64] http://mirrors.tuna.tsinghua.edu.cn/mariadb/repo/10.4/debian buster main
    deb-src http://mirrors.tuna.tsinghua.edu.cn/mariadb/repo/10.4/debian buster main
    ```
 
