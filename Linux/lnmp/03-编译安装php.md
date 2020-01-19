@@ -306,7 +306,7 @@ php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译�
    $ cp ./php-fpm.service /usr/lib/systemd/system/
    ```
 
-   > 注意：修改 PIDFile 路径为 `/server/run/php/php-fpm.pif`
+   > 注意：修改 PIDFile 路径为 `/server/run/php/php-fpm.pid`
 
 2. 重新载入 Systemd 服务配置
 
