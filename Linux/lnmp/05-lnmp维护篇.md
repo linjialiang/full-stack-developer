@@ -154,6 +154,8 @@ MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，
 
 ## 附录一：为什么 PHP 无法使用链接 MariaDB ？
 
+### 思路一、socket 路径错误
+
 - 原因分析：
 
   ```text
@@ -169,3 +171,20 @@ MariaDB 用 apt 安装好后，自动创建了 mysql 用户及对应用户组，
   - 修改php.ini ：mysqli.default_socket=/server/run/mariadb/mariadb.sock
   - 重启 php-fpm
   ```
+
+### 思路二、socket 路径权限不足
+
+1. 要想正常启动 MariaDB 需要满足：
+
+   mysql 用户对 [socket 文件的存放目录] 具有读写权限。
+
+2. 要想 php 正常执行 MariaDB 需要满足
+
+   php-fpm 用户对 [socket 文件的存放目录] 具有读权限。
+
+3. 解决方法：
+
+   ```sh
+   $ chown mysql /server/run/mariadb/
+   $ chmod 755 /server/run/mariadb/
+   ```
