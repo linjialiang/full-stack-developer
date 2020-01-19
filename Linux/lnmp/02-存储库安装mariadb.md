@@ -33,6 +33,8 @@ LNMP 第二个要安装的是 MariaDB， 由于 MariaDB 官方对编译安装的
    $ apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
    ```
 
+   > 公钥内容请查看 `[mariadb_release_signing_key.asc](./source/mariadb/mariadb_release_signing_key.asc)`
+
 3. 为 MariaDB 创建专属 apt 源文件：
 
    ```sh
