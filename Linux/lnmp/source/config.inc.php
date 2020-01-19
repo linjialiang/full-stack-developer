@@ -18,7 +18,7 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
 # 默认语言
-    $cfg['DefaultLang'] = 'zh_CN';
+$cfg['DefaultLang'] = 'zh_CN';
 # 设置主题
 $cfg['ThemeDefault'] = 'original';
 # 缓存目录，主要用于缓存模板文件提升访问速度，注意目录权限
