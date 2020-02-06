@@ -68,11 +68,11 @@ mariadb 这里只做最简单的配置，帮助新手快速搭建，更加高级
 
 1. 生成 datadir 目录
 
-   可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 目录，并初始化基础数据
+   可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 的初始化基础数据，并指定Windows服务的名称
 
    ```cmd
    > cd c:\wamp\base\mariadb\bin
-   > mysql_install_db.exe --service=mysqld --datadir=c:/wamp/web/data --password=123456 --skip-networking --socket=mysqld.sock
+   > mysql_install_db.exe --datadir=c:/wamp/web/data --password=123456
    ```
 
    便捷操作：
