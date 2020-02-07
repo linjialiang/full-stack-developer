@@ -68,7 +68,7 @@ mariadb 这里只做最简单的配置，帮助新手快速搭建，更加高级
 
 1. 生成 datadir 目录
 
-   可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 的初始化基础数据，并指定Windows服务的名称
+   可执行程序 `mysql_install_db.exe` 用于生成 MariaDB 的 `datadir` 的初始化基础数据，并指定 Windows 服务的名称
 
    ```cmd
    > cd c:\wamp\base\mariadb\bin
@@ -147,23 +147,45 @@ mariadb 这里只做最简单的配置，帮助新手快速搭建，更加高级
 
 ## 指定 pid 文件
 
-> pid 文件默认会在`datadir`目录自动生成，为了便于管理，我们可以单独指定：
+1. pid 文件默认会在 `datadir` 目录自动生成，为了便于管理，我们可以单独指定：
 
-```ini
-[client]
-pid-file    = c:/wamp/base/conf/mariadb.pid
+   ```ini
+   [mysqld]
+   pid-file    = c:/wamp/base/conf/mariadb.pid
+   ```
 
-[mysqld]
-pid-file    = c:/wamp/base/conf/mariadb.pid
-```
+2. pid 相关说明：
 
-> 提示：需要保证目录存在，并且 `mariadb.pid` 文件不需要创建！
+   ```text
+   - 只需要保证 `c:/wamp/base/conf/` 目录存在，启动 MariaDB 时自动生成 mariadb.pid 文件！
+   - MariaDB 客户端不存在 pid-file 这个变量，即：
+        [client]、[client-mariadb]、[client-server] 这些客户端选项组下不应该出现 pid-file 选项
+   ```
 
-## 附录一：
+## 附录一：InnoDB 相关
 
-`InnoDB` 索引的 mariadb 如何拷贝数据库到另一台服务器上？
+1. 提问：`InnoDB` 索引的 mariadb 如何拷贝数据库到另一台服务器上？
 
-1. 复制数据库需要先复制 `ibdata1` 文件，再复制想要的数据库目录；
-2. 这里建议大家使用 `adminer` 等数据库管理系统将需要的数据库导出到 sql 文件，再用相同的数据库管理系统文件导入。
+   ```text
+   - 复制数据库需要先复制 ibdata1 文件，再复制想要的数据库目录；
+   - 这里建议大家使用 adminer 等数据库管理系统将需要的数据库导出到 sql 文件，再用相同的数据库管理系统文件导入。
+   ```
 
-> 到此 wamp 的 mariadb 操作篇讲解完毕，更多内容请查阅 [关系型数据库-MariaDB 篇](./../../MariaDB/README.md)
+## 附录二：socket 相关
+
+我们常见的 socket 通信方式有 `Unix domain socket` 和 `IP socket`
+
+1. 提问：`Unix domain socket` 和 `IP socket` 的区别是什么？
+
+   先来看一个使用案例，配置 php-fpm 与 Nginx 交互的 socket:
+
+   | SOCKET 类型        | Nginx 配置内容案例                              |
+   | ------------------ | ----------------------------------------------- |
+   | IP socket          | fastcgi_pass 127.0.0.1:9000                     |
+   | Unix domain socket | fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock |
+
+2. 提问：Windows 系统下 MariaDB 是否可以使用套接字通信？
+
+   MariaDB 下的 socket 通信指的是： `UNIX Domain SOCKET`，只能基于类 unix 系统，Windows 下的 MariaDB 并不支持 socket 这个变量！
+
+> 关于 MariaDB 操作的更多内容请查阅 [关系型数据库-MariaDB 篇](./../../MariaDB/README.md)
