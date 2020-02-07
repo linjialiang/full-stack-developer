@@ -194,3 +194,26 @@ $ pkill -9 nginx
 用 Systemd 来管理守护进程更方便，建议为 Nginx 添加 Systemd 单元（Unit）
 
 > 提示：单元文件配置详情，请查阅 [Systemd 实战篇](./../manual/06-systemd实战篇.md)
+
+## 七、Nginx 跨域访问支持
+
+Nginx 想要跨域只需要在 Nginx 的配置文件中配置以下参数即可：
+
+```sh
+location / {
+    add_header Access-Control-Allow-Origin *;
+    add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
+    add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
+
+    if ($request_method = 'OPTIONS') {
+        return 204;
+    }
+}
+```
+
+关于跨域的更多内容，请参考：
+
+| 序号 | 跨域参考                                         |
+| ---- | ------------------------------------------------ |
+| 01   | http://www.ruanyifeng.com/blog/2016/04/cors.html |
+| 02   | https://segmentfault.com/a/1190000012550346      |
