@@ -1,4 +1,5 @@
 "*":
+  "atom-autocomplete-caomei": {}
   "atom-beautify":
     css:
       default_beautifier: "Prettier"
@@ -22,11 +23,6 @@
     runOnSave: true
   autosave:
     enabled: true
-  "color-picker":
-    abbreviateValues: true
-    alphaChannelAlways: true
-    automaticReplace: true
-    triggerKey: "K"
   core:
     autoHideMenuBar: true
     closeDeletedFileTabs: true
@@ -36,27 +32,18 @@
     ]
     packagesWithKeymapsDisabled: [
       "git-time-machine"
-      "open-in-browser"
       "symbols-view"
       "markdown-preview-plus"
     ]
     telemetryConsent: "limited"
-    uriHandlerRegistration: "always"
-  docblockr:
-    auto_add_method_tag: true
-    c_style_block_comments: true
-    deep_indent: true
-    development_mode: true
-    extra_tags_go_after: true
-    lower_case_primitives: true
-    newline_after_block: true
-    override_js_var: true
-    per_section_indent: true
-    short_primitives: true
-  "double-tag":
-    allowEndTagSync: true
+    themes: [
+      "one-light-ui"
+      "one-dark-syntax"
+    ]
+    uriHandlerRegistration: "never"
   editor:
     fontFamily: "'Fira Code', '思源黑体 CN'"
+    fontSize: 15
     showIndentGuide: true
     showInvisibles: true
     tabLength: 4
@@ -85,11 +72,10 @@
     tabCloseButton: "Left"
     tabSizing: "Maximum"
   "one-light-ui":
+    hideDockButtons: true
+    stickyHeaders: true
     tabCloseButton: "Left"
     tabSizing: "Maximum"
-  "php-ide-serenata":
-    core: {}
-    storagePath: "C:\\Users\\emad\\AppData\\Roaming\\php-ide-serenata"
   "platformio-ide-terminal":
     ansiColors:
       zBright:
@@ -111,11 +97,13 @@
   "spell-check":
     useLocales: false
   "sync-settings":
-    _lastBackupHash: ""
     gistId: ""
+    hiddenSettings:
+      _lastBackupHash: ""
     personalAccessToken: ""
     quietUpdateCheck: true
     removeObsoletePackages: true
+  "tree-view": {}
   "tree-view-git-status":
     gitFlow:
       display_type: 2

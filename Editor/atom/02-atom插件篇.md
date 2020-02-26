@@ -4,10 +4,9 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 ## atom 插件扩展
 
-| 实用插件(11)            | 插件描述          |
+| 实用插件(10)            | 插件描述          |
 | ----------------------- | ----------------- |
 | atom-beautify           | 格式化源代码      |
-| docblockr               | 用于注释          |
 | sync-settings           | atom 配置同步插件 |
 | split-diff              | 文件对比插件      |
 | project-manager         | 项目管理          |
@@ -37,13 +36,6 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 | language-nginx  | nginx 配置文件语法高亮  |
 | language-ini    | ini 扩展文件语法高亮    |
 | language-notenv | .env 扩展文件语法高亮   |
-
-| html 相关插件(4) | 插件描述                  |
-| ---------------- | ------------------------- |
-| autoprefixer     | css3 后缀自动完成         |
-| open-in-browser  | html 页面从默认浏览器打开 |
-| color-picker     | 颜色选择                  |
-| double-tag       | html 标签同步修改         |
 
 | vim 相关插件(3)  | 插件描述                   |
 | ---------------- | -------------------------- |
