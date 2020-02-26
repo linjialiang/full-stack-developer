@@ -5,7 +5,7 @@
       default_beautifier: "Prettier"
     executables:
       "php-cs-fixer":
-        path: "C:\\Users\\emad\\.atom\\php-cs-fixer-v2.phar"
+        path: "C:\\Users\\emad\\.atom\\php-cs-fixer-v2.16.1.phar"
     general:
       _analyticsUserId: ""
     html:
