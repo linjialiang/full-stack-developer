@@ -23,7 +23,7 @@
    `-exec` 会多次执行 `tar` 指令，应该采用增量打包（压缩不支持增量操作）
 
    ```sh
-   $ cd /alidata/www/jjz_aji/zj_wz
+   $ cd /alidata/www/jjz_aji/zj_wz/
    $ find cnrhyy -type d -name "zt" -exec tar -rvf cnrhyy_zt.tar {} \;
    $ tar -czvf cnrhyy_zt.tar.gz cnrhyy_zt.tar
    ```
@@ -33,6 +33,6 @@
    使用 `xargs` 指令，`tar` 指令只会执行（`xargs` 会将打印出来的换行符等空白符转成空格）
 
    ```sh
-   $ cd /alidata/www/jjz_aji/zj_wz
+   $ cd /alidata/www/jjz_aji/zj_wz/
    $ find cnrhyy -type d -name "zt" | xargs tar -czvf cnrhyy_zt.tar.gz
    ```
