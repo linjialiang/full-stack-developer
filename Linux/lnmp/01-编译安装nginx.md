@@ -145,11 +145,13 @@ $ make install
 
 Nginx 三个比较常用的配置文件示例：
 
-| 配置文件                                          | 描述               | 具体操作     |
-| ------------------------------------------------- | ------------------ | ------------ |
-| [nginx.conf](./source/nginx/nginx.conf)           | nginx 主配置文件   | 替换         |
-| [fastcgi-tp.conf](./source/nginx/fastcgi-tp.conf) | `tp6` 基本配置项   | 新增         |
-| [sites.conf](./source/nginx/sites.conf)           | `tp6` 站点配置模版 | 按需新建多个 |
+| 配置文件                                              | 描述                         | 具体操作     |
+| ----------------------------------------------------- | ---------------------------- | ------------ |
+| [nginx.conf](./source/nginx/nginx.conf)               | nginx 主配置文件             | 替换         |
+| [fastcgi-tp.conf](./source/nginx/fastcgi-tp.conf)     | `tp6` 基本配置项             | 新增         |
+| [tp-sites.conf](./source/nginx/tp-sites.conf)         | `tp6` 站点配置模版           | 按需新建多个 |
+| [static-sites.conf](./source/nginx/static-sites.conf) | 静态站点配置模版             | 按需新建多个 |
+| [public-sites.conf](./source/nginx/public-sites.conf) | 静态站点配置模版（涉及跨域） | 按需新建多个 |
 
 - 关于 Nginx 错误日志
 
