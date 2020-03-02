@@ -30,7 +30,7 @@
 
 2. 使用 `xargs` 指令
 
-   使用 `xargs` 指令，`tar` 指令只会执行，`xargs` 会将打印出来的 `换行/空白` 转成空格
+   使用 `xargs` 指令，`tar` 指令只会执行（`xargs` 会将打印出来的换行符等空白符转成空格）
 
    ```sh
    $ cd /alidata/www/jjz_aji/zj_wz
