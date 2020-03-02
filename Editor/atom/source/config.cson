@@ -99,7 +99,8 @@
   "sync-settings":
     gistId: ""
     hiddenSettings:
-      _lastBackupHash: ""
+      _lastBackupTime: ""
+    installLatestVersion: true
     personalAccessToken: ""
     quietUpdateCheck: true
     removeObsoletePackages: true
