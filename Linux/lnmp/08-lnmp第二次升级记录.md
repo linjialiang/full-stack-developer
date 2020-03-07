@@ -101,6 +101,8 @@ $ apt upgrade
    $ make install
    ```
 
+   > 提示：测试 `--with-curl=/package/pkg/curl-7.69.0` 无效
+
 2. 配置 php.ini 文件
 
    ```sh
