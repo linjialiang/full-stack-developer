@@ -156,6 +156,8 @@ $ cd /package/lnmp/nginx-1.16.1
 $ cp -p -r /package/lnmp/nginx-1.16.1/nginx_bulid/nginx /server/nginx/sbin/
 ```
 
+> 提示：实测，该步骤在编译安装时会自动完成的，所以一般可以省略。
+
 ### 查看当前的 Nginx 版本
 
 ```sh
@@ -215,6 +217,7 @@ configure arguments: --prefix=/server/nginx --builddir=/package/lnmp/nginx-1.16.
 3. 使用 ps 查看当前 Nginx 的进程 id：
 
    ```sh
+   $ ps -ef|grep nginx
    root     13170 28576  0 12:04 ?        00:00:00 nginx: master process /server/nginx/sbin/nginx
    nginx    13171 13170  0 12:04 ?        00:00:00 nginx: worker process
    nginx    13172 13170  0 12:04 ?        00:00:00 nginx: worker process
