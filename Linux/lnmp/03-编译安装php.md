@@ -6,18 +6,16 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 
 编译 PHP 需要的准备好的软件包：
 
-| 必备            | 操作                                                  |
-| --------------- | ----------------------------------------------------- |
-| libxml2 依赖库  | libxml2-dev                                           |
-| libssl 依赖库   | libssl-dev                                            |
-| libonig 依赖库  | libonig-dev                                           |
-| libcurl4 依赖库 | libcurl4-openssl-dev                                  |
-| PHP 源码包      | [php-7.4.1.tar.gz](https://www.php.net/downloads.php) |
+| 必备           | 操作                                                  |
+| -------------- | ----------------------------------------------------- |
+| libxml2 依赖库 | libxml2-dev                                           |
+| libonig 依赖库 | libonig-dev                                           |
+| PHP 源码包     | [php-7.4.3.tar.gz](https://www.php.net/downloads.php) |
 
 1. 安装 php 必备开发库
 
    ```sh
-   $ apt install libxml2-dev libssl-dev libonig-dev libcurl4-openssl-dev
+   $ apt install libxml2-dev libonig-dev
    ```
 
    > 提示：使用 `./configure` 指令构建时，会提示缺失的依赖包相关信息！
@@ -42,11 +40,12 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    $ ../configure --prefix=/server/php \
    --enable-fpm \
    --enable-mbstring \
+   --with-zlib \
    --with-pcre-jit \
    --enable-mysqlnd \
+   --with-mysqli \
    --with-pdo-mysql \
    --with-mysql-sock=/server/run/mariadb/mysqld.sock \
-   --with-zlib \
    --without-sqlite3 \
    --without-pdo-sqlite
    ```
@@ -58,15 +57,28 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    | --prefix=            | 指定 php 安装路径                               |
    | --enable-fpm         | 构建 php-fpm 服务                               |
    | --enable-mbstring    | 构建 mbstring 扩展                              |
+   | --with-zlib          | 构建 zlib 扩展(允许 php 透明读写 gzip 压缩文件) |
    | --with-pcre-jit      | 正则支持 jit 编译器                             |
    | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）    |
+   | --with-mysqli        | 指定 mysqli 扩展（默认使用 mysqlnd 驱动）       |
    | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）    |
    | --with-mysql-sock=   | 指定 MariaDB 的 socket 文件路径                 |
-   | --with-zlib          | 构建 zlib 扩展(允许 php 透明读写 gzip 压缩文件) |
    | --without-sqlite3    | 禁止构建 sqlite3 数据库系统扩展                 |
    | --without-pdo-sqlite | 禁止构建 pdo-sqlite 数据库系统扩展              |
 
-4. 编译并安装
+4. 编译 php 涉及的扩展说明
+
+   编译 php 过程中安装的扩展我们称为静态扩展，效率上比较高，但不能禁用（动态扩展可以禁用）。
+
+   | 静态扩展  | 扩展描述                                 | 扩展所属分类                       |
+   | --------- | ---------------------------------------- | ---------------------------------- |
+   | mbstring  | 让 php 支持处理多字节字符串              | 捆绑扩展，不需要其它依赖项         |
+   | zlib      | 允许 php 透明读写 gzip 压缩文件的扩展    | 捆绑扩展，不需要其它依赖项         |
+   | mysqlnd   | 为 php 写的 MySQL/MariaDB 连接器         | 外部扩展，不需要其它依赖项         |
+   | mysqli    | php 处理 MySQL/MariaDB 最快的扩展        | 外部扩展，需要先安装 MySQL/MariaDB |
+   | pdo-mysql | php 使用 PDO 来处理 MySQL/MariaDB 的扩展 | 外部扩展，需要先安装 MySQL/MariaDB |
+
+5. 编译并安装
 
    ```sh
    $ make -j4
