@@ -86,14 +86,10 @@ $ apt upgrade
    $ ../configure --prefix=/server/php \
    --enable-fpm \
    --enable-mbstring \
-   --with-openssl=/package/pkg/openssl-1.1.1d \
    --with-pcre-jit \
    --enable-mysqlnd \
-   --with-mysqli \
    --with-pdo-mysql \
    --with-mysql-sock=/server/run/mariadb/mysqld.sock \
-   --with-curl=/package/pkg/curl-7.69.0 \
-   --with-zlib=/package/pkg/zlib-1.2.11 \
    --without-sqlite3 \
    --without-pdo-sqlite
    $ make -j4

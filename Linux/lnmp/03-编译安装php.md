@@ -6,18 +6,15 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 
 编译 PHP 需要的准备好的软件包：
 
-| 必备            | 操作                                                     |
-| --------------- | -------------------------------------------------------- |
-| libxml2 依赖库  | libxml2-dev                                              |
-| libssl 依赖库   | libssl-dev                                               |
-| libonig 依赖库  | libonig-dev                                              |
-| libcurl4 依赖库 | libcurl4-openssl-dev                                     |
-| PHP 源码包      | [php-7.4.1.tar.gz](https://www.php.net/downloads.php)    |
-| openssl 依赖库  | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/) |
-| curl 依赖库     | [curl-7.68.0.tar.gz](https://curl.haxx.se/download.html) |
-| zlib 依赖库     | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz) |
+| 必备            | 操作                                                  |
+| --------------- | ----------------------------------------------------- |
+| libxml2 依赖库  | libxml2-dev                                           |
+| libssl 依赖库   | libssl-dev                                            |
+| libonig 依赖库  | libonig-dev                                           |
+| libcurl4 依赖库 | libcurl4-openssl-dev                                  |
+| PHP 源码包      | [php-7.4.1.tar.gz](https://www.php.net/downloads.php) |
 
-1. 安装 Nginx 必备开发库
+1. 安装 php 必备开发库
 
    ```sh
    $ apt install libxml2-dev libssl-dev libonig-dev libcurl4-openssl-dev
@@ -28,7 +25,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 2. 创建 Nginx 构建目录
 
    ```sh
-   $ mkdir /package/php-7.4.1/php_bulid
+   $ mkdir /package/php-7.4.3/php_bulid
    ```
 
 ## 二、编译安装
@@ -36,7 +33,7 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
 1. 进入构建路径
 
    ```sh
-   $ cd /package/php-7.4.1/php_bulid
+   $ cd /package/php-7.4.3/php_bulid
    ```
 
 2. php 构建选项：
@@ -45,14 +42,11 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    $ ../configure --prefix=/server/php \
    --enable-fpm \
    --enable-mbstring \
-   --with-openssl=/package/pkg/openssl-1.1.1d \
    --with-pcre-jit \
    --enable-mysqlnd \
-   --with-mysqli \
    --with-pdo-mysql \
    --with-mysql-sock=/server/run/mariadb/mysqld.sock \
-   --with-curl=/package/pkg/curl-7.68.0 \
-   --with-zlib=/package/pkg/zlib-1.2.11 \
+   --with-zlib \
    --without-sqlite3 \
    --without-pdo-sqlite
    ```
@@ -64,14 +58,11 @@ PHP 是处理 php 脚本的解释器，服务器安装了 MariaDB 后就可以�
    | --prefix=            | 指定 php 安装路径                               |
    | --enable-fpm         | 构建 php-fpm 服务                               |
    | --enable-mbstring    | 构建 mbstring 扩展                              |
-   | --with-openssl=      | 构建 openssl 扩展                               |
    | --with-pcre-jit      | 正则支持 jit 编译器                             |
    | --enable-mysqlnd     | 构建 mysqlnd 扩展（php 官方写的 mysql 驱动）    |
-   | --with-mysqli        | 构建 mysqli 扩展（默认使用 mysqlnd 驱动）       |
    | --with-pdo-mysql     | 构建 pdo-mysql 扩展（默认使用 mysqlnd 驱动）    |
    | --with-mysql-sock=   | 指定 MariaDB 的 socket 文件路径                 |
-   | --with-curl=         | 构建 curl 扩展                                  |
-   | --with-zlib=         | 构建 zlib 扩展(允许 php 透明读写 gzip 压缩文件) |
+   | --with-zlib          | 构建 zlib 扩展(允许 php 透明读写 gzip 压缩文件) |
    | --without-sqlite3    | 禁止构建 sqlite3 数据库系统扩展                 |
    | --without-pdo-sqlite | 禁止构建 pdo-sqlite 数据库系统扩展              |
 

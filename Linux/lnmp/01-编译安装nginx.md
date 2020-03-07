@@ -12,7 +12,7 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
 | geoip 开发库   | libgeoip-dev                                             |
 | Nginx 源码包   | [nginx-1.16.1.tar.gz](http://nginx.org/en/download.html) |
 | openssl 依赖库 | [openssl-1.1.1d.tar.gz](https://www.openssl.org/source/) |
-| pcre 依赖库    | [pcre-8.43.tar.gz](ftp://ftp.pcre.org/pub/pcre/)         |
+| pcre 依赖库    | [pcre-8.44.tar.gz](ftp://ftp.pcre.org/pub/pcre/)         |
 | zlib 依赖库    | [zlib-1.2.11.tar.gz](http://zlib.net/zlib-1.2.11.tar.gz) |
 
 1. 安装 Nginx 必备开发库
@@ -28,6 +28,10 @@ Nginx 是 LNMP 第一个要安装的软件包，关于 Nginx 的知识点请查�
    ```sh
    $ mkdir /package/nginx-1.16.1/nginx_bulid
    ```
+
+3. 关于依赖库问题
+
+   Nginx 的依赖库只需要正确指定其源码路径即可，nginx 编译安装是会自动编译安装这些依赖库。
 
 ## 二、编译安装
 
@@ -61,6 +65,11 @@ $ cd /package/nginx-1.16.1
 --without-http_uwsgi_module \
 --without-http_scgi_module \
 --without-http_grpc_module \
+--with-pcre=/package/pkg/pcre-8.44 \
+--with-pcre-jit \
+--with-zlib=/package/pkg/zlib-1.2.11 \
+--with-openssl=/package/pkg/openssl-1.1.1d \
+# “mail模块” 和 “stream模块” 按需选择
 --with-mail \
 --with-mail_ssl_module \
 --with-stream \
@@ -68,34 +77,12 @@ $ cd /package/nginx-1.16.1
 --with-stream_realip_module \
 --with-stream_geoip_module \
 --with-stream_ssl_preread_module \
---with-pcre=/package/pkg/pcre-8.43 \
---with-pcre-jit \
---with-zlib=/package/pkg/zlib-1.2.11 \
---with-openssl=/package/pkg/openssl-1.1.1d \
+# 部署环境不要构建debug选项
 --with-debug
 ```
 
-> 提示：添加了 `--pid-path=` 构建选项后，`nginx.conf` 文件下的 pid 参数就可有可无了！
-
-1. `mail模块` 和 `stream模块` 按需选择：
-
-   ```sh
-   --with-mail \
-   --with-mail_ssl_module \
-   --with-stream \
-   --with-stream_ssl_module \
-   --with-stream_realip_module \
-   --with-stream_geoip_module \
-   --with-stream_ssl_preread_module \
-   ```
-
-2. 部署环境不建议添加的构建选项：
-
-   ```sh
-   --with-debug
-   ```
-
-> 提示：使用 `./configure -h` 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
+    - 使用 `./configure -h` 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
+    - 添加了 `--pid-path=` 构建选项后，`nginx.conf` 文件下的 pid 参数就可有可无了！
 
 ### 编译并安装
 
