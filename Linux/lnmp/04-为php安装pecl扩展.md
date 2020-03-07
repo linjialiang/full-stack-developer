@@ -7,7 +7,9 @@ PECL 扩展是非常多的，我们需要在 [PECL 官网](https://pecl.php.net/
 | [imagick](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
 | [xdebug](https://pecl.php.net/package/xdebug)   | 用于显示 PHP 错误的扩展 |
 
-## 一、 创建 PECL 扩展源码目录
+## 一、 创建 PECL 扩展存放目录
+
+由于 PECL 扩展的源码，PHP 本身没有提供，所以我们就为所有 PECL 扩展源码包创建一个根目录
 
 ```sh
 $ mkdir -p /package/ext
@@ -18,7 +20,7 @@ $ mkdir -p /package/ext
 1. 创建构建目录
 
    ```sh
-   $ cd /package/ext/xdebug-2.9.0
+   $ cd /package/ext/xdebug-2.9.2
    $ mkdir xdebug_bulid
    ```
 
@@ -90,16 +92,16 @@ $ mkdir -p /package/ext
    | imagick 必备包                                                   | 必备包说明           |
    | ---------------------------------------------------------------- | -------------------- |
    | [imagick](https://pecl.php.net/get/imagick-3.4.4.tgz)            | PHP 图片处理扩展     |
-   | [ImageMagick-7.0.9-16.tar.gz](https://imagemagick.org/download/) | php_imagick 的运行库 |
+   | [ImageMagick-7.0.9-27.tar.gz](https://imagemagick.org/download/) | php_imagick 的运行库 |
 
-### 编译安装 ImageMagick
+### 编译安装 ImageMagick（运行库）
 
 对于 ImageMagick 我们没有特别的需求，就采用最简单的方式编译了
 
 1. 创建构建目录
 
    ```sh
-   $ cd /package/pkg/ImageMagick-7.0.9-16/
+   $ cd /package/pkg/ImageMagick-7.0.9-27/
    $ mkdir ImageMagick_bulid
    $ cd ImageMagick_bulid/
    ```
@@ -114,7 +116,7 @@ $ mkdir -p /package/ext
 
 > 提示：如果不需要最新版的运行库，也可以使用 `$ apt install imagemagick` 指令安装！
 
-### 编译安装 php_imagick
+### 编译安装 php_imagick（扩展）
 
 1. 创建构建目录
 
@@ -133,9 +135,11 @@ $ mkdir -p /package/ext
    $ make -j4
    $ make test
    $ make install
+   Installing shared extensions:     /server/php/lib/php/extensions/no-debug-non-zts-20190902/
+   Installing header files:          /server/php/include/php/
    ```
 
-   > 说明：如果 /server/php/bin 没有加入环境变量，构建时需要加上 `--with-php-config` 选项：
+   如果 `/server/php/bin` 没有加入环境变量，构建时需要加上 `--with-php-config` 选项：
 
    ```sh
    $ ../configure \
@@ -143,13 +147,13 @@ $ mkdir -p /package/ext
    --with-imagick=/server/ImageMagick
    ```
 
-3. <span id="imagick-config">php.ini 文件添加扩展信息</span>
+3. 在 PHP 配置文件(php.ini)上，启用 imagick 扩展
 
    ```sh
    $ vim /server/php/lib/php.ini
    ```
 
-   `php.ini` 第 `941行` 左右添加以下内容：
+   `php.ini` 第 `950行` 左右添加以下内容：
 
    ```ini
    extension=imagick
@@ -173,102 +177,3 @@ $ mkdir -p /package/ext
    | `Imagick using ImageMagick library version` | 服务器上 ImageMagick 作为依赖库的版本号         |
 
    > 提示：如果两者的版本号不一致，imagick 扩展就不能正常运行！
-
-## 四、安装内置扩展 —— `zlib`
-
-在安装 composer 时建议启用此扩展，可提升 composer 编译速度
-
-1. 安装过程：
-
-   ```sh
-   $ cd /package/php-7.4.1/ext/zlib/
-   $ cp config0.m4 config.m4
-   $ phpize
-   $ mkdir zlib_bulid
-   $ cd zlib_bulid/
-   $ ../configure
-   $ make -j4
-   $ make test
-   $ make install
-   ```
-
-2. 加入 php.ini 文件：
-
-   具体操作请参考前面的 [imagick 扩展](#imagick-config)
-
-> 提示：最新的 php 编译安装指令， 已经构建了静态加载的 zlib 扩展，故通常不需要动态加载的 zlib 扩展！
-
-## 五、安装内置扩展 —— `ftp`
-
-composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
-
-1. 安装过程
-
-   ```sh
-   $ cd /package/php-7.4.1/ext/ftp/
-   $ phpize
-   $ mkdir ftp_bulid
-   $ cd ftp_bulid/
-   $ ../configure
-   $ make -j4
-   $ make test
-   $ make install
-   ```
-
-2. 加入 php.ini 文件：
-
-   具体操作请参考前面的 [imagick 扩展](#imagick-config)
-
-## 六、安装内置扩展 —— `intl`
-
-composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
-
-1. 安装过程
-
-   ```sh
-   $ cd /package/php-7.4.1/ext/intl/
-   $ phpize
-   $ mkdir intl_bulid
-   $ cd intl_bulid/
-   $ ../configure
-   $ make -j4
-   $ make test
-   $ make install
-   ```
-
-2. 加入 php.ini 文件：
-
-   具体操作请参考前面的 [imagick 扩展](#imagick-config)
-
-## 七、安装 PECL 扩展 —— `redis`
-
-composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
-
-1. 下载 php_redis
-
-   | 步骤     | 具体操作                           |
-   | -------- | ---------------------------------- |
-   | 下载地址 | https://pecl.php.net/package/redis |
-
-   ```sh
-   $ cd /package/ext/
-   $ wget https://pecl.php.net/get/redis-5.1.1.tgz
-   $ tar -xzvf redis-5.1.1.tgz
-   ```
-
-2. 安装过程
-
-   ```sh
-   $ cd /package/ext/redis-5.1.1
-   $ phpize
-   $ mkdir redis_bulid
-   $ cd redis_bulid/
-   $ ../configure
-   $ make -j4
-   $ make test
-   $ make install
-   ```
-
-3. 加入 php.ini 文件：
-
-   具体操作请参考前面的 [imagick 扩展](#imagick-config)
