@@ -1,62 +1,19 @@
-# 为 PHP 安装 PRCL 扩展
+# 为 PHP 安装 PECL 扩展
 
-安装扩展的方式大同小异，下面是需要安装的两个 prcl 扩展
+PECL 扩展是非常多的，我们需要在 [PECL 官网](https://pecl.php.net/) 获得这些扩展的源码包。很多 PECL 扩展在 PHP 手册中尚未对其进行记录。
 
-| PRCL 扩展                                       | 描述                    |
+| PECL 扩展                                       | 描述                    |
 | ----------------------------------------------- | ----------------------- |
 | [imagick](https://pecl.php.net/package/imagick) | 处理图片的 PHP 扩展     |
 | [xdebug](https://pecl.php.net/package/xdebug)   | 用于显示 PHP 错误的扩展 |
 
-## 一、phpize 程序
+## 一、 创建 PECL 扩展源码目录
 
-`phpize` 可以将 PECL 扩展源码构建为可用 `./configure` 编译的源码，使用 `phpize --help` 可以查看帮助。
+```sh
+$ mkdir -p /package/ext
+```
 
-### 配置环境变量:
-
-将 php 可执行程序目录的路径加入环境变量中，可以方便后续操作
-
-1. 修改控制环境变量的文件
-
-   ```sh
-   $ cp /etc/profile{,.bak}
-   $ vim /etc/profile
-   ```
-
-2. `/etc/profile` 底部增加一行内容：
-
-   ```sh
-   export PATH=$PATH:/server/php/bin:/server/php/sbin
-   ```
-
-3. 使用 `source` 指令重新激活文件：
-
-   ```sh
-   $ source /etc/profile
-   ```
-
-### 安装配置文件前的准备工作
-
-1. 检查 PHP 配置文件是否正确加载
-
-   使用 phpize 前，需要先正确加载 PHP 配置文件（php.ini）
-
-   ```sh
-   $ php --ini
-   # 如出现如下内容则配置文件正确加载
-   Loaded Configuration File:         /server/php/lib/php.ini
-   # 如出现如下内容则配置文件未加载
-   Loaded Configuration File: (none)
-   ```
-
-   > 说明：加载 php 配置文件，请参考 [编译安装 php](./03-编译安装php.md)
-
-2. 创建 PRCL 扩展源码目录
-
-   ```sh
-   $ mkdir -p /package/ext
-   ```
-
-## 二、安装 PRCL 扩展 —— `Xdebug`
+## 二、安装 PECL 扩展 —— `Xdebug`
 
 1. 创建构建目录
 
@@ -117,7 +74,7 @@
    $ mkdir -p /logs/php/xdebug
    ```
 
-## 三、安装 PRCL 扩展 —— `imagick`
+## 三、安装 PECL 扩展 —— `imagick`
 
 安装 `imagick` 扩展之前，需要先编译安装它的运行库 `ImageMagick`
 
@@ -283,7 +240,7 @@ composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此�
 
    具体操作请参考前面的 [imagick 扩展](#imagick-config)
 
-## 七、安装 PRCL 扩展 —— `redis`
+## 七、安装 PECL 扩展 —— `redis`
 
 composer 安装 thinkphp 6.0.1 时，建议安装此扩展（项目有用到此扩展再安装）
 

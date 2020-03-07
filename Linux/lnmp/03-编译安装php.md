@@ -183,7 +183,7 @@ PHP 扩展分为静态扩展和动态扩展两类：
 
 > 提示：如果某个扩展既是 `静态扩展` 又启用了 `动态扩展`，以 `静态扩展` 方式优先!
 
-### 安装动态扩展
+### 1、安装动态扩展
 
 PHP 动态扩展库的具体安装方法请查阅：
 
@@ -193,7 +193,7 @@ PHP 动态扩展库的具体安装方法请查阅：
 | 捆绑扩展  | [为 PHP 安装捆绑扩展](./04-为php安装捆绑扩展.md)   |
 | 外部扩展  | [为 PHP 安装外部扩展](./04-为php安装外部扩展.md)   |
 
-### 启用 php 动态扩展
+### 2、启用 php 动态扩展
 
 动态扩展由 php 配置文件来控制，php 配置文件一般指的就是 `php.ini`
 
@@ -203,6 +203,53 @@ PHP 动态扩展库的具体安装方法请查阅：
 | 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` 内容 |
 
 > 提示：有些动态库是依赖 `zend` 扩展的，这时候就需要使用 `zend_extension=<库名>` 才能生效，比如：`xdebug` 扩展！
+
+### 3、phpize 程序说明
+
+`phpize` 可以将 php 扩展源码构建为可用 `./configure` 编译的代码，使用 `phpize --help` 可以查看帮助。
+
+### 4、配置环境变量
+
+将 php 可执行程序目录的路径加入环境变量中，可以方便后续操作
+
+1. 修改控制环境变量的文件
+
+   ```sh
+   $ cp /etc/profile{,.bak}
+   $ vim /etc/profile
+   ```
+
+2. `/etc/profile` 底部增加一行内容：
+
+   ```sh
+   export PATH=$PATH:/server/php/bin:/server/php/sbin
+   ```
+
+3. 使用 `source` 指令重新激活文件：
+
+   ```sh
+   $ source /etc/profile
+   ```
+
+### 5、检查 PHP 配置文件是否正确加载
+
+使用 phpize 前，需要先正确加载 PHP 配置文件（php.ini）
+
+1. 如出现类似如下内容，则配置文件正确加载：
+
+   ```sh
+   $ php --ini
+   Loaded Configuration File:         /server/php/lib/php.ini
+   ```
+
+2. 如出现类似如下内容，则配置文件未加载
+
+   ```sh
+   $ php --ini
+   Loaded Configuration File: (none)
+   ```
+
+> 说明：加载 php 配置文件，请参考 [编译安装 php](./03-编译安装php.md)
 
 ## 五、配置 php-fpm 服务
 
