@@ -81,8 +81,8 @@ $ cd /package/nginx-1.16.1
 --with-debug
 ```
 
-    - 使用 `./configure -h` 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
-    - 添加了 `--pid-path=` 构建选项后，`nginx.conf` 文件下的 pid 参数就可有可无了！
+- 使用 ./configure -h 可获取所有构建选项，上述各种指令的具体介绍，请查阅 [从源代码构建 Nginx](./../../Nginx/01-从源代码构建nginx.md)
+- 添加了 --pid-path= 构建选项后，nginx.conf 文件下的 pid 参数就可有可无了！
 
 ### 编译并安装
 

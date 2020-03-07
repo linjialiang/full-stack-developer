@@ -119,8 +119,8 @@ $ /server/php/bin/php-config -h
 
 | 配置文件模版 | 路径                                   |
 | ------------ | -------------------------------------- |
-| 开发环境推荐 | /package/php-7.4.1/php.ini-development |
-| 部署环境推荐 | /package/php-7.4.1/php.ini-production  |
+| 开发环境推荐 | /package/php-7.4.3/php.ini-development |
+| 部署环境推荐 | /package/php-7.4.3/php.ini-production  |
 
 1. 查询 php 配置文件的存放路径
 
@@ -149,10 +149,13 @@ $ /server/php/bin/php-config -h
 2. 拷贝配置文件模版到 /server/php/lib 目录下：
 
    ```sh
-   $ cp /package/php-7.4.1/php.ini-development /server/php/lib/php.ini
+   # 开发环境
+   $ cp /package/php-7.4.3/php.ini-development /server/php/lib/php.ini
+   # 部署环境
+   $ cp /package/php-7.4.3/php.ini-production /server/php/lib/php.ini
    ```
 
-3. 查询 php.ini 配置文件是否呗加载
+3. 查询 php.ini 配置文件是否加载
 
    ```sh
    $ /server/php/bin/php --ini
@@ -173,23 +176,33 @@ $ /server/php/bin/php-config -h
 
 PHP 扩展分为静态扩展和动态扩展两类：
 
-| 扩展类型 | 扩展类型说明                       | 操作方式                    |
-| -------- | ---------------------------------- | --------------------------- |
-| 静态扩展 | 编译安装 PHP 时，一起安装的扩展    | 只能通过重新编译 PHP 来修改 |
-| 动态扩展 | 使用 `phpize` 编译安装的 PECL 扩展 | 通过操作 `php.ini` 来控制   |
+| 扩展类型 | 扩展类型说明                     | 操作方式                              |
+| -------- | -------------------------------- | ------------------------------------- |
+| 静态扩展 | 编译安装 PHP 时，一起安装的扩展  | 只能通过重新编译 PHP 来禁用扩展       |
+| 动态扩展 | php 编译成功后，再独立安装的扩展 | 通过 `php.ini` 配置文件来 `禁用/启用` |
 
-> 提示：php 源码自带的扩展库，支持静态安装和动态安装，如果两个都安装了，默认以静态扩展方式优先!
+> 提示：如果某个扩展既是 `静态扩展` 又启用了 `动态扩展`，以 `静态扩展` 方式优先!
 
-- 动态库操作：
+### 安装动态扩展
 
-  PHP 动态扩展库的具体安装方法请查阅[为 PHP 安装 PECL 扩展](./04-为php安装pecl扩展.md)
+PHP 动态扩展库的具体安装方法请查阅：
 
-  | 操作       | 案例                                               |
-  | ---------- | -------------------------------------------------- |
-  | 开启动态库 | `php.ini` 文件里添加 `extension=<库名>`            |
-  | 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` 内容 |
+| 扩展分类  | 动态扩展安装说明                                   |
+| --------- | -------------------------------------------------- |
+| PECL 扩展 | [为 PHP 安装 PECL 扩展](./04-为php安装pecl扩展.md) |
+| 捆绑扩展  | [为 PHP 安装捆绑扩展](./04-为php安装捆绑扩展.md)   |
+| 外部扩展  | [为 PHP 安装外部扩展](./04-为php安装外部扩展.md)   |
 
-  > 提示：有些动态库是 `zend` 扩展库，需要使用 `zend_extension=<库名>` 开启，才能生效！
+### 启用 php 动态扩展
+
+动态扩展由 php 配置文件来控制，php 配置文件一般指的就是 `php.ini`
+
+| 操作       | 案例                                               |
+| ---------- | -------------------------------------------------- |
+| 开启动态库 | `php.ini` 文件里添加 `extension=<库名>`            |
+| 禁用动态库 | `php.ini` 文件里删除指定的 `extension=<库名>` 内容 |
+
+> 提示：有些动态库是依赖 `zend` 扩展的，这时候就需要使用 `zend_extension=<库名>` 才能生效，比如：`xdebug` 扩展！
 
 ## 五、配置 php-fpm 服务
 
@@ -298,14 +311,14 @@ php 在编译时如果选择安装 php-fpm(--enable-fpm 构建选项)，编译�
 | ----------- | ----------------------------------------------- |
 | Unit 文件   | [php-fpm.service](./source/php/php-fpm.service) |
 | init.d 文件 | init.d.php-fpm                                  |
-| 脚本目录    | /package/php-7.4.1/php_bulid/sapi/fpm           |
+| 脚本目录    | /package/php-7.4.3/php_bulid/sapi/fpm           |
 
 > 说明：这里只讨论 Systemd 操作，init.d 脚本已经不再推荐使用
 
 1. 将 nginx 的单元文件拷贝到 Systemd 的用户目录下：
 
    ```sh
-   $ cd /package/php-7.4.1/php_bulid/sapi/fpm
+   $ cd /package/php-7.4.3/php_bulid/sapi/fpm
    $ cp ./php-fpm.service /usr/lib/systemd/system/
    ```
 
