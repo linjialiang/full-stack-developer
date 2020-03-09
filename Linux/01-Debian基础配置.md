@@ -322,8 +322,8 @@ $ apt install vim ctags vim-scripts
    ```sh
    $ mkdir -p /package/vim
    $ cd /package/vim
-   $ wget https://github.com/yianwillis/vimcdoc/releases/download/v2.1.0/vimcdoc-2.1.0.tar.gz
-   $ tar -xzvf vimcdoc-2.1.0.tar.gz
-   $ cd vimcdoc-2.1.0
-   $ ./vimcdoc.sh -i
+   $ wget https://github.com/yianwillis/vimcdoc/releases/download/v2.3.0/vimcdoc-2.3.0.tar.gz
+   $ tar -xzvf vimcdoc-2.3.0.tar.gz
+   $ cd vimcdoc-2.3.0
+   $ ./vimcdoc.sh -I
    ```
