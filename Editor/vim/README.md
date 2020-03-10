@@ -67,3 +67,54 @@ vim/gvim 的配置直接使用 [大神的配置](https://github.com/linjialiang/
    $ git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
    $ ~/.vim_runtime/install_awesome_vimrc.sh
    ```
+
+3. 安装 `IBM-Plex-Mono` 字体
+
+   该配置推荐使用 IBM-Plex-Mono 字体，具体操作：
+
+   | 系统     | 具体操作                                                                   |
+   | -------- | -------------------------------------------------------------------------- |
+   | Windows  | 直接安装 `otf/ttf` 字体即可                                                |
+   | 远程 vim | 本地安装 `otf/ttf` 字体后，在 xshell 等终端工具中设置字体为`IBM-Plex-Mono` |
+
+## 四、更新 `vim/gvim` 配置
+
+不同的配置更新方式也有所区别：
+
+| 配置     | 更新方式                                                       |
+| -------- | -------------------------------------------------------------- |
+| 基础配置 | 没有插件，只需要通过 git 指令来更新源代码即可                  |
+| 推荐配置 | 通过 git 指令更新源代码，通过 `update_plugins.py` 文件更新插件 |
+
+1. 基础配置版：
+
+   ```sh
+   $ cd ~/.vim_runtime
+   $ git pull --rebase
+   ```
+
+2. 推荐配置版：
+
+   ```sh
+   $ cd ~/.vim_runtime
+   $ git pull --rebase
+   $ python update_plugins.py
+   ```
+
+3. 为 python 导入 requests 库
+
+   使用 `update_plugins.py` 更新插件时，会报错：
+
+   ```sh
+   $ python ./update_plugins.py
+   Traceback (most recent call last):
+     File "./update_plugins.py", line 12, in <module>
+       import requests
+   ModuleNotFoundError: No module named 'requests'
+   ```
+
+   这是由于 requests 库未导入，使用 pip 将其导入即可：
+
+   ```sh
+   $ pip install requests
+   ```
