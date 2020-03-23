@@ -4,18 +4,17 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 ## atom 插件扩展
 
-| 实用插件(10)            | 插件描述          |
-| ----------------------- | ----------------- |
-| atom-beautify           | 格式化源代码      |
-| sync-settings           | atom 配置同步插件 |
-| split-diff              | 文件对比插件      |
-| project-manager         | 项目管理          |
-| platformio-ide-terminal | atom 下出色的终端 |
-| markdown-preview-plus   | markdown 预览     |
-| language-markdown       | markdown 语法高亮 |
-| file-icons              | 文件图标          |
-| quick-highlight         | 文本快速高亮      |
-| editorconfig            | 统一代码风格      |
+| 实用插件(9)               | 插件描述          |
+| ------------------------- | ----------------- |
+| atom-beautify             | 格式化源代码      |
+| sync-settings             | atom 配置同步插件 |
+| split-diff                | 文件对比插件      |
+| project-manager           | 项目管理          |
+| platformio-ide-terminal   | atom 下出色的终端 |
+| markdown-preview-Enhanced | markdown 预览     |
+| file-icons                | 文件图标          |
+| quick-highlight           | 文本快速高亮      |
+| editorconfig              | 统一代码风格      |
 
 | git 相关插件(3)      | 插件描述                                   |
 | -------------------- | ------------------------------------------ |
@@ -29,13 +28,6 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 | minimap-git-diff        | 代码小窗口-git 对比高亮 |
 | minimap-split-diff      | 代码小窗口-对比高亮     |
 | minimap-quick-highlight | 代码小窗口-快速高亮     |
-
-| 语法相关插件(4) | 插件描述                |
-| --------------- | ----------------------- |
-| language-apache | apache 配置文件语法高亮 |
-| language-nginx  | nginx 配置文件语法高亮  |
-| language-ini    | ini 扩展文件语法高亮    |
-| language-notenv | .env 扩展文件语法高亮   |
 
 | vim 相关插件(3)  | 插件描述                   |
 | ---------------- | -------------------------- |
@@ -61,15 +53,15 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 > 提示：事实上 project-manager 控制插件是不明智，因为 atom 首先会全部加载所有插件，然后再由 project-manager 开启 `devMode` 模式来禁用一些插件！
 
-| 属性设置   | 属性值类型 | 描述              | 默认值                 |
-| ---------- | ---------- | ----------------- | ---------------------- |
-| `title`    | 字符串     | 项目标题          | `''`                   |
-| `paths`    | 数组       | 视图中所有根目录  | `[]`                   |
-| `settings` | 对象       | 特定项目的设置。  | `{}`                   |
-| `icon`     | 字符串     | 项目列表中的图标  | `'icon-chevron-right'` |
-| `devMode`  | 布尔值     | `true` 为开发模式 | `false`                |
-| `group`    | 字符串     | 项目组            | `null`                 |
-| `template` | 字符串     | 项目模板          | `null`                 |
+| 属性设置 | 属性值类型 | 描述              | 默认值                 |
+| -------- | ---------- | ----------------- | ---------------------- |
+| title    | 字符串     | 项目标题          | `''`                   |
+| paths    | 数组       | 视图中所有根目录  | `[]`                   |
+| settings | 对象       | 特定项目的设置。  | `{}`                   |
+| icon     | 字符串     | 项目列表中的图标  | `'icon-chevron-right'` |
+| devMode  | 布尔值     | `true` 为开发模式 | `false`                |
+| group    | 字符串     | 项目组            | `null`                 |
+| template | 字符串     | 项目模板          | `null`                 |
 
 > 常规案例：
 
@@ -99,15 +91,15 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 
 > `icon` 的属性值，可以直接使用 `file-icons` 插件（700 多个图标）设置，如：
 
-| 案例                  | 描述        |
-| --------------------- | ----------- |
-| `icon: 'atom-icon'`   | atom 图标   |
-| `icon: 'git-icon'`    | git 图标    |
-| `icon: 'github-icon'` | github 图标 |
-| `icon: 'code-icon'`   | 代码图标    |
-| `icon: 'psd-icon'`    | psd 图标    |
-| `icon: 'php-icon'`    | php 图标    |
-| `icon: 'book-icon'`   | 文档 图标   |
+| 案例                | 描述        |
+| ------------------- | ----------- |
+| icon: 'atom-icon'   | atom 图标   |
+| icon: 'git-icon'    | git 图标    |
+| icon: 'github-icon' | github 图标 |
+| icon: 'code-icon'   | 代码图标    |
+| icon: 'psd-icon'    | psd 图标    |
+| icon: 'php-icon'    | php 图标    |
+| icon: 'book-icon'   | 文档 图标   |
 
 ### autoprefixer
 

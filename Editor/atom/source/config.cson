@@ -1,5 +1,4 @@
 "*":
-  "atom-autocomplete-caomei": {}
   "atom-beautify":
     css:
       default_beautifier: "Prettier"
@@ -19,12 +18,11 @@
       default_beautifier: "Prettier"
     php:
       allow_risky: "yes"
-  autoprefixer:
-    runOnSave: true
   autosave:
     enabled: true
   core:
     autoHideMenuBar: true
+    automaticallyUpdate: false
     closeDeletedFileTabs: true
     disabledPackages: [
       "markdown-preview"
@@ -33,7 +31,7 @@
     packagesWithKeymapsDisabled: [
       "git-time-machine"
       "symbols-view"
-      "markdown-preview-plus"
+      "markdown-preview-enhanced"
     ]
     telemetryConsent: "limited"
     themes: [
@@ -42,8 +40,8 @@
     ]
     uriHandlerRegistration: "never"
   editor:
-    fontFamily: "'Fira Code', '思源黑体 CN'"
-    fontSize: 15
+    fontFamily: "'Fira Code','思源黑体 CN'"
+    fontSize: 16
     showIndentGuide: true
     showInvisibles: true
     tabLength: 4
@@ -52,12 +50,10 @@
     userId: ""
   "line-ending-selector":
     defaultLineEnding: "LF"
-  "markdown-preview-plus":
-    syncConfig:
-      syncEditorOnPreviewScroll: true
-      syncPreviewOnChange: true
-      syncPreviewOnEditorScroll: true
-    useGitHubStyle: true
+  "markdown-preview-enhanced":
+    codeBlockTheme: "coy.css"
+    previewTheme: "solarized-light.css"
+    revealjsTheme: "solarized.css"
   minimap:
     plugins:
       bookmarks: true
@@ -69,6 +65,8 @@
       "split-diff": true
       "split-diffDecorationsZIndex": 0
   "one-dark-ui":
+    hideDockButtons: true
+    stickyHeaders: true
     tabCloseButton: "Left"
     tabSizing: "Maximum"
   "one-light-ui":
@@ -104,6 +102,7 @@
     personalAccessToken: ""
     quietUpdateCheck: true
     removeObsoletePackages: true
+    removeUnfamiliarFiles: true
   "tree-view": {}
   "tree-view-git-status":
     gitFlow:

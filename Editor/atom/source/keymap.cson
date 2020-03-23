@@ -11,15 +11,13 @@
 
 'atom-workspace atom-text-editor':
     'ctrl-k ctrl-o': 'autocomplete-plus:activate'
+    'ctrl-k ctrl-m': 'markdown-preview-enhanced:toggle'
 
 '.select-list atom-text-editor, body atom-text-editor.autocomplete-active':
     'ctrl-p': 'core:move-up'
     'ctrl-n': 'core:move-down'
     'home': 'core:move-to-top'
     'end': 'core:move-to-bottom'
-
-'atom-text-editor, webview.markdown-preview-plus':
-    'ctrl-k ctrl-m': 'markdown-preview-plus:toggle'
 
 'atom-workspace atom-text-editor:not([mini])':
     'ctrl-k m': 'quick-highlight:toggle'
