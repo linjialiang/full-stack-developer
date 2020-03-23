@@ -32,6 +32,7 @@
       "git-time-machine"
       "symbols-view"
       "markdown-preview-enhanced"
+      "language-markdown"
     ]
     telemetryConsent: "limited"
     themes: [

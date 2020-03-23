@@ -48,3 +48,57 @@ vscode 插件非常丰富，大类分为：内置扩展和社区插件。
 | 24   | Apache Conf Snippets                | httpd 语法片段           |
 | 25   | DotENV                              | ENV 语法高亮             |
 | 26   | nginx.conf hint                     | nginx 高亮、补全、格式化 |
+| 27   | vim                                 | vim 扩展                 |
+| 26   | eslint                              | js 错误提示              |
+
+### eslint 配置
+
+1. 首先全局安装 eslint
+
+   ```sh
+   $ npm install eslint -g
+   ```
+
+2. 使用 `npm init` 指令创建 package.json 文件
+
+   ```sh
+   $ C:\wamp\web\www\qyadmin\admin>npm init
+   This utility will walk you through creating a package.json file.
+   It only covers the most common items, and tries to guess sensible defaults.
+
+   See `npm help json` for definitive documentation on these fields
+   and exactly what they do.
+
+   Use `npm install <pkg>` afterwards to install a package and
+   save it as a dependency in the package.json file.
+
+   Press ^C at any time to quit.
+   package name: (admin) qyadmin
+   version: (1.0.0) 1.0.0
+   description: qyadmin project
+   entry point: (index.js)
+   test command:
+   git repository:
+   keywords:
+   author:
+   license: (ISC)
+   About to write to C:\wamp\web\www\qyadmin\admin\package.json:
+   ```
+
+3. 终端进入项目使用 js 的主目录，使用 `eslint --init` 指令配置
+
+   ```sh
+   $ C:\wamp\web\www\qyadmin\admin>eslint --init
+   ? How would you like to use ESLint? To check syntax and find problems
+   ? What type of modules does your project use? JavaScript modules (import/export)
+   ? Which framework does your project use? Vue.js
+   ? Does your project use TypeScript? No
+   ? Where does your code run? Browser
+   ? What format do you want your config file to be in? JSON
+   The config that you've selected requires the following dependencies:
+
+   eslint-plugin-vue@latest
+   ? Would you like to install them now with npm? (Y/n)
+   # 选择 yes
+   # 在主目录下生成一个 node_modules 目录，并生成 `.eslintrc.js` 配置文件
+   ```
