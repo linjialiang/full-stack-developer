@@ -139,6 +139,7 @@ Nginx 三个比较常用的配置文件示例：
 | [tp-sites.conf](./source/nginx/tp-sites.conf)         | `tp6` 站点配置模版           | 按需新建多个 |
 | [static-sites.conf](./source/nginx/static-sites.conf) | 静态站点配置模版             | 按需新建多个 |
 | [public-sites.conf](./source/nginx/public-sites.conf) | 静态站点配置模版（涉及跨域） | 按需新建多个 |
+| [gbk-sites.conf](./source/nginx/gbk-sites.conf)       | 默认编码格式为 gbk           | 按需新建多个 |
 
 - 关于 Nginx 错误日志
 
