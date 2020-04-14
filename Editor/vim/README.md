@@ -98,7 +98,10 @@ vim/gvim 的配置直接使用 [大神的配置](https://github.com/linjialiang/
    ```sh
    $ cd ~/.vim_runtime
    $ git pull --rebase
-   $ python update_plugins.py
+   # 单个 python 版本
+   $ python ./update_plugins.py
+   # 多个 python 版本
+   $ python3 ./update_plugins.py
    ```
 
 3. 为 python 导入 requests 库
@@ -117,4 +120,6 @@ vim/gvim 的配置直接使用 [大神的配置](https://github.com/linjialiang/
 
    ```sh
    $ pip install requests
+   # 多个 python 时，python3 通常与 pip3 绑定 
+   $ pip3 install requests
    ```
