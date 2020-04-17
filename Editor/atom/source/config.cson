@@ -100,7 +100,7 @@
     useLocales: false
   "sync-settings":
     extraFiles: [
-      "php-cs-fixer.phar"
+      "projects.cson"
     ]
     gistId: ""
     hiddenSettings:
