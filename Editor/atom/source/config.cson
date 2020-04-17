@@ -4,7 +4,7 @@
       default_beautifier: "Prettier"
     executables:
       "php-cs-fixer":
-        path: "C:\\Users\\emad\\.atom\\php-cs-fixer-v2.16.1.phar"
+        path: "C:\\Users\\emad\\.atom\\php-cs-fixer.phar"
     general:
       _analyticsUserId: ""
     html:
@@ -52,7 +52,10 @@
   "line-ending-selector":
     defaultLineEnding: "LF"
   "markdown-preview-enhanced":
+    automaticallyShowPreviewOfMarkdownBeingEdited: false
+    closePreviewAutomatically: false
     codeBlockTheme: "coy.css"
+    openPreviewPaneAutomatically: false
     previewTheme: "solarized-light.css"
     revealjsTheme: "solarized.css"
   minimap:
@@ -96,10 +99,14 @@
   "spell-check":
     useLocales: false
   "sync-settings":
+    extraFiles: [
+      "php-cs-fixer.phar"
+    ]
     gistId: ""
     hiddenSettings:
       _lastBackupTime: ""
     installLatestVersion: true
+    onlySyncCommunityPackages: true
     personalAccessToken: ""
     quietUpdateCheck: true
     removeObsoletePackages: true
