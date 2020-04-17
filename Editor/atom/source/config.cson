@@ -103,14 +103,14 @@
       "projects.cson"
     ]
     gistId: ""
-    hiddenSettings:
-      _lastBackupTime: ""
+    hiddenSettings: {}
     installLatestVersion: true
-    onlySyncCommunityPackages: true
     personalAccessToken: ""
     quietUpdateCheck: true
     removeObsoletePackages: true
     removeUnfamiliarFiles: true
+    syncInit: false
+    syncSnippets: false
   "tree-view": {}
   "tree-view-git-status":
     gitFlow:
