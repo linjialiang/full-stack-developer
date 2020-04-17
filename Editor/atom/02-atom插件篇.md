@@ -13,6 +13,7 @@ Atom 有很多优秀的插件，我们这里只是讲解其中一部分插件，
 | platformio-ide-terminal   | atom 下出色的终端 |
 | markdown-preview-Enhanced | markdown 预览     |
 | language-markdown         | markdown 语法高亮 |
+| language-ini              | ini 文件语法高亮  |
 | file-icons                | 文件图标          |
 | quick-highlight           | 文本快速高亮      |
 | editorconfig              | 统一代码风格      |
