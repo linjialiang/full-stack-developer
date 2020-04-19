@@ -5,6 +5,6 @@
 | 编辑器                           | 描述         |
 | -------------------------------- | ------------ |
 | [notepad++](./npp/README.md)     | 超级记事本   |
-| [phpstorm](./phpstorm/README.md) | php 超级 IDE |
-| [Atom](./atom/README.md)         | 现代编辑器   |
 | [VSCode](./vscode/README.md)     | 现代编辑器   |
+| [Vim](./vim/README.md)           | 编辑器之神   |
+| [NetBeans](./NetBeans/README.md) | PHP 开源 IDE |
