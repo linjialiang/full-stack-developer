@@ -120,6 +120,6 @@ vim/gvim 的配置直接使用 [大神的配置](https://github.com/linjialiang/
 
    ```sh
    $ pip install requests
-   # 多个 python 时，python3 通常与 pip3 绑定 
+   # 多个 python 时，python3 通常与 pip3 绑定
    $ pip3 install requests
    ```
