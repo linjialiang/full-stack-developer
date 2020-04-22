@@ -15,55 +15,55 @@ Debian 系统刚刚安装成功非常干净，我们需要对其进行适当的�
 
 1. 配置 ip 地址
 
-   ```sh
-   $ cp /etc/network/interfaces{,.bak}
-   $ nano /etc/network/interfaces
-   ```
+    ```sh
+    $ cp /etc/network/interfaces{,.bak}
+    $ nano /etc/network/interfaces
+    ```
 
-   配置静态地址：
+    配置静态地址：
 
-   ```sh
-   source /etc/network/interfaces.d/*
+    ```sh
+    source /etc/network/interfaces.d/*
 
-   # The loopback network interface
-   auto lo
-   iface lo inet loopback
+    # The loopback network interface
+    auto lo
+    iface lo inet loopback
 
-   # The primary nerwork interfaces
-   allow-hotplug enp0s3
-   iface enp0s3 inet static
-           address 192.168.10.252
-           netmask 255.255.255.0
-           gateway 192.168.10.1
-   ```
+    # The primary nerwork interfaces
+    allow-hotplug enp0s3
+    iface enp0s3 inet static
+            address 192.168.10.252
+            netmask 255.255.255.0
+            gateway 192.168.10.1
+    ```
 
-   配置动态地址(默认就是这个)：
+    配置动态地址(默认就是这个)：
 
-   ```sh
-   source /etc/network/interfaces.d/*
+    ```sh
+    source /etc/network/interfaces.d/*
 
-   # The loopback network interface
-   auto lo
-   iface lo inet loopback
+    # The loopback network interface
+    auto lo
+    iface lo inet loopback
 
-   # The primary nerwork interfaces
-   allow-hotplug enp0s3
-   iface enp0s3 inet dhcp
-   ```
+    # The primary nerwork interfaces
+    allow-hotplug enp0s3
+    iface enp0s3 inet dhcp
+    ```
 
 2. 配置 DNS
 
-   ```sh
-   $ cp /etc/resolv.conf{,.bak}
-   $ vi /etc/resolv.conf
-   ```
+    ```sh
+    $ cp /etc/resolv.conf{,.bak}
+    $ vi /etc/resolv.conf
+    ```
 
-   测试服务器案例如下：
+    测试服务器案例如下：
 
-   ```conf
-   nameserver 192.168.10.1
-   nameserver 0.0.0.0
-   ```
+    ```conf
+    nameserver 192.168.10.1
+    nameserver 0.0.0.0
+    ```
 
 ### 网络相关指令
 
@@ -82,23 +82,23 @@ Debian 通过 `network` 这个软件来管理网络
 
 1. 重启加载网络配置
 
-   ```sh
-   $ service networking restart
-   $ systemctl restart networking
-   $ /etc/init.d/networking restart
-   ```
+    ```sh
+    $ service networking restart
+    $ systemctl restart networking
+    $ /etc/init.d/networking restart
+    ```
 
 2. 停止网络
 
-   ```sh
-   $ /etc/init.d/networking stop
-   ```
+    ```sh
+    $ /etc/init.d/networking stop
+    ```
 
 3. 启动网络
 
-   ```sh
-   $ /etc/init.d/networking start
-   ```
+    ```sh
+    $ /etc/init.d/networking start
+    ```
 
 > 提示：禁用网卡是操作硬件，禁用网络是操作管理网络的软件包！
 
@@ -108,20 +108,20 @@ Debian 通过 `network` 这个软件来管理网络
 
 1. 安装 `locales` 软件包
 
-   ```sh
-   $ apt install locales
-   ```
+    ```sh
+    $ apt install locales
+    ```
 
 2. 设置语言环境
 
-   ```sh
-   $ dpkg-reconfigure locales
-   ```
+    ```sh
+    $ dpkg-reconfigure locales
+    ```
 
-   | 语言选项      | 选项说明 |
-   | ------------- | -------- |
-   | `C.UTF-8`     | 英文界面 |
-   | `zh_CN.UTF-8` | 中文界面 |
+    | 语言选项      | 选项说明 |
+    | ------------- | -------- |
+    | `C.UTF-8`     | 英文界面 |
+    | `zh_CN.UTF-8` | 中文界面 |
 
 ## 安装帮助手册
 
@@ -148,24 +148,24 @@ $ apt install manpages manpages-zh helpman help2man
 $ apt install ssh
 ```
 
-- 允许 ssh 使用远程 root 连接：
+-   允许 ssh 使用远程 root 连接：
 
-  ```sh
-  $ cp /etc/ssh/sshd_config{,.bak}
-  $ vi /etc/ssh/sshd_config
-  ```
+    ```sh
+    $ cp /etc/ssh/sshd_config{,.bak}
+    $ vi /etc/ssh/sshd_config
+    ```
 
-  > 修改 `PermitRootLogin` 参数值，并去掉前面的注释 `#`
+    > 修改 `PermitRootLogin` 参数值，并去掉前面的注释 `#`
 
-  ```conf
-  PermitRootLogin yes
-  ```
+    ```conf
+    PermitRootLogin yes
+    ```
 
-- 重新加载 ssh 配置，让修改生效
+-   重新加载 ssh 配置，让修改生效
 
-  ```sh
-  $ /etc/init.d/ssh reload
-  ```
+    ```sh
+    $ /etc/init.d/ssh reload
+    ```
 
 ## 配置源镜像
 
@@ -178,81 +178,81 @@ $ vi /etc/apt/sources.list
 
 1. 完整的 `sources.list` 案例：
 
-   ```conf
-   ## 安全更新（重要）
-   deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
-   deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
+    ```conf
+    ## 安全更新（重要）
+    deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
+    deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main contrib non-free
 
-   ## Debian 软件包镜像
-   # 基础仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
-   # 更新仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
-   # 后移植版本仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
+    ## Debian 软件包镜像
+    # 基础仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
+    # 更新仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
+    # 后移植版本仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
 
-   ```
+    ```
 
 2. 常规 `sources.list` 案例：
 
-   通常并不需要 `non-free` 和 `contrib` 区块，具体如下：
+    通常并不需要 `non-free` 和 `contrib` 区块，具体如下：
 
-   ```conf
-   ## 安全更新（重要）
-   deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
-   deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
+    ```conf
+    ## 安全更新（重要）
+    deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
+    deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main
 
-   ## Debian 软件包镜像
-   # 基础仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster main
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster main
-   # 更新仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster-updates main
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main
-   # 后移植版本仓库
-   deb http://mirrors.ustc.edu.cn/debian/ buster-backports main
-   deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main
-   ```
+    ## Debian 软件包镜像
+    # 基础仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster main
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster main
+    # 更新仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster-updates main
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main
+    # 后移植版本仓库
+    deb http://mirrors.ustc.edu.cn/debian/ buster-backports main
+    deb-src http://mirrors.ustc.edu.cn/debian/ buster-backports main
+    ```
 
-   > 163 源镜像，应该是浙江地区最快的镜像了吧：
+    > 163 源镜像，应该是浙江地区最快的镜像了吧：
 
-   ```conf
-   ## 安全更新（重要）
-   deb http://mirrors.163.com/debian-security/ buster/updates main
-   deb-src http://mirrors.163.com/debian-security/ buster/updates main
+    ```conf
+    ## 安全更新（重要）
+    deb http://mirrors.163.com/debian-security/ buster/updates main
+    deb-src http://mirrors.163.com/debian-security/ buster/updates main
 
-   ## Debian 软件包镜像
-   # 基础仓库
-   deb http://mirrors.163.com/debian/ buster main
-   deb-src http://mirrors.163.com/debian/ buster main
-   # 更新仓库
-   deb http://mirrors.163.com/debian/ buster-updates main
-   deb-src http://mirrors.163.com/debian/ buster-updates main
-   # 后移植版本仓库
-   deb http://mirrors.163.com/debian/ buster-backports main
-   deb-src http://mirrors.163.com/debian/ buster-backports main
-   ```
+    ## Debian 软件包镜像
+    # 基础仓库
+    deb http://mirrors.163.com/debian/ buster main
+    deb-src http://mirrors.163.com/debian/ buster main
+    # 更新仓库
+    deb http://mirrors.163.com/debian/ buster-updates main
+    deb-src http://mirrors.163.com/debian/ buster-updates main
+    # 后移植版本仓库
+    deb http://mirrors.163.com/debian/ buster-backports main
+    deb-src http://mirrors.163.com/debian/ buster-backports main
+    ```
 
 3. 操作源镜像
 
-   | 指令               | 描述                 |
-   | ------------------ | -------------------- |
-   | `apt update`       | 更新本地源文件到最新 |
-   | `apt upgrade`      | 更新软件包           |
-   | `apt dist-upgrade` | 跨大版本更新软件包   |
+    | 指令               | 描述                 |
+    | ------------------ | -------------------- |
+    | `apt update`       | 更新本地源文件到最新 |
+    | `apt upgrade`      | 更新软件包           |
+    | `apt dist-upgrade` | 跨大版本更新软件包   |
 
 4. 镜像区块说明
 
-   | 镜像区块 | 描述                                                        |
-   | -------- | ----------------------------------------------------------- |
-   | main     | 遵从 Debian 自由软件指导方针（DFSG），并且不依赖于 non-free |
-   | non-free | 不遵从 Debian 自由软件指导方针（DFSG）                      |
-   | contrib  | 遵从 Debian 自由软件指导方针（DFSG），但依赖于 non-free     |
+    | 镜像区块 | 描述                                                        |
+    | -------- | ----------------------------------------------------------- |
+    | main     | 遵从 Debian 自由软件指导方针（DFSG），并且不依赖于 non-free |
+    | non-free | 不遵从 Debian 自由软件指导方针（DFSG）                      |
+    | contrib  | 遵从 Debian 自由软件指导方针（DFSG），但依赖于 non-free     |
 
-   > 事实上收录到 `non-free` 和 `contrib` 仓库上的包是非常少的，而 `main` 仓库就有 5 万多个包！
+    > 事实上收录到 `non-free` 和 `contrib` 仓库上的包是非常少的，而 `main` 仓库就有 5 万多个包！
 
 ## 美化 bash 终端
 
@@ -265,20 +265,20 @@ $ vi ~/.bashrc
 
 1. `.bashrc` 示例：
 
-   ```sh
-   PS1='[${debian_chroot:+($debian_chroot)}\u@Debian10 \W]\$ '
-   export LS_OPTIONS='--color=auto'
-   eval "`dircolors`"
-   alias ls='ls $LS_OPTIONS -F'
-   alias ll='ls $LS_OPTIONS -lF'
-   alias lla='ls $LS_OPTIONS -laF'
-   ```
+    ```sh
+    PS1='[${debian_chroot:+($debian_chroot)}\u@Debian10 \W]\$ '
+    export LS_OPTIONS='--color=auto'
+    eval "`dircolors`"
+    alias ls='ls $LS_OPTIONS -F'
+    alias ll='ls $LS_OPTIONS -lF'
+    alias lla='ls $LS_OPTIONS -laF'
+    ```
 
 2. 使用 `source` 更新终端界面：
 
-   ```sh
-   $ source ~/.bashrc
-   ```
+    ```sh
+    $ source ~/.bashrc
+    ```
 
 ## 为 Debian 安装常用工具包
 
@@ -296,7 +296,11 @@ $ apt install lrzsz tar bzip2 gzip curl wget
 | `tar.bz2` | 让 tar 支持 bz2 格式的压缩和解压缩  |
 | `curl`    | 功能丰富的网络命令行工具            |
 
-## 安装 vim
+## 安装 NeoVim
+
+NeoVim 用于替代 Vim，具体查看 [SpaceVim 操作指南](../Editor/vim/SpaceVim操作指南.md)
+
+## ~~安装 vim~~
 
 vim 编辑器非常适合终端操作，具体安装代码如下：
 
@@ -306,24 +310,30 @@ $ apt install vim ctags vim-scripts
 
 1. 修改 vim 配置文件
 
-   基础配置文件 `vimrc` 加载了一个空配置文件 `vimrc.local`，所以我们直接修改 `vimrc.local`
+    基础配置文件 `vimrc` 加载了一个空配置文件 `vimrc.local`，所以我们直接修改 `vimrc.local`
 
-   ```sh
-   $ touch /etc/vim/vimrc.local
-   $ vim /etc/vim/vimrc.local
-   ```
+    ```sh
+    $ touch /etc/vim/vimrc.local
+    $ vim /etc/vim/vimrc.local
+    ```
 
-   具体代码见 [vimrc.local](./source/vimrc.local)
+    具体代码见 [vimrc.local](./source/vimrc.local)
 
-   > 提示：远程终端想要复制 vim 编辑器的内容，需要每次设置 `:set mouse=c`!
+    > 提示：远程终端想要复制 vim 编辑器的内容，需要每次设置 `:set mouse=c`!
 
 2. vim 安装中文帮助手册
 
-   ```sh
-   $ mkdir -p /package/vim
-   $ cd /package/vim
-   $ wget https://github.com/yianwillis/vimcdoc/releases/download/v2.3.0/vimcdoc-2.3.0.tar.gz
-   $ tar -xzvf vimcdoc-2.3.0.tar.gz
-   $ cd vimcdoc-2.3.0
-   $ ./vimcdoc.sh -I
-   ```
+    ```sh
+    $ mkdir -p /package/vim
+    $ cd /package/vim
+    $ wget https://github.com/yianwillis/vimcdoc/releases/download/v2.3.0/vimcdoc-2.3.0.tar.gz
+    $ tar -xzvf vimcdoc-2.3.0.tar.gz
+    $ cd vimcdoc-2.3.0
+    $ ./vimcdoc.sh -I
+    ```
+
+3. vim 卸载中文帮助手册
+
+    ```sh
+    $ ./vimcdoc -u
+    ```
