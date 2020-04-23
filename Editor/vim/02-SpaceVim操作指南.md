@@ -1,22 +1,16 @@
 # SpaceVim 操作指南
 
-本教程是在 SpaceVim 官方文档外，做更详细的操作说明。
+本教程是在 SpaceVim 官方文档外，做一些细节的操作说明。
+
+> 题外话：建议 SpaceVim 应用于 Linx 下，Windows 下的 SpaceVim 有各种问题
 
 ## 一、安装 NeoVim
 
-1. Debian 系统安装 NeoVim 很简单，只需要如下指令：
+Debian 系统安装 NeoVim 很简单，只需要如下指令：
 
-    ```sh
-    $ apt install neovim
-    ```
-
-2. Windows 系统安装 NeoVim
-
-    | 步骤 | 具体描述                                |
-    | ---- | --------------------------------------- |
-    | 01   | 去 github 上下载最新的 `nvim-win64.zip` |
-    | 02   | 解压到指定目录                          |
-    | 03   | 使用 `nvim-qt.exe` 启动 NeoVim          |
+```sh
+$ apt install neovim
+```
 
 > 提示：NeoVim 使用上与 vim 基本相同
 
@@ -63,7 +57,7 @@ Debian 服务器默认终端为 8 色，为更好的使用 SpaceVim，我们需�
 
 ## 三、安装 SpaceVim
 
-### Debian 上安装操作
+Debian 上安装操作如下：
 
 1. 安装前的准备工作
 
@@ -84,25 +78,3 @@ Debian 服务器默认终端为 8 色，为更好的使用 SpaceVim，我们需�
     ```sh
     $ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
     ```
-
-### Windows 上安装操作
-
-1. 安装前的准备工作
-
-    安装 SpaceVim 前，需要先安装如下软件：
-
-    | 序号 | 软件    |
-    | ---- | ------- |
-    | 01   | python3 |
-    | 02   | nodejs  |
-    | 03   | git     |
-
-2. 安装过程
-
-    Windows 下安装 SpaceVim 最快的方式就是使用 install.cmd 脚本，具体操作如下：
-
-    | 步骤 | 具体操作                                                |
-    | ---- | ------------------------------------------------------- |
-    | 01   | 下载 [install.cmd](https://spacevim.org/cn/install.cmd) |
-    | 02   | 将 `install.cmd` 脚本，编码转为 gbk                     |
-    | 03   | 以管理员的身份运行 `install.cmd` 脚本                   |

@@ -298,7 +298,7 @@ $ apt install lrzsz tar bzip2 gzip curl wget
 
 ## 安装 NeoVim
 
-NeoVim 用于替代 Vim，具体查看 [SpaceVim 操作指南](../Editor/vim/SpaceVim操作指南.md)
+NeoVim 用于替代 Vim，具体查看 [SpaceVim 操作指南](../Editor/vim/01-SpaceVim操作指南.md)
 
 ## ~~安装 vim~~
 
