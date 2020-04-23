@@ -78,3 +78,52 @@ Debian 上安装操作如下：
     ```sh
     $ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
     ```
+
+## 四、配置 SpaceVim
+
+    ```vim
+    [options]
+        colorscheme = "onedark"
+        colorscheme_bg = "dark"
+        enable_guicolors = false
+        statusline_separator = "arrow"
+        statusline_inactive_separator = "arrow"
+        buffer_index_type = 4
+        enable_tabline_filetype_icon = true
+        enable_statusline_mode = false
+    [[layers]]
+    name = 'autocomplete'
+    auto_completion_return_key_behavior = "complete"
+    auto_completion_tab_key_behavior = "smart"
+    [[layers]]
+    name = 'shell'
+    default_position = 'top'
+    default_height = 30
+    [[layers]]
+    name = "VersionControl"
+    [[layers]]
+    name = "git"
+    [[layers]]
+    name = 'chinese'
+    [[layers]]
+    name = 'colorscheme'
+    [[layers]]
+    name = 'lang#html'
+    [[layers]]
+    name = 'lang#javascript'
+    [[layers]]
+    name = 'lang#php'
+    [[layers]]
+    name = 'lang#sh'
+    [[layers]]
+    name = 'lang#vim'
+    [[layers]]
+    name = 'lang#vue'
+    ```
+
+## 五、SpaceVim 常用快捷键
+
+| 快捷键               | 描述                             |
+| -------------------- | -------------------------------- |
+| `:SPUpdate SpaceVim` | 通过插件管理器更新               |
+| `:SPUpdate`          | 更新所有插件，包括 SpaceVim 自身 |
