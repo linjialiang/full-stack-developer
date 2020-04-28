@@ -24,6 +24,7 @@
   "markdown-preview-enhanced.revealjsTheme": "solarized.css",
   "markdown-preview-enhanced.codeBlockTheme": "coy.css",
   "markdown-preview-enhanced.previewTheme": "solarized-light.css",
+  "files.autoGuessEncoding":true,
   "intelephense.stubs": [
     "apache",
     "bcmath",
