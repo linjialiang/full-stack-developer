@@ -2,77 +2,29 @@
 
 此次 LNMP 升级并不全面，因为很多软件都没有更新，所以这里只更新了部分软件包。
 
-## 更新 Nginx
+## 升级 MariaDB
 
-Nginx 升级至 1.8.0 并更新了部分依赖包，具体如下：
-
-| 包名    | 当前版本 | 升级版本 | 包地址                            |
-| ------- | -------- | -------- | --------------------------------- |
-| ngixn   | 1.6.1    | 1.8.0    | http://nginx.org/en/download.html |
-| openssl | 1.1.1d   | 1.1.1g   | https://www.openssl.org/source/   |
-
-### 构建选项
-
-部署环境下使用这些构建选项即可：
+MariaDB 是使用 apt 安装的，没有大版本升级都不需要特别处理：
 
 ```sh
-$ ./configure --prefix=/server/nginx \
---builddir=/package/nginx-1.18.0/nginx_bulid \
---error-log-path=/server/logs/nginx/error.log \
---pid-path=/server/run/nginx/nginx.pid \
---with-threads --with-file-aio \
---with-http_ssl_module \
---with-http_v2_module \
---with-http_realip_module \
---with-http_image_filter_module \
---with-http_geoip_module \
---with-http_dav_module \
---with-http_gunzip_module \
---with-http_gzip_static_module \
---with-http_auth_request_module \
---with-http_secure_link_module \
---with-http_degradation_module \
---with-http_slice_module \
---with-http_stub_status_module \
---http-log-path=/server/logs/nginx/access.log \
---without-http_ssi_module \
---without-http_uwsgi_module \
---without-http_scgi_module \
---without-http_grpc_module \
---with-pcre=/package/pkg/pcre-8.44 \
---with-pcre-jit \
---with-zlib=/package/pkg/zlib-1.2.11 \
---with-openssl=/package/pkg/openssl-1.1.1g
+$ apt update
+$ apt upgrade
 ```
-
-### 具体操作
-
-```sh
-$ mv /server/nginx/sbin/nginx{,-v1.16.1}
-$ mkdir /package/nginx-1.18.0/nginx_bulid
-$ cd /package/nginx-1.18.0/
-$ ./configure 构建选项 ...
-$ make -j4
-$ cp -p -r /package/nginx-1.18.0/nginx_bulid/nginx /server/nginx/sbin/
-$ server ngixn restart
-```
-
-> 提示：这里没有使用平滑升级，如有需要请参考 [Nginx 平滑升级](../../Nginx/03-Nginx平滑升级.md)
 
 ## 升级 PHP
 
 本次 PHP 升级的地方比较多，具体如下：
 
-| 包名        | 当前版本 | 欲升级版本 | 包地址                            |
-| ----------- | -------- | ---------- | --------------------------------- |
-| PHP         | 7.4.3    | 7.4.5      | https://www.php.net/downloads.php |
-| ImageMagick | 7.0.9-27 | 7.0.10-10  | https://imagemagick.org/download/ |
+| 包名        | 当前版本  | 欲升级版本 | 包地址                            |
+| ----------- | --------- | ---------- | --------------------------------- |
+| PHP         | 7.4.5     | 7.4.6      | https://www.php.net/downloads.php |
+| ImageMagick | 7.0.10-10 | 7.0.10-14  | https://imagemagick.org/download/ |
 
 ### php 升级操作计划
 
 | 序号 | php 升级操作              |
 | ---- | ------------------------- |
-| 01   | 编译 php7.4.5             |
+| 01   | 编译 php7.4.6             |
 | 02   | 无缝升级 php              |
 | 03   | 重新编译安装 php 动态扩展 |
 
@@ -83,8 +35,8 @@ $ server ngixn restart
     如果有需要保存的配置文件，就应该要先保存好，再编译安装：
 
     ```sh
-    $ mkdir /package/php-7.4.5/php_bulid
-    $ cd /package/php-7.4.5/php_bulid/
+    $ mkdir /package/php-7.4.6/php_bulid
+    $ cd /package/php-7.4.6/php_bulid/
     $ ../configure --prefix=/server/php \
     --enable-fpm \
     --enable-mbstring \
