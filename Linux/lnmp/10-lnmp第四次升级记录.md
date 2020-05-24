@@ -56,11 +56,11 @@ $ apt upgrade
 2. 配置 php.ini 文件
 
     ```sh
-    $ mv /server/php/lib/php{,-v7.4.3}.ini
+    $ mv /server/php/lib/php{,-v7.4.5}.ini
     # 开发环境
-    $ cp -p -r /package/php-7.4.5/php.ini-development /server/php/lib/php.ini
+    $ cp -p -r /package/php-7.4.6/php.ini-development /server/php/lib/php.ini
     # 部署环境
-    $ cp -p -r /package/php-7.4.5/php.ini-production /server/php/lib/php.ini
+    $ cp -p -r /package/php-7.4.6/php.ini-production /server/php/lib/php.ini
     ```
 
 3. 管理动态扩展
@@ -107,7 +107,7 @@ $ apt upgrade
     $ mkdir /server/ImageMagick
 
     # 3. 创建构建目录
-    $ cd /package/pkg/ImageMagick-7.0.10-10/
+    $ cd /package/pkg/ImageMagick-7.0.10-14/
     $ mkdir ImageMagick_bulid
     $ cd ImageMagick_bulid/
 
