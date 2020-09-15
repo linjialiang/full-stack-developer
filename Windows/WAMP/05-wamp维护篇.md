@@ -6,53 +6,53 @@
 
 1. 将 httpd 安装进系统服务中
 
-   以管理员的身份打开 cmd，具体操作如下：
+    以管理员的身份打开 cmd，具体操作如下：
 
-   ```cmd
-   cd c:\wamp\base\httpd\bin
-   httpd.exe -k install -n <service-httpd>
-   ```
+    ```cmd
+    cd c:\wamp\base\httpd\bin
+    httpd.exe -k install -n <service-httpd>
+    ```
 
-   > 安装多个 httpd 服务时，httpd 服务名称不能一样
+    > 安装多个 httpd 服务时，httpd 服务名称不能一样
 
 2. 将 httpd 从系统服务中卸载
 
-   | 卸载方法   | 代码                                        |
-   | ---------- | ------------------------------------------- |
-   | httpd 卸载 | `httpd.exe -k uninstall -n <service-httpd>` |
-   | sc 卸载    | `sc delete <service-httpd>`                 |
+    | 卸载方法   | 代码                                        |
+    | ---------- | ------------------------------------------- |
+    | httpd 卸载 | `httpd.exe -k uninstall -n <service-httpd>` |
+    | sc 卸载    | `sc delete <service-httpd>`                 |
 
 3. httpd 服务启停
 
-   | 服务 | 代码                        |
-   | ---- | --------------------------- |
-   | 启动 | `net start <service-httpd>` |
-   | 停止 | `net stop <service-httpd>`  |
+    | 服务 | 代码                        |
+    | ---- | --------------------------- |
+    | 启动 | `net start <service-httpd>` |
+    | 停止 | `net stop <service-httpd>`  |
 
 ## 维护 mariadb
 
 1. 安装 mariadb 到系统服务
 
-   以管理员的身份打开 cmd，具体操作如下：
+    以管理员的身份打开 cmd，具体操作如下：
 
-   ```cmd
-   cd c:\wamp\base\mariadb\bin
-   mysqld.exe --install <service-mariadb>
-   ```
+    ```cmd
+    cd c:\wamp\base\mariadb\bin
+    mysqld.exe --install <service-mariadb>
+    ```
 
 2. 卸载 mariadb 系统服务
 
-   | 卸载方法     | 代码                                    |
-   | ------------ | --------------------------------------- |
-   | mariadb 卸载 | `mysqld.exe --remove <service-mariadb>` |
-   | sc 卸载      | `sc <server> delete <service-mariadb>`  |
+    | 卸载方法     | 代码                                    |
+    | ------------ | --------------------------------------- |
+    | mariadb 卸载 | `mysqld.exe --remove <service-mariadb>` |
+    | sc 卸载      | `sc <server> delete <service-mariadb>`  |
 
 3. mariadb 启停
 
-   | 服务 | 代码                          |
-   | ---- | ----------------------------- |
-   | 启动 | `net start <service-mariadb>` |
-   | 停止 | `net stop <service-mariadb>`  |
+    | 服务 | 代码                          |
+    | ---- | ----------------------------- |
+    | 启动 | `net start <service-mariadb>` |
+    | 停止 | `net stop <service-mariadb>`  |
 
 ## 修改系统服务启动类型
 
@@ -72,31 +72,31 @@ sc config <service-name> start=<set-value>
 
 ## 附录：wamp 使用说明书
 
-| 步骤 | 使用说明书                                                                       |
-| ---- | -------------------------------------------------------------------------------- |
-| 01   | 将 `wamp.7z` 解压到 C 盘根目录                                                   |
-| 02   | 将 `C:\wamp\base\ImageMagick\bin` 加入`系统环境变量`(启动 `php_magick` 扩展必备) |
-| 03   | 使用 `C:\wamp\install.bat` 脚本安装系统服务                                      |
-| 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                                     |
-| 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                              |
-| 06   | 将 `C:\wamp\base\php` 加入环境变量(方便操作)                                     |
-| 07   | 将 `C:\wamp\base\httpd\bin` 加入环境变量 (方便操作)                              |
-| 08   | 将 `C:\wamp\base\mariadb\bin` 加入环境变量 (方便操作)                            |
-| 09   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统                       |
-| 10   | `http://localhost/phpmyadmin` 可以进入网页版 MariaDB 管理系统                    |
-| 11   | 通过使用 composer 来更新 adminer 以及 phpMyAdmin 到最新稳定版                    |
-| 12   | MariaDB 的 `root@localhost` 密码默认为 `123456`                                  |
+| 步骤 | 使用说明书                                                                           |
+| ---- | ------------------------------------------------------------------------------------ |
+| 01   | 将 `wamp.7z` 解压到 C 盘根目录                                                       |
+| 02   | ~~将 `C:\wamp\base\ImageMagick\bin` 加入`系统环境变量`(启动 `php_magick` 扩展必备)~~ |
+| 03   | 使用 `C:\wamp\install.bat` 脚本安装系统服务                                          |
+| 04   | 使用 `C:\wamp\便捷指令.bat` 脚本管理服务启动                                         |
+| 05   | `C:\wamp\web\sites\*.conf` 存放所有虚拟站点配置文件                                  |
+| 06   | 将 `C:\wamp\base\php` 加入环境变量(方便操作)                                         |
+| 07   | 将 `C:\wamp\base\httpd\bin` 加入环境变量 (方便操作)                                  |
+| 08   | 将 `C:\wamp\base\mariadb\bin` 加入环境变量 (方便操作)                                |
+| 09   | `http://localhost/adminer` 可以进入网页版 MariaDB 管理系统                           |
+| 10   | `http://localhost/phpmyadmin` 可以进入网页版 MariaDB 管理系统                        |
+| 11   | 通过使用 composer 来更新 adminer 以及 phpMyAdmin 到最新稳定版                        |
+| 12   | MariaDB 的 `root@localhost` 密码默认为 `123456`                                      |
 
-> 提示：`C:\wamp\base\ImageMagick\bin` 必须加入到 `系统环境变量` （httpd 无法获取 `用户环境变量`）
+> ~~提示：`C:\wamp\base\ImageMagick\bin` 必须加入到 `系统环境变量` （httpd 无法获取 `用户环境变量`）~~
 
 ### 更换 WAMP 路径
 
 如果要更改 wamp 的更路径，需要修改以下几个文件的内容：
 
-| 步骤 | 修改内容                                              |
-| ---- | ----------------------------------------------------- |
-| 01   | `httpd.conf` 第 1 行 `WAMP_ROOT` 的变量值             |
-| 02   | `my.ini` 下所有与路径相关的参数值                     |
-| 03   | 修改 `php.ini` 下 `extension_dir` 参数值              |
-| 04   | 修改 `php.ini` 下 `xdebug.profiler_output_dir` 参数值 |
-| 05   | 修改 `php.ini` 下 `xdebug.trace_output_dir` 参数值    |
+| 步骤 | 修改内容                                                  |
+| ---- | --------------------------------------------------------- |
+| 01   | `httpd.conf` 第 1 行 `WAMP_ROOT` 的变量值                 |
+| 02   | `my.ini` 下所有与路径相关的参数值                         |
+| 03   | 修改 `php.ini` 下 `extension_dir` 参数值                  |
+| 04   | ~~修改 `php.ini` 下 `xdebug.profiler_output_dir` 参数值~~ |
+| 05   | ~~修改 `php.ini` 下 `xdebug.trace_output_dir` 参数值~~    |
