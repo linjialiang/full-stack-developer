@@ -46,33 +46,33 @@ Windows 系统默认情况下 php 扩展的默认存放目录是 `c:\php\etc`，
 
 1. php 扩展写入 php.ini 格式：
 
-   | 扩展文件名     | 格式 1                   | 格式 2           |
-   | -------------- | ------------------------ | ---------------- |
-   | `php_别名.dll` | `extension=php_别名.dll` | `extension=别名` |
+    | 扩展文件名     | 格式 1                   | 格式 2           |
+    | -------------- | ------------------------ | ---------------- |
+    | `php_别名.dll` | `extension=php_别名.dll` | `extension=别名` |
 
 2. xdebug 扩展说明
 
-   由于 xdebug 的驱动程序与其它官方自带扩展不同，我们应写在 php.ini 最下方，写法如下：
+    由于 xdebug 的驱动程序与其它官方自带扩展不同，我们应写在 php.ini 最下方，写法如下：
 
-   ```ini
-   [Xdebug]
-   zend_extension=xdebug
+    ```ini
+    [Xdebug]
+    zend_extension=xdebug
 
-   xdebug.collect_params = 4
-   xdebug.dump_globals = 1
-   xdebug.dump_undefined = 1
-   xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
-   xdebug.gc_stats_enable = 1
-   xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
-   xdebug.profiler_enable = 1
-   xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
+    xdebug.collect_params = 4
+    xdebug.dump_globals = 1
+    xdebug.dump_undefined = 1
+    xdebug.trace_output_dir = "C:\wamp\web\logs\xdebug"
+    xdebug.gc_stats_enable = 1
+    xdebug.gc_stats_output_dir = "C:\wamp\web\logs\xdebug"
+    xdebug.profiler_enable = 1
+    xdebug.profiler_output_dir = "C:\wamp\web\logs\xdebug"
 
-   xdebug.remote_enable = 1
-   xdebug.remote_autostart = 1
-   xdebug.idekey = WAMP
-   xdebug.remote_host = localhost
-   xdebug.remote_port = 9000
-   ```
+    xdebug.remote_enable = 1
+    xdebug.remote_autostart = 1
+    xdebug.idekey = WAMP
+    xdebug.remote_host = localhost
+    xdebug.remote_port = 9000
+    ```
 
 ### php 错误提示
 
@@ -227,14 +227,39 @@ composer 安装教程请查阅 [composer 快速入门](./../../PHP/01-composer�
 
 ## 附录
 
-1. php 不能动态加载 `php_curl.dll` 扩展
+1.  php 不能动态加载 `php_curl.dll` 扩展
 
-   答：因为 httpd 的 bin 目录下缺少 1 个 openssl 库文件 `libssh2.dll`：
+    答：因为 httpd 的 bin 目录下缺少 1 个 openssl 库文件 `libssh2.dll`：
 
-   | 步骤 | 具体操作                                    |
-   | ---- | ------------------------------------------- |
-   | 01   | 在 php 根目录下找到 `libssh2.dll` 文件      |
-   | 02   | 将 `libssh2.dll` 复制到 httpd 的 bin 目录下 |
-   | 03   | 重启 httpd 服务                             |
+    | 步骤 | 具体操作                                    |
+    | ---- | ------------------------------------------- |
+    | 01   | 在 php 根目录下找到 `libssh2.dll` 文件      |
+    | 02   | 将 `libssh2.dll` 复制到 httpd 的 bin 目录下 |
+    | 03   | 重启 httpd 服务                             |
 
-   > 提示：亲测 `php 7.4.0` 只需要 `libssh2.dll` 库文件，[官方说明](https://www.php.net/manual/en/curl.installation.php)需要 3 个库文件
+    > 提示：亲测 `php 7.4.0` 只需要 `libssh2.dll` 库文件，[官方说明](https://www.php.net/manual/en/curl.installation.php)需要 3 个库文件
+
+2.  安装 composer 时，报 SSL 错误问题
+
+    报错内容如下：
+
+    ```sh
+    PHP Warning:  copy(): SSL operation failed with code 1. OpenSSL Error messages:
+    error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed in Command line code on line 1
+    ```
+
+    原因分析：是 php.ini 中 `openssl.cafile=` 文件路径配置错误
+
+    ```sh
+    从 https://curl.se/docs/caextract.html 地址可以看到：
+      - 该文件为openssl从Mozilla提取的CA证书
+
+    证书文件下载地址： https://curl.se/ca/cacert.pem
+    ```
+
+    下载成功后，放置到 `base/conf` 目录下,php.ini 最下方加上如下内容：
+
+    ```ini
+    [openssl]
+    openssl.cafile="C:\wamp\base\conf\cert.pem"
+    ```
