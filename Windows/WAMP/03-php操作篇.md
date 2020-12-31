@@ -261,5 +261,5 @@ composer 安装教程请查阅 [composer 快速入门](./../../PHP/01-composer�
 
     ```ini
     [openssl]
-    openssl.cafile="C:\wamp\base\conf\cert.pem"
+    openssl.cafile="C:\wamp\base\conf\cacert.pem"
     ```
