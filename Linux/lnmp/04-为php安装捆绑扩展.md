@@ -11,51 +11,51 @@ PHP 捆绑扩展顾名思义，与 PHP 捆绑在一起，这类扩展部分被�
 
 1. 拷贝源码至 `/package/ext` 目录下
 
-   ```sh
-   $ cp -p -r /package/php-7.4.3/ext/gd /package/ext/
-   ```
+    ```sh
+    $ cp -p -r /package/php-8.0.1/ext/gd /package/ext/
+    ```
 
 2. 使用 phpize 生成可编译源码
 
-   ```SH
-   $ cd /package/ext/gd
-   $ phpize
-   ```
+    ```SH
+    $ cd /package/ext/gd
+    $ phpize
+    ```
 
 3. 编译安装
 
-   ```sh
-   $ ./configure
-   $ make -j4
-   $ make test
-   $ make install
-   Installing shared extensions:     /server/php/lib/php/extensions/no-debug-non-zts-20190902/
-   Installing header files:          /server/php/include/php/
-   ```
+    ```sh
+    $ ./configure
+    $ make -j4
+    $ make test
+    $ make install
+    Installing shared extensions:     server/php/lib/php/extensions/no-debug-non-zts-20200930/
+    Installing header files:          /server/php/include/php/
+    ```
 
 4. 在 PHP 配置文件(php.ini)上，启用 gd 扩展
 
-   ```sh
-   $ vim /server/php/lib/php.ini
-   ```
+    ```sh
+    $ vim /server/php/lib/php.ini
+    ```
 
-   `php.ini` 第 `950行` 左右添加以下内容：
+    `php.ini` 第 `950行` 左右添加以下内容：
 
-   ```ini
-   extension=gd
-   ```
+    ```ini
+    extension=gd
+    ```
 
 5. 查询 `gd` 扩展是否安装成功
 
-   ```sh
-   $ php -m
-   ```
+    ```sh
+    $ php -m
+    ```
 
 6. 查看 `gd` 是否可以正常运行：
 
-   ```sh
-   $ php --ri gd
-   ```
+    ```sh
+    $ php --ri gd
+    ```
 
 ## 安装 Sockets 扩展
 
@@ -83,3 +83,58 @@ $ php -m
 # 查看 `sockets` 是否可以正常运行：
 $ php --ri gd
 ```
+
+## 安装 zip 扩展
+
+1. 安装 zip 扩展前，需要先安装它的支持库
+
+    ```sh
+    $ apt install libzip-dev
+    ```
+
+2. 拷贝源码至 `/package/ext` 目录下
+
+    ```sh
+    $ cp -p -r /package/php-8.0.1/ext/zip /package/ext/
+    ```
+
+3. 使用 phpize 生成可编译源码
+
+    ```SH
+    $ cd /package/ext/zip
+    $ phpize
+    ```
+
+4. 编译安装
+
+    ```sh
+    $ ./configure
+    $ make -j4
+    $ make test
+    $ make install
+    Installing shared extensions:     /server/php/lib/php/extensions/no-debug-non-zts-20200930/
+    ```
+
+5. 在 PHP 配置文件(php.ini)上，启用 zip 扩展
+
+    ```sh
+    $ vim /server/php/lib/php.ini
+    ```
+
+    `php.ini` 第 `950行` 左右添加以下内容：
+
+    ```ini
+    extension=zip
+    ```
+
+6. 查询 `gd` 扩展是否安装成功
+
+    ```sh
+    $ php -m
+    ```
+
+7. 查看 `gd` 是否可以正常运行：
+
+    ```sh
+    $ php --ri zip
+    ```
