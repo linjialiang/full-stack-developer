@@ -31,7 +31,6 @@
 | Partial Diff                 | 选中对比               |
 | gitlens                      | git 管理插件           |
 | Bracket Pair Colorizer 2     | 括号高亮               |
-| koroFileHeader               | 文件头信息             |
 | vim                          | vim 键盘               |
 | Markdown Preview Enhanced    | markdown 插件          |
 | hexdump for VSCode           | 十六进制文件预览与编辑 |
