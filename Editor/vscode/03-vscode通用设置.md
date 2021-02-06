@@ -6,7 +6,6 @@
    {
      // 编辑器自带的功能
      "workbench.startupEditor": "none",
-     // "editor.columnSelection": true,
      "editor.fontFamily": "'Fira Code', '思源黑体 CN'",
      "editor.fontLigatures": true,
      "editor.inlineHints.fontFamily": "'Fira Code', '思源黑体 CN'",
