@@ -9,3 +9,4 @@
 | 01   | [VSCode 简要说明](./01-vscode简要说明.md)         |
 | 02   | [VSCode 插件系统概述](./02-vscode插件系统概述.md) |
 | 03   | [VSCode 通用设置](./03-vscode通用设置.md)         |
+| 04   | [VSCode 通用快捷键](./04-vscode通用快捷键.md)     |
