@@ -4,7 +4,7 @@
 
    ```json
    {
-     // 编辑器自带的功能
+     // 编辑器自带的功能配置
      "workbench.startupEditor": "none",
      "editor.fontFamily": "'Fira Code', '思源黑体 CN'",
      "editor.fontLigatures": true,
@@ -38,6 +38,7 @@
      "html.format.enable": false,
      "json.format.enable": false,
      "javascript.format.enable": false,
-     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe"
+     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+     "terminal.external.windowsExec": "C:\\cmder_mini\\cmder.exe"
    }
    ```

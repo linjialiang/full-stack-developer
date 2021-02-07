@@ -12,7 +12,6 @@
 | 主题         | 描述     |
 | ------------ | -------- |
 | One Dark Pro | 暗系主题 |
-| Nord         | 暗系主题 |
 | vscode-icons | 图标高亮 |
 
 通用扩展列表
@@ -21,17 +20,17 @@
 | ---------------------------- | ---------------------- |
 | vscode-language-pack-zh-hans | 中文语言包             |
 | EditorConfig                 | 编码格式管理           |
+| Perttier                     | 格式化工具             |
 | path-intellisense            | 路径补全               |
 | gitlens                      | git 管理插件           |
 | Bracket Pair Colorizer 2     | 括号高亮               |
+| todo-tree                    | Todo 树                |
+| neo vim                      | neo vim 集成           |
 | project-manager              | 项目管理               |
 | hexdump for VSCode           | 十六进制文件预览与编辑 |
 | Bookmarks                    | 书签                   |
-| vim                          | vim 键盘               |
-| todo-tree                    | Todo 树                |
 | Better Align                 | 符号对齐               |
 | highlight-words              | 词组高亮               |
-| vscode-diff                  | 文件对比               |
 | Partial Diff                 | 选中对比               |
 | Settings Sync                | 设置同步               |
 
