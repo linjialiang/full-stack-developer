@@ -25,7 +25,7 @@
 | gitlens                      | git 管理插件           |
 | Bracket Pair Colorizer 2     | 括号高亮               |
 | todo-tree                    | Todo 树                |
-| neo vim                      | neo vim 集成           |
+| Neo Vim                      | nvim 集成              |
 | project-manager              | 项目管理               |
 | hexdump for VSCode           | 十六进制文件预览与编辑 |
 | Bookmarks                    | 书签                   |
@@ -50,7 +50,9 @@ vscode-neovim 扩展相对复杂，具体操作如下：
 
    ```json
    [
-   // windows系统下vscode-neovim扩展绑定neovim编辑器路径
-   "vscode-neovim.neovimExecutablePaths.win32": "C:\\Neovim\\bin\\nvim.exe"
+     {
+       // windows系统下vscode-neovim扩展绑定neovim编辑器路径
+       "vscode-neovim.neovimExecutablePaths.win32": "C:\\Neovim\\bin\\nvim.exe"
+     }
    ]
    ```
