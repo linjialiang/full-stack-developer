@@ -2,33 +2,6 @@
 
 vscode 官网有一个常用快捷键手册，我这里直接将其翻译成中文供大家参考： [`vscode通用快捷键-中文版.pdf`](./source/vscode快捷键-windows中文版.pdf)
 
-## neo vim 相关快捷键
-
-需要安装 neovim 并绑定路径及 id，具体查看插件说明
-
-| 快捷键  | 描述                       |
-| ------- | -------------------------- |
-| ctrl+c  | vim 初始化                 |
-| "+y     | vim 信息复制到外部         |
-| "+p     | vim 粘贴外部的信息         |
-| ctrl+a  | vim 数字增加 1             |
-| ctrl+x  | vim 数字减少 1             |
-| h j k l | `右 下 上 左` 移动         |
-| Ctrl+K  | 严重影响 vscode 快捷键系统 |
-
-- 自定义的快捷键信息
-
-  ```json
-  [
-    // 针对 vim 扩展的快捷键设置
-    {
-      "key": "ctrl+k",
-      "command": "-extension.vim_ctrl+k",
-      "when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl"
-    }
-  ]
-  ```
-
 ## project-manager 相关快捷键
 
 快速打开项目经常用到，快捷键如下（更多快捷键自行`Ctrl+k Ctrl+s`查看）：

@@ -39,3 +39,18 @@ PHP 插件
 | PHP 插件         | 描述    |
 | ---------------- | ------- |
 | PHP Intelephense | php ide |
+
+## vscode-neovim
+
+vscode-neovim 扩展相对复杂，具体操作如下：
+
+1. 安装 vscode 扩展：Neo Vim
+2. 桌面系统安装：NeoVim 编辑器
+3. vscode 绑定 NeoVim 编辑器，settings.json 具体设置如下：
+
+   ```json
+   [
+   // windows系统下vscode-neovim扩展绑定neovim编辑器路径
+   "vscode-neovim.neovimExecutablePaths.win32": "C:\\Neovim\\bin\\nvim.exe"
+   ]
+   ```
