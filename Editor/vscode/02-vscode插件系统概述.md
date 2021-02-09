@@ -2,10 +2,10 @@
 
 扩展是为了帮助我们更好的工作，扩展的原则如下：
 
-- 扩展越少，编辑器越流畅
-- 编辑器已经自带的，就不要重复安装
-- 扩展部分功能与编辑器重复，应该禁用掉编辑器自带功能
-- 对编辑器负荷很大的插件，尽量少安装，平时不用，可以先禁用掉
+-   扩展越少，编辑器越流畅
+-   编辑器已经自带的，就不要重复安装
+-   扩展部分功能与编辑器重复，应该禁用掉编辑器自带功能
+-   对编辑器负荷很大的插件，尽量少安装，平时不用，可以先禁用掉
 
 主题扩展列表
 
@@ -48,11 +48,26 @@ vscode-neovim 扩展相对复杂，具体操作如下：
 2. 桌面系统安装：NeoVim 编辑器
 3. vscode 绑定 NeoVim 编辑器，settings.json 具体设置如下：
 
-   ```json
-   [
-     {
-       // windows系统下vscode-neovim扩展绑定neovim编辑器路径
-       "vscode-neovim.neovimExecutablePaths.win32": "C:\\Neovim\\bin\\nvim.exe"
-     }
-   ]
-   ```
+    ```json
+    [
+        {
+            // windows系统下vscode-neovim扩展绑定neovim编辑器路径
+            "vscode-neovim.neovimExecutablePaths.win32": "C:\\Neovim\\bin\\nvim.exe"
+        }
+    ]
+    ```
+
+## Perttier
+
+Perttier 是下载量最高的格式化工具，支持格式化 html、js、css 及其衍生语言、markdown
+
+-   默认 `tab=2空格`，通常我们需要修改成 `tab=4空格`
+
+    ```json
+    [
+        {
+            // prettier 的tab对应空格数与vscode的tab空格数保持一致
+            "prettier.tabWidth": 4
+        }
+    ]
+    ```
