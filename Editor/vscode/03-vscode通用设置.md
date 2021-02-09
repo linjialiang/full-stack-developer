@@ -24,6 +24,7 @@
             "**/.DS_Store": true
         },
         "files.trimFinalNewlines": true,
+        "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
         "files.watcherExclude": {
             "**/.git/objects/**": true,
