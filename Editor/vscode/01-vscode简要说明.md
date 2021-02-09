@@ -42,6 +42,10 @@ vscode 自带的一些功能，在其他编辑器上都是通过插件才能实�
 | autoClosingTag  | HTML 标签自动闭合  |
 | linkedEditing   | HTML 标签链接编辑  |
 
+## 四、扩展
+
+详细见 [插件系统概述.md](./02-vscode插件系统概述.md)
+
 ## 五、快捷键系统
 
 vscode 快捷键系统很灵活，支持快捷键自定义
