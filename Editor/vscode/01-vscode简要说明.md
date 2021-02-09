@@ -2,7 +2,7 @@
 
 ## 一、支持的操作系统
 
-    vscode 适用于 Windows、macOS 和 Linux 三大操作系统，属于跨平台桌面编辑器！
+vscode 适用于 Windows、macOS 和 Linux 三大操作系统，属于跨平台桌面编辑器！
 
 ## 二、vscode 界面说明
 
@@ -24,22 +24,23 @@ vscode 的界面分为多个模块，具体如下：
   | 编辑器 | 对应一个文件                            |
   | 组     | 允许多个编辑器                          |
   | 窗口   | 类似 windows 打开的目录，允许多组编辑器 |
-
-## 三、快捷键系统
-
-vscode 快捷键系统很灵活，支持快捷键自定义
-
-## 三、自带高级功能说明
+## 三、自带特色功能
 
 vscode 自带的一些功能，在其他编辑器上都是通过插件才能实现的
 
 | 高级功能        | 描述               |
 | --------------- | ------------------ |
+| Git             | 分布式版本控制系统 |
+| Format          | 代码格式化         |
 | linting         | 语法验证           |
-| Snippets        | 代码片段           |
 | IntelliSense    | 智能感知           |
+| Snippets        | 代码片段           |
 | Emmet snippets  | Emmet 语法         |
 | Syntax coloring | 语法高亮           |
 | Color preview   | 颜色预览           |
-| Format          | 代码格式化         |
-| Git             | 分布式版本控制系统 |
+| autoClosingTag  | HTML 标签自动闭合  |
+| linkedEditing   | HTML 标签链接编辑  |
+
+## 五、快捷键系统
+
+vscode 快捷键系统很灵活，支持快捷键自定义
